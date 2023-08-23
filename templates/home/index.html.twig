@@ -1,20 +1,631 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
-
+{% block title %}Accueil - C'est moi qui régale
+{% endblock %}
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+	<main
+		class="container py-5">
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/Users/mcpiie/Documents/DEV/symfony/cestmoiqui_regale/src/Controller/HomeController.php'|file_link(0) }}">src/Controller/HomeController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/Users/mcpiie/Documents/DEV/symfony/cestmoiqui_regale/templates/home/index.html.twig'|file_link(0) }}">templates/home/index.html.twig</a></code></li>
-    </ul>
-</div>
+		<!-- Carousel Section -->
+		<section
+			class="d-block d-lg-flex pt-4 mb-4">
+
+			<!-- Carousel image -->
+			<div class="carousel-image">
+				<img src="https://images.unsplash.com/photo-1556911073-52527ac43761?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" class="img-fluid object-fit-cover" alt="Home image">
+			</div>
+
+			<!-- Carousel content -->
+			<div class="content bg-warning p-5">
+
+				<span class="badge bg-primary mb-3">Catégorie</span>
+				<h2>
+					<a href="">Titre de la publication</a>
+				</h2>
+				<p class="mb-3 text-light">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate vero obcaecati natus adipisci necessitatibus eius, enim vel sit ad reiciendis. Enim praesentium magni delectus cum, tempore deserunt aliquid quaerat culpa nemo veritatis, iste adipisci excepturi consectetur doloribus aliquam accusantium beatae?</p>
+
+				<!-- Post Meta -->
+				<small
+					class="post-meta text-primary ">
+					{# servings #}
+					<span class="post-meta-servings">
+						<i class="fas fa-user"></i>
+						<span class="post-meta-servings-text">4</span>
+					</span>
+					<span class="post-meta-separator">|</span>
+
+					{# cook-time #}
+					<span class="post-meta-preparation-time">
+						<i class="fas fa-clock"></i>
+						<span class="post-meta-servings-text">30 mins</span>
+					</span>
+					<span class="post-meta-separator">|</span>
+
+					{# difficutly #}
+					<span class="post-meta-difficulty">
+						<span class="post-meta-difficulty-text">Facile</span>
+					</span>
+				</small>
+
+			</div>
+
+			<!-- Carousel indicators -->
+			{# <ol class="carousel-indicators">
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																												<li data-target="#myCarousel" data-slide-to="0" class="bg-light"></li>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																												<li data-target="#myCarousel" data-slide-to="1" class="bg-light"></li>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																												<li data-target="#myCarousel" data-slide-to="2" class="bg-dark active"></li>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																											</ol> #}
+
+		</section>
+
+		<!-- Post and Side bar Section -->
+		<section class="container px-0 pt-3">
+
+			<div
+				class="row g-5">
+
+				<!-- Main Section -->
+				<div
+					class="col-xl-8">
+
+					<!-- Article Section -->
+					<section
+						class="pt-4 mb-5 mb-sm-3">
+
+						<!-- Title Section -->
+						<div class="row">
+							<div class="col-12">
+								<div class="section-title">
+									<h2 class="pb-2 mb-4 border-bottom">Le Mag'</h2>
+								</div>
+							</div>
+						</div>
+
+						<!-- Recipes -->
+						<div
+							class="row">
+
+							<!-- Fist Recipe -->
+							<div class="col-md-6 pb-5">
+								<div class="post-entry-1">
+									<a href="#"><img src="https://images.unsplash.com/photo-1556911073-52527ac43761?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" alt="Image" class="img-fluid object-fit-cover">
+									</a>
+									<h3 class="pt-3">
+										<a href="#">News Needs to Meet Its Audiences Where They Are</a>
+									</h3>
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi temporibus praesentium neque, voluptatum quam quibusdam.</p>
+
+									<!-- Post Meta -->
+									<div class="post-meta text-primary">
+										<small>
+											{# Date #}
+											<span class="post-meta-date">
+												<i class="fas fa-calendar-days"></i>
+												<span class="post-meta-date-text">23 Aou 2023</span>
+											</span>
+											<span class="post-meta-separator">|</span>
+
+											{# Comment #}
+											<span class="post-meta-comment">
+												<i class="fas fa-comment-dots"></i>
+												<span class="post-meta-comment-text">10</span>
+											</span>
+										</small>
+									</div>
+
+								</div>
+							</div>
+
+							<!-- Right Articles -->
+							<div
+								class="col-md-6">
+
+								<!-- Article -->
+								<div class="post-entry-2 d-flex bg-body-tertiary mb-3">
+									<img src="https://images.unsplash.com/photo-1556911073-52527ac43761?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" alt="Image" class="img-fluid img-thumbnail border border-0 p-0 object-fit-cover" width="100">
+
+									<div class="content p-3">
+										<h3 class="fs-5">
+											<a href="blog-single.html">News Needs to Meet Its Audiences Where They Are</a>
+										</h3>
+
+										<!-- Post Meta -->
+										<div class="post-meta text-primary ">
+											<small>
+												{# Date #}
+												<span class="post-meta-date">
+													<i class="fas fa-calendar-days"></i>
+													<span class="post-meta-date-text">23 Aou 2023</span>
+												</span>
+												<span class="post-meta-separator">|</span>
+
+												{# Comment #}
+												<span class="post-meta-comment">
+													<i class="fas fa-comment-dots"></i>
+													<span class="post-meta-comment-text">10</span>
+												</span>
+											</small>
+										</div>
+
+									</div>
+								</div>
+
+								<!-- Article -->
+								<div class="post-entry-2 d-flex bg-body-tertiary mb-3">
+									<img src="https://images.unsplash.com/photo-1556911073-52527ac43761?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" alt="Image" class="img-fluid img-thumbnail border border-0 p-0 object-fit-cover" width="100">
+
+
+									<div class="content p-3">
+										<h3 class="fs-5">
+											<a href="blog-single.html">News Needs to Meet Its Audiences Where They Are</a>
+										</h3>
+
+										<!-- Post Meta -->
+										<div class="post-meta text-primary ">
+											<small>
+												{# Date #}
+												<span class="post-meta-date">
+													<i class="fas fa-calendar-days"></i>
+													<span class="post-meta-date-text">23 Aou 2023</span>
+												</span>
+												<span class="post-meta-separator">|</span>
+
+												{# Comment #}
+												<span class="post-meta-comment">
+													<i class="fas fa-comment-dots"></i>
+													<span class="post-meta-comment-text">10</span>
+												</span>
+											</small>
+										</div>
+
+									</div>
+								</div>
+
+								<!-- Article -->
+								<div class="post-entry-2 d-flex bg-body-tertiary mb-3">
+									<img src="https://images.unsplash.com/photo-1556911073-52527ac43761?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" alt="Image" class="img-fluid img-thumbnail border border-0 p-0 object-fit-cover" width="100">
+
+
+									<div class="content p-3">
+										<h3 class="fs-5">
+											<a href="blog-single.html">News Needs to Meet Its Audiences Where They Are</a>
+										</h3>
+
+										<!-- Post Meta -->
+										<div class="post-meta text-primary ">
+											<small>
+												{# Date #}
+												<span class="post-meta-date">
+													<i class="fas fa-calendar-days"></i>
+													<span class="post-meta-date-text">23 Aou 2023</span>
+												</span>
+												<span class="post-meta-separator">|</span>
+
+												{# Comment #}
+												<span class="post-meta-comment">
+													<i class="fas fa-comment-dots"></i>
+													<span class="post-meta-comment-text">10</span>
+												</span>
+											</small>
+										</div>
+
+									</div>
+								</div>
+
+								<a type="button" class="btn btn-outline-warning d-grid m-0">Voir tous nos articles</a>
+
+							</div>
+
+						</div>
+
+					</section>
+
+					<!-- Recipe Category Section -->
+					<section class="container bg-body-tertiary pt-4 mb-5 mb-sm-3">
+						<h3 class="category-title text-center">Selon vos envies</h3>
+						<!-- Grid row -->
+						<div
+							class="row mt-2 d-flex justify-content-center">
+
+							<!-- Grid column -->
+							<div class="col-4 col-lg-2 d-flex flex-column align-items-center m-4">
+								<a href="#" class="d-flex flex-column align-items-center justify-content-center">
+									<img src="https://images.unsplash.com/photo-1556911073-52527ac43761?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" class="rounded-circle mb-3 object-fit-cover" alt="Home image" width="100" height="100">Catégorie</a>
+							</div>
+
+							<!-- Grid column -->
+							<div class="col-4 col-lg-2 d-flex flex-column align-items-center m-4">
+								<a href="#" class="d-flex flex-column align-items-center justify-content-center">
+									<img src="https://images.unsplash.com/photo-1556911073-52527ac43761?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" class="rounded-circle mb-3 object-fit-cover" alt="Home image" width="100" height="100">Catégorie</a>
+							</div>
+
+							<!-- Grid column -->
+							<div class="col-4 col-lg-2 d-flex flex-column align-items-center m-4">
+								<a href="#" class="d-flex flex-column align-items-center justify-content-center">
+									<img src="https://images.unsplash.com/photo-1556911073-52527ac43761?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" class="rounded-circle mb-3 object-fit-cover" alt="Home image" width="100" height="100">Catégorie</a>
+							</div>
+
+							<!-- Grid column -->
+							<div class="col-4 col-lg-2 d-flex flex-column align-items-center m-4">
+								<a href="#" class="d-flex flex-column align-items-center justify-content-center">
+									<img src="https://images.unsplash.com/photo-1556911073-52527ac43761?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" class="rounded-circle mb-3 object-fit-cover" alt="Home image" width="100" height="100">Catégorie</a>
+							</div>
+
+						</div>
+					</section>
+
+					<!-- Recipe Section -->
+					<section
+						class="pt-5 mb-5 mb-sm-3">
+
+						<!-- Title Section -->
+						<div class="row">
+							<div class="col-12">
+								<div class="section-title">
+									<h2 class="pb-2 mb-4 border-bottom">Les recettes de saison !</h2>
+								</div>
+							</div>
+						</div>
+
+						<!-- Recipes -->
+						<div
+							class="row">
+
+							<!-- Fist Recipe -->
+							<div class="col-md-6 pb-5">
+								<div class="post-entry-1">
+									<a href="#"><img src="https://images.unsplash.com/photo-1556911073-52527ac43761?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" alt="Image" class="img-fluid object-fit-cover">
+									</a>
+									<h3 class="pt-3">
+										<a href="blog-single.html">News Needs to Meet Its Audiences Where They Are</a>
+									</h3>
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi temporibus praesentium neque, voluptatum quam quibusdam.</p>
+
+									<!-- Post Meta -->
+									<div class="post-meta text-primary ">
+										<small>
+											{# servings #}
+											<span class="post-meta-servings">
+												<i class="fas fa-user"></i>
+												<span class="post-meta-servings-text">4</span>
+											</span>
+											<span class="post-meta-separator">|</span>
+
+											{# cook-time #}
+											<span class="post-meta-preparation-time">
+												<i class="fas fa-clock"></i>
+												<span class="post-meta-servings-text">30 mins</span>
+											</span>
+											<span class="post-meta-separator">|</span>
+
+											{# difficutly #}
+											<span class="post-meta-difficulty">
+												<span class="post-meta-difficulty-text">Facile</span>
+											</span>
+										</small>
+									</div>
+
+								</div>
+							</div>
+
+							<!-- Right Recipes -->
+							<div
+								class="col-md-6">
+
+								<!-- Recipe -->
+								<div class="post-entry-2 d-flex bg-body-tertiary mb-3">
+									<img src="https://images.unsplash.com/photo-1556911073-52527ac43761?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" alt="Image" class="img-fluid img-thumbnail border border-0 p-0 object-fit-cover" width="100">
+
+									<div class="content p-3">
+										<h3 class="fs-5">
+											<a href="blog-single.html">News Needs to Meet Its Audiences Where They Are</a>
+										</h3>
+
+										<!-- Post Meta -->
+										<div class="post-meta text-primary ">
+											<small>
+												{# servings #}
+												<span class="post-meta-servings">
+													<i class="fas fa-user"></i>
+													<span class="post-meta-servings-text">4</span>
+												</span>
+												<span class="post-meta-separator">|</span>
+
+												{# cook-time #}
+												<span class="post-meta-preparation-time">
+													<i class="fas fa-clock"></i>
+													<span class="post-meta-servings-text">30 mins</span>
+												</span>
+												<span class="post-meta-separator">|</span>
+
+												{# difficutly #}
+												<span class="post-meta-difficulty">
+													<span class="post-meta-difficulty-text">Facile</span>
+												</span>
+											</small>
+										</div>
+
+									</div>
+								</div>
+
+								<!-- Recipe -->
+								<div class="post-entry-2 d-flex bg-body-tertiary mb-3">
+									<img src="https://images.unsplash.com/photo-1556911073-52527ac43761?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" alt="Image" class="img-fluid img-thumbnail border border-0 p-0 object-fit-cover" width="100">
+
+									<div class="content p-3">
+										<h3 class="fs-5">
+											<a href="blog-single.html">News Needs to Meet Its Audiences Where They Are</a>
+										</h3>
+
+										<!-- Post Meta -->
+										<div class="post-meta text-primary ">
+											<small>
+												{# servings #}
+												<span class="post-meta-servings">
+													<i class="fas fa-user"></i>
+													<span class="post-meta-servings-text">4</span>
+												</span>
+												<span class="post-meta-separator">|</span>
+
+												{# cook-time #}
+												<span class="post-meta-preparation-time">
+													<i class="fas fa-clock"></i>
+													<span class="post-meta-servings-text">30 mins</span>
+												</span>
+												<span class="post-meta-separator">|</span>
+
+												{# difficutly #}
+												<span class="post-meta-difficulty">
+													<span class="post-meta-difficulty-text">Facile</span>
+												</span>
+											</small>
+										</div>
+
+									</div>
+								</div>
+
+								<!-- Recipe -->
+								<div class="post-entry-2 d-flex bg-body-tertiary mb-3">
+									<img src="https://images.unsplash.com/photo-1556911073-52527ac43761?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" alt="Image" class="img-fluid img-thumbnail border border-0 p-0 object-fit-cover" width="100">
+
+									<div class="content p-3">
+										<h3 class="fs-5">
+											<a href="blog-single.html">News Needs to Meet Its Audiences Where They Are</a>
+										</h3>
+
+										<!-- Post Meta -->
+										<div class="post-meta text-primary ">
+											<small>
+												{# servings #}
+												<span class="post-meta-servings">
+													<i class="fas fa-user"></i>
+													<span class="post-meta-servings-text">4</span>
+												</span>
+												<span class="post-meta-separator">|</span>
+
+												{# cook-time #}
+												<span class="post-meta-preparation-time">
+													<i class="fas fa-clock"></i>
+													<span class="post-meta-servings-text">30 mins</span>
+												</span>
+												<span class="post-meta-separator">|</span>
+
+												{# difficutly #}
+												<span class="post-meta-difficulty">
+													<span class="post-meta-difficulty-text">Facile</span>
+												</span>
+											</small>
+										</div>
+
+									</div>
+								</div>
+
+								<a type="button" class="btn btn-outline-warning d-grid m-0">Voir tous nos articles</a>
+
+							</div>
+						</div>
+					</section>
+
+					<!-- Recipe Category Section -->
+					<section class="container bg-body-tertiary pt-4 my-5 mb-sm-3">
+						<h3 class="category-title text-center">Selon vos envies</h3>
+						<!-- Grid row -->
+						<div
+							class="row mt-2 d-flex justify-content-center">
+
+							<!-- Grid column -->
+							<div class="col-4 col-lg-2 d-flex flex-column align-items-center m-4">
+								<a href="#" class="d-flex flex-column align-items-center justify-content-center">
+									<img src="https://images.unsplash.com/photo-1556911073-52527ac43761?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" class="rounded-circle mb-3 object-fit-cover" alt="Home image" width="100" height="100">Catégorie</a>
+							</div>
+
+							<!-- Grid column -->
+							<div class="col-4 col-lg-2 d-flex flex-column align-items-center m-4">
+								<a href="#" class="d-flex flex-column align-items-center justify-content-center">
+									<img src="https://images.unsplash.com/photo-1556911073-52527ac43761?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" class="rounded-circle mb-3 object-fit-cover" alt="Home image" width="100" height="100">Catégorie</a>
+							</div>
+
+							<!-- Grid column -->
+							<div class="col-4 col-lg-2 d-flex flex-column align-items-center m-4">
+								<a href="#" class="d-flex flex-column align-items-center justify-content-center">
+									<img src="https://images.unsplash.com/photo-1556911073-52527ac43761?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" class="rounded-circle mb-3 object-fit-cover" alt="Home image" width="100" height="100">Catégorie</a>
+							</div>
+
+							<!-- Grid column -->
+							<div class="col-4 col-lg-2 d-flex flex-column align-items-center m-4">
+								<a href="#" class="d-flex flex-column align-items-center justify-content-center">
+									<img src="https://images.unsplash.com/photo-1556911073-52527ac43761?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" class="rounded-circle mb-3 object-fit-cover" alt="Home image" width="100" height="100">Catégorie</a>
+							</div>
+
+						</div>
+					</section>
+
+					<!-- Video Presentation Section -->
+					<section
+						class="bg-warning mt-5 mb-5 mb-sm-3 d-lg-flex">
+
+						<!-- Video content -->
+						<div class="content p-5 pb-3">
+
+							<span class="badge bg-primary mb-3">Catégorie</span>
+							<h2>
+								<a href="">Titre de la publication</a>
+							</h2>
+							<p class="mb-3 text-light">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate vero obcaecati natus adipisci necessitatibus eius, enim vel sit ad reiciendis.</p>
+							<a type="button" class="btn btn-primary btn-sm">Voir d'autre recette</a>
+
+						</div>
+
+						<!-- Video -->
+						<div class="my-5 me-5 ratio ratio-1x1">
+							<iframe src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0" title="YouTube video" allowfullscreen></iframe>
+						</div>
+
+					</section>
+
+
+					<!-- Trin'k Presentation Section -->
+					<section class="text-center mt-5 py-4 border-top border-bottom">
+						<h2>C'EST MOI QUI RÉGALE</h2>
+						<p>Pour plus de vidéos, recettes et astuces :
+							<a href="#" class="text-warning">abonnez-vous</a>
+							!</p>
+						<a type="button" class="btn btn-primary">Youtube</a>
+					</section>
+
+				</div>
+
+				<!-- Sidebar -->
+				<div class="col-xl-4 sidebar">
+
+					<div
+						class="position-sticky pt-4 ps-5" style=" top: 2rem;">
+
+						<!-- Section Search -->
+						<div class="sidebar-box search-form-wrap py-3">
+							<form class="d-grid">
+								<input class="form-control me-sm-2 text-center mb-2" type="search" placeholder="Que souhaitez vous cuisiner ?">
+								<button class="btn btn-primary my-2 my-sm-0" type="submit">Recherhcer</button>
+							</form>
+						</div>
+
+						<!-- Section Bio -->
+						<div class="bio text-center border p-4">
+							<img src="https://images.unsplash.com/photo-1556911073-52527ac43761?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" class="rounded-circle mb-3 object-fit-cover" alt="Home image" width="100" height="100">
+							<div class="bio-body">
+								<h3>C'est moi qui régale</h3>
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Exercitationem facilis sunt repellendus excepturi beatae porro debitis voluptate nulla quo veniam fuga sit molestias minus.
+								</p>
+								<a href="#" class="btn btn-warning btn-sm">Notre concept</a>
+								<div class="social d-flex justify-content-center pt-3">
+									<a href="#" class="p-2">
+										<i class="fas fa-envelope"></i>
+									</a>
+									<a href="#" class="p-2">
+										<i class="fa-brands fa-youtube"></i>
+									</a>
+									<a href="#" class="p-2">
+										<i class="fa-brands fa-instagram"></i>
+									</a>
+								</div>
+							</div>
+
+						</div>
+
+						<!-- Section Popular -->
+						<div class="sidebar-box pt-5">
+							<h3 class="pb-2 mb-4 border-bottom">Le Top des publications</h3>
+
+							<div class="post-entry-sidebar">
+								<ul
+									class="px-0 m-0">
+
+									{# post #}
+									<li class="d-flex mb-3">
+										<img src="https://images.unsplash.com/photo-1556911073-52527ac43761?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" alt="Image" class="img-fluid img-thumbnail border border-0 p-0 object-fit-cover" width="100">
+
+										<div class="content ps-3 d-flex align-items-center">
+											<h3 class="fs-5 m-0">
+												<a href="#">News Needs to Meet Its Audiences Where They Are</a>
+											</h3>
+										</div>
+									</li>
+
+									{# post #}
+									<li class="d-flex mb-3">
+										<img src="https://images.unsplash.com/photo-1556911073-52527ac43761?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" alt="Image" class="img-fluid img-thumbnail border border-0 p-0 object-fit-cover" width="100">
+
+										<div class="content ps-3 d-flex align-items-center">
+											<h3 class="fs-5 m-0">
+												<a href="#">News Needs to Meet Its Audiences Where They Are</a>
+											</h3>
+										</div>
+									</li>
+
+									{# post #}
+									<li class="d-flex">
+										<img src="https://images.unsplash.com/photo-1556911073-52527ac43761?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" alt="Image" class="img-fluid img-thumbnail border border-0 p-0 object-fit-cover" width="100">
+
+										<div class="content ps-3 d-flex align-items-center">
+											<h3 class="fs-5 m-0">
+												<a href="#">News Needs to Meet Its Audiences Where They Are</a>
+											</h3>
+										</div>
+									</li>
+
+								</ul>
+							</div>
+
+						</div>
+
+						<!-- Section Category -->
+						<div class="sidebar-box pt-5">
+							<h3 class="pb-2 mb-4 border-bottom">Les plus dégustées</h3>
+
+							<div class="categories">
+								<ul class="list-group list-group-flush">
+									<li class="list-group-item d-flex justify-content-between align-items-center">Categorie
+										<span class="badge bg-primary rounded-pill">14</span>
+									</li>
+									<li class="list-group-item d-flex justify-content-between align-items-center">Categorie
+										<span class="badge bg-primary rounded-pill">14</span>
+									</li>
+									<li class="list-group-item d-flex justify-content-between align-items-center">Categorie
+										<span class="badge bg-primary rounded-pill">14</span>
+									</li>
+								</ul>
+							</div>
+
+						</div>
+
+						<!-- Section Tags -->
+						<div class="sidebar-box pt-5">
+							<h3 class="pb-2 mb-4 border-bottom">Tags</h3>
+
+							<div class="tags">
+								<span class="badge bg-warning">#Tag</span>
+								<span class="badge bg-warning">#Tag</span>
+								<span class="badge bg-warning">#Tag</span>
+								<span class="badge bg-warning">#Tag</span>
+								<span class="badge bg-warning">#Tag</span>
+								<span class="badge bg-warning">#Tag</span>
+								<span class="badge bg-warning">#Tag</span>
+								<span class="badge bg-warning">#Tag</span>
+								<span class="badge bg-warning">#Tag</span>
+								<span class="badge bg-warning">#Tag</span>
+								<span class="badge bg-warning">#Tag</span>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</section>
+
+
+	</main>
 {% endblock %}
