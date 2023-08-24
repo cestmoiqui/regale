@@ -3,6 +3,9 @@
 namespace App\Controller\Admin;
 
 use App\Entity\RecipeIngredient;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class RecipeIngredientCrudController extends AbstractCrudController
@@ -12,14 +15,12 @@ class RecipeIngredientCrudController extends AbstractCrudController
         return RecipeIngredient::class;
     }
 
-    /*
+
     public function configureFields(string $pageName): iterable
     {
-        return [
-            IdField::new('id'),
-            TextField::new('title'),
-            TextEditorField::new('description'),
-        ];
+
+        yield IntegerField::new('quantity', 'Quantité');
+
+        yield TextField::new('measure', 'Unité de mesure');
     }
-    */
 }
