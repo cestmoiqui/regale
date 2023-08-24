@@ -21,6 +21,9 @@ class Ingredients
     #[ORM\OneToMany(mappedBy: 'ingredients', targetEntity: RecipeIngredient::class, orphanRemoval: true)]
     private Collection $recipeIngredients;
 
+    #[ORM\ManyToOne]
+    private ?MeasurementUnits $defaultUnit = null;
+
     public function __construct()
     {
         $this->recipeIngredients = new ArrayCollection();
@@ -69,6 +72,18 @@ class Ingredients
                 $recipeIngredient->setIngredients(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRelation(): ?MeasurementUnits
+    {
+        return $this->defaultUnit;
+    }
+
+    public function setRelation(?MeasurementUnits $relation): static
+    {
+        $this->defaultUnit = $relation;
 
         return $this;
     }

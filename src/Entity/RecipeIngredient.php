@@ -24,6 +24,9 @@ class RecipeIngredient
     #[ORM\JoinColumn(nullable: false)]
     private ?Ingredients $ingredients = null;
 
+    #[ORM\ManyToOne]
+    private ?MeasurementUnits $unit = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -61,6 +64,18 @@ class RecipeIngredient
     public function setIngredients(?Ingredients $ingredients): static
     {
         $this->ingredients = $ingredients;
+
+        return $this;
+    }
+
+    public function getUnit(): ?MeasurementUnits
+    {
+        return $this->unit;
+    }
+
+    public function setUnit(?MeasurementUnits $unit): static
+    {
+        $this->unit = $unit;
 
         return $this;
     }

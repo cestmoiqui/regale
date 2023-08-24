@@ -14,7 +14,7 @@ final class Version20230824212535 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return 'Supression de l\'enregistrement "measure"';
+        return 'Supression de l\'enregistrement "measure" dans la table RecipeIngredient';
     }
 
     public function up(Schema $schema): void
