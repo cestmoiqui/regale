@@ -20,7 +20,5 @@ class RecipeIngredientCrudController extends AbstractCrudController
     {
 
         yield IntegerField::new('quantity', 'Quantité');
-
-        yield TextField::new('measure', 'Unité de mesure');
     }
 }

@@ -16,9 +16,6 @@ class RecipeIngredient
     #[ORM\Column(nullable: true)]
     private ?int $quantity = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $measure = null;
-
     #[ORM\ManyToOne(inversedBy: 'recipeIngredients')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Recipe $recipes = null;
@@ -40,18 +37,6 @@ class RecipeIngredient
     public function setQuantity(?int $quantity): static
     {
         $this->quantity = $quantity;
-
-        return $this;
-    }
-
-    public function getMeasure(): ?string
-    {
-        return $this->measure;
-    }
-
-    public function setMeasure(?string $measure): static
-    {
-        $this->measure = $measure;
 
         return $this;
     }
