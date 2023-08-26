@@ -49,10 +49,14 @@ class Recipe
     #[ORM\OneToMany(mappedBy: 'recipes', targetEntity: RecipeIngredient::class, orphanRemoval: true)]
     private Collection $recipeIngredients;
 
+    #[ORM\OneToMany(mappedBy: 'recipe', targetEntity: Steps::class, orphanRemoval: true)]
+    private Collection $steps;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
         $this->recipeIngredients = new ArrayCollection();
+        $this->steps = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -219,6 +223,36 @@ class Recipe
             // set the owning side to null (unless already changed)
             if ($recipeIngredient->getRecipes() === $this) {
                 $recipeIngredient->setRecipes(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Steps>
+     */
+    public function getSteps(): Collection
+    {
+        return $this->steps;
+    }
+
+    public function addStep(Steps $step): static
+    {
+        if (!$this->steps->contains($step)) {
+            $this->steps->add($step);
+            $step->setRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStep(Steps $step): static
+    {
+        if ($this->steps->removeElement($step)) {
+            // set the owning side to null (unless already changed)
+            if ($step->getRecipe() === $this) {
+                $step->setRecipe(null);
             }
         }
 

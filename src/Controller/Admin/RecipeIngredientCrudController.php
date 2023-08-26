@@ -3,9 +3,6 @@
 namespace App\Controller\Admin;
 
 use App\Entity\RecipeIngredient;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class RecipeIngredientCrudController extends AbstractCrudController
@@ -16,9 +13,12 @@ class RecipeIngredientCrudController extends AbstractCrudController
     }
 
 
-    public function configureFields(string $pageName): iterable
-    {
+    // public function configureFields(string $pageName): iterable
+    // {
 
-        yield IntegerField::new('quantity', 'Quantité');
-    }
+    //     yield AssociationField::new('recipes', 'Recette');
+    //     yield NumberField::new('quantity', 'Quantité');
+    //     yield AssociationField::new('unit', 'Unité de mesure')->setRequired(false);
+    //     yield AssociationField::new('ingredients', 'Ingrédient');
+    // }
 }

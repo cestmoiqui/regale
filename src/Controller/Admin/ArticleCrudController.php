@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Article;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
@@ -17,19 +18,41 @@ class ArticleCrudController extends AbstractCrudController
         return Article::class;
     }
 
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setEntityLabelInSingular('Article')
+            ->setEntityLabelInPlural('Articles')
+            ->setPageTitle(Crud::PAGE_INDEX, 'Liste des %entity_label_plural%')
+            ->setPageTitle(Crud::PAGE_NEW, 'Créer un nouvel %entity_label_singular%')
+            ->setPageTitle(Crud::PAGE_EDIT, 'Modifier l\'%entity_label_singular%')
+            ->setPageTitle(Crud::PAGE_DETAIL, 'Détails de l\'%entity_label_singular%');
+    }
 
     public function configureFields(string $pageName): iterable
     {
-        yield TextField::new('title', 'Titre');
+        yield TextField::new('title', 'Titre')
+            ->setFormTypeOptions([
+                'attr' => ['placeholder' => 'Entrer le titre de l\'article']
+            ]);
 
         yield SlugField::new('slug')
             ->setTargetFieldName('title');
 
-        yield TextEditorField::new('content', 'Contenu');
+        yield TextEditorField::new('content', 'Contenu')
+            ->setFormTypeOptions([
+                'attr' => ['placeholder' => 'Entrer le contenu de l\'article']
+            ]);
 
-        yield TextField::new('featured_text', 'Texte mis en avant');
+        yield TextField::new('featured_text', 'Texte mis en avant')
+            ->setFormTypeOptions([
+                'attr' => ['placeholder' => 'Entrer le texte à mettre en avant de l\'article']
+            ]);
 
-        yield AssociationField::new('categories', 'Catégorie');
+        yield AssociationField::new('categories', 'Catégorie')
+            ->setFormTypeOptions([
+                'attr' => ['placeholder' => 'Sélectionner une catégorie']
+            ]);
 
         yield DateTimeField::new('created_at', 'Créé le')
             ->hideOnForm();

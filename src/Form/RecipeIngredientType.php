@@ -1,0 +1,47 @@
+<?php
+
+namespace App\Form;
+
+use App\Entity\Ingredients;
+use App\Entity\MeasurementUnits;
+use App\Entity\RecipeIngredient;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+class RecipeIngredientType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder
+            ->add('quantity', IntegerType::class, [
+                'label' => 'Quantité',
+                'attr' => [
+                    'min' => 1, // prevent selection of negative values
+                    'required' => true,
+                ],
+            ])
+            ->add('unit', EntityType::class, [
+                'class' => MeasurementUnits::class,
+                'choice_label' => 'abbreviation',
+                'label' => 'Unité de mesure',
+                'required' => false,
+                'placeholder' => 'Sélectionner une unité de mesure',
+            ])
+            ->add('ingredient', EntityType::class, [
+                'class' => Ingredients::class,
+                'label' => 'Ingrédient',
+                'choice_label' => 'name',
+                'placeholder' => 'Sélectionner un ingrédient',
+            ]);
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'data_class' => RecipeIngredient::class,
+        ]);
+    }
+}

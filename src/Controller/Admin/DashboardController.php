@@ -5,8 +5,6 @@ namespace App\Controller\Admin;
 use App\Entity\Recipe;
 use App\Entity\Article;
 use App\Entity\Category;
-use App\Entity\Instructions;
-use App\Entity\RecipeIngredient;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -35,17 +33,16 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Tableau de bord');
+            ->setTitle('Une cuisine connectée');
     }
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
+        yield MenuItem::linkToDashboard('Tableau de bord', 'fa fa-home');
 
         yield MenuItem::subMenu('Recette', 'fas fa-book')->setSubItems([
             MenuItem::linkToCrud('Toutes les recettes', 'fas fa-swatchbook', Recipe::class),
             MenuItem::linkToCrud('Ajouter', 'fas fa-plus', Recipe::class)->setAction(Crud::PAGE_NEW),
-            MenuItem::linkToCrud('Ingrédient', 'fas fa-bowl-rice', RecipeIngredient::class),
             MenuItem::linkToCrud('Catégorie', 'fas fa-list', Category::class)
                 ->setQueryParameter('categoryType', 'recipe'),
         ]);

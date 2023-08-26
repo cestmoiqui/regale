@@ -20,8 +20,9 @@ class Steps
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $content = null;
 
-    #[ORM\ManyToOne]
-    private ?Recipe $recipes = null;
+    #[ORM\ManyToOne(inversedBy: 'steps')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Recipe $recipe = null;
 
     public function getId(): ?int
     {
@@ -52,14 +53,14 @@ class Steps
         return $this;
     }
 
-    public function getRecipes(): ?Recipe
+    public function getRecipe(): ?Recipe
     {
-        return $this->recipes;
+        return $this->recipe;
     }
 
-    public function setRecipes(?Recipe $recipes): static
+    public function setRecipe(?Recipe $recipe): static
     {
-        $this->recipes = $recipes;
+        $this->recipe = $recipe;
 
         return $this;
     }
