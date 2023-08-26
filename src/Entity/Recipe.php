@@ -2,14 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\RecipeRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Model\TimestampedInterface;
+use App\Repository\RecipeRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: RecipeRepository::class)]
-class Recipe
+class Recipe implements TimestampedInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

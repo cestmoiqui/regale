@@ -14,7 +14,7 @@ final class Version20230826001327 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return 'Suppression de la table Instructions (entité et repository';
+        return 'Suppression de la table Instructions (entité et repository)';
     }
 
     public function up(Schema $schema): void

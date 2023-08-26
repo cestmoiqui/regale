@@ -56,7 +56,13 @@ class RecipeCrudController extends AbstractCrudController
                 'attr' => ['placeholder' => 'Entrer le texte à mettre en avant de la recette']
             ]);
 
-        yield TimeField::new('cook_time', 'Temps de préparation')->setFormat('H:i:s');
+        yield TimeField::new('cook_time', 'Temps de préparation')
+            ->formatValue(function ($value) {
+                if ($value instanceof \DateTimeInterface) {
+                    return $value->format('i');
+                }
+                return $value;
+            }); // This method takes a callback function as argument, which receives the field value as parameter.
 
         yield AssociationField::new('difficulty', 'Difficulté')
             ->setFormTypeOptions([
