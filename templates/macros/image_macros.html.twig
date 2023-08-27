@@ -1,0 +1,9 @@
+{% macro display_image(media, alt, extra_class = "", width = "") %}
+	{% if media is not null %}
+		<img src="{{ media.filename }}" alt="{{ alt }}" class="{{ extra_class }} img-fluid object-fit-cover" {% if width %} width="{{ width }}" {% endif %} loading="lazy">
+	{% else %}
+		<img src="https://images.unsplash.com/photo-1556911073-52527ac43761?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" alt="{{ alt }}" class="{{ extra_class }} img-fluid object-fit-cover" {% if width %} width="{{ width }}" {% endif %} loading="lazy">
+	{% endif %}
+{% endmacro %}
+
+// This code uses the display_image macro to display an image, providing the various options used in the original code (media, alt, extra_class, width). We can now use this macro for all image tags in the code, passing the appropriate values for each case.
