@@ -1,8 +1,8 @@
-{% macro display_image(media, alt, extra_class = "", width = "") %}
+{% macro display_image(media, altText, extra_class = "", width = "", height = "") %}
 	{% if media is not null %}
-		<img src="{{ media.filename }}" alt="{{ alt }}" class="{{ extra_class }} img-fluid object-fit-cover" {% if width %} width="{{ width }}" {% endif %} loading="lazy">
+		<img src="{{ media.filename }}" alt="{{ altText }}" class="{{ extra_class }} img-fluid object-fit-cover" {{ width ? "width=" ~ width : "" }} {{ height ? "height=" ~ height : "" }} loading="lazy">
 	{% else %}
-		<img src="https://images.unsplash.com/photo-1556911073-52527ac43761?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" alt="{{ alt }}" class="{{ extra_class }} img-fluid object-fit-cover" {% if width %} width="{{ width }}" {% endif %} loading="lazy">
+		<img src="https://images.unsplash.com/photo-1556911073-52527ac43761?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" alt="{{ altText }}" class="{{ extra_class }} img-fluid object-fit-cover" {{ width ? "width=" ~ width : "" }} {{ height ? "height=" ~ height : "" }} loading="lazy">
 	{% endif %}
 {% endmacro %}
 

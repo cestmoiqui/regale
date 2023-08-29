@@ -1,0 +1,9 @@
+{% macro display_video(media, altText) %}
+	{% if media is not null %}
+		<iframe src="{{ media.filename }}" title="{{ altText }}" loading="lazy" allowfullscreen></iframe>
+	{% else %}
+		<iframe src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0" title="{{ altText }}" loading="lazy" allowfullscreen></iframe>
+	{% endif %}
+{% endmacro %}
+
+// This code uses the display_video macro to display an image, providing the various options used in the original code (media, alt, extra_class, width). We can now use this macro for all video tags in the code, passing the appropriate values for each case.

@@ -1,18 +1,14 @@
 {% import 'macros/image_macros.html.twig' as imageMacros %}
 
 <article
-	class="pt-4 my-lg-3">
+	class="col mb-5">
 
 	<!-- Title Section -->
-	<div class="row">
-		<div class="col-12 section-title">
-			<h2 class="pb-2 mb-4 border-bottom">À la une du Mag'</h2>
-		</div>
-	</div>
+	<h2 class="pb-2 mb-4 border-bottom">À la une du Mag'</h2>
 
 	<!-- Article -->
 	<div
-		class="row">
+		class="row g-3">
 
 		<!-- Fist Recipe -->
 		{% if articles|length > 0 %}
@@ -20,12 +16,12 @@
 			<article class="col-md-6 pb-5">
 				<div class="post-entry-1">
 
-					{{ imageMacros.display_image(media, 'Description de l\'image', 'img-fluid object-fit-cover') }}
+					<a href="{{ path('article_show', {'slug': first_article.slug}) }}">{{ imageMacros.display_image(media, 'Description de l\'image', 'img-fluid object-fit-cover') }}</a>
 
 					<h3 class="pt-3">
-						<a href="{{ path('article_show', {'slug': first_article.slug}) }}">{{ first_article.title }}</a>
+						{{ first_article.title }}
 					</h3>
-					<p>{{ first_article.featuredText ?: first_article.content|striptags|slice(0, 120) ~'...' }}</p>
+					<p>{{ first_article.featuredText ?: first_article.content|striptags|slice(0, 120) ~'...' }} <a href="{{ path('article_show', {'slug': first_article.slug}) }}" class="fs-6 text-uppercase font-weight-bold text-warning">Lire la suite</a></p>
 
 					<!-- Post Meta -->
 					<div class="post-meta text-primary">
@@ -57,12 +53,14 @@
 					{% set article_show = path('article_show', { 'slug': article.slug }) %}
 					<article class="post-entry-2 d-flex bg-body-tertiary mb-3">
 
-						{{ imageMacros.display_image(media, 'Description de l\'image', 'img-thumbnail border border-0 p-0', '100') }}
+						<a href="{{ article_show }}">{{ imageMacros.display_image(media, 'Description de l\'image', 'img-thumbnail border border-0 p-0 img-fluid object-fit-cover h-100', '180') }}</a>
 					<div class=" content p-3">
 
 						<h3 class="fs-5">
-							<a href="{{ article_show }}">{{ article.title }}</a>
+							{{ article.title }}
 						</h3>
+						<a href="{{ article_show }}" class="fs-6 text-uppercase font-weight-bold text-warning">
+							Lire la suite</a>
 						<!-- Post Meta -->
 						<div class="post-meta text-primary ">
 							<small>
@@ -86,6 +84,7 @@
 				</article>
 			{% endfor %}
 		{% endif %}
+
 		<a href="{{ path('article_all') }}" type="button" class="btn btn-outline-warning d-grid m-0">Voir tous nos articles</a>
 
 	</div>

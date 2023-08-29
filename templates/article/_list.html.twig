@@ -1,0 +1,7 @@
+<div class="row g-4">
+
+	{% for article in articles %}
+		{% include 'article/_item.html.twig' with { article } %}
+	{% endfor %}
+
+</div>

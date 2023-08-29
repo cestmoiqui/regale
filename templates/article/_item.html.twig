@@ -1,0 +1,52 @@
+{% set article_show = path('article_show', { 'slug': article.slug }) %}
+
+{% import 'macros/image_macros.html.twig' as imageMacros %}
+
+<article class="col-md-4">
+
+
+	{% set articleMedia = mediaForArticles[article.getId()] %}
+
+	{% if articleMedia is defined and articleMedia.filename is defined %}
+		<a href="{{ path('article_show', {'slug': article.slug}) }}">
+			{{ imageMacros.display_image(articleMedia, 'Description de l\'image', 'img-fluid object-fit-cover') }}
+        </a>
+    {% else %}
+        {# Debug: si articleMedia est indéfini ou filename est indéfini #}
+        <img src="https://images.unsplash.com/photo-1556911073-52527ac43761?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" alt="" class=" img-fluid object-fit-cover"  loading="lazy">
+    {% endif %}
+
+
+
+		
+<div class="bg-body-tertiary p-3">
+        <h3 class="pt-3">
+            {{ article.title }}
+        </h3>
+
+        <p>{{ article.featuredText ?: article.content|striptags|slice(0, 120) ~'...' }} <a href="{{ path('article_show', {'slug': article.slug}) }}" class="fs-6 text-uppercase font-weight-bold text-warning">Lire la suite</a></p>
+
+        <!-- Post Meta -->
+        <div class="post-meta text-primary">
+            <small>
+                {# Date #}
+                <span class="post-meta-date">
+                    <i class="fas fa-calendar-days"></i>
+                    <span class="post-meta-date-text">{{ article.createdAt|date('d M Y') }}</span>
+                </span>
+
+                <span class="post-meta-separator">|</span>
+
+                {# Comment #}
+                <span class="post-meta-comment">
+                    <i class="fas fa-comment-dots"></i>
+                    <span class="post-meta-comment-text">10</span>
+                </span>
+            </small>
+        </div>
+
+
+
+	</div>
+    
+</article>
