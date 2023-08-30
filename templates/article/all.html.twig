@@ -96,21 +96,21 @@
 
 		<!-- Post and Side bar Section -->
 		<div class="row">
-			<section class="my-5">
+			<div class="my-5">
 
 				<div
-					class="row">
+					class="row g-5">
 
 					<!-- Main Section -->
-					<section class="col-xl-8">
+					<div class="col-xl-8 pb-5">
 						{% include 'article/_list.html.twig' with { articles } %}
-					</section>
+					</div>
 
 					<!-- Sidebar -->
-					<aside class="col-xl-4 px-4 px-md-0 sidebar">
+					<aside class="col-xl-4 sidebar">
 
 						<div
-							class="row position-sticky pt-4 ps-0 ps-xl-5" style=" top: 2rem;">
+							class="row position-sticky pt-lg-3 pt-4 p-4 ps-xl-5" style="top:2rem;">
 							<!-- Content -->
 							{% include "shared/_sidebar_content.html.twig" %}
 						</div>
@@ -119,7 +119,7 @@
 
 				</div>
 
-			</section>
+			</div>
 		</div>
 
 	</main>

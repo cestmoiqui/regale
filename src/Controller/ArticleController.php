@@ -38,19 +38,4 @@ class ArticleController extends AbstractController
             'mediaForArticles' => $mediaForArticles,
         ]);
     }
-
-
-    public function recent(EntityManagerInterface $entityManager): Response
-    {
-        $article = $entityManager->getRepository(Article::class)
-            ->findOneBy([], ['date' => 'DESC']);
-
-        if (!$article) {
-            return $this->redirectToRoute('app_home');  // Redirect to home page if no article found
-        }
-
-        return $this->render('article/_recent.html.twig', [
-            'article' => $article,
-        ]);
-    } // The list method uses the EntityManager service to retrieve articles sorted by date in 'descending order', and then passes them to the articles/_recent.html.twig template.
 }

@@ -1,7 +1,7 @@
 {% import 'macros/image_macros.html.twig' as imageMacros %}
 
 <article
-	class="col mb-5">
+	class="col mb-5 px-md-0 px-4">
 
 	<!-- Title Section -->
 	<h2 class="pb-2 mb-4 border-bottom">À la une du Mag'</h2>
@@ -14,13 +14,13 @@
 		{% if articles|length > 0 %}
 			{% set first_article = articles[0] %}
 			<article class="col-md-6 pb-5">
-				<div class="post-entry-1">
 
+				<div class="post-entry-1">
 					<a href="{{ path('article_show', {'slug': first_article.slug}) }}">{{ imageMacros.display_image(media, 'Description de l\'image', 'img-fluid object-fit-cover') }}</a>
 
-					<h3 class="pt-3">
+					<h2 class="pt-3">
 						{{ first_article.title }}
-					</h3>
+					</h2>
 					<p>{{ first_article.featuredText ?: first_article.content|striptags|slice(0, 120) ~'...' }} <a href="{{ path('article_show', {'slug': first_article.slug}) }}" class="fs-6 text-uppercase font-weight-bold text-warning">Lire la suite</a></p>
 
 					<!-- Post Meta -->
@@ -40,8 +40,8 @@
 							</span>
 						</small>
 					</div>
-
 				</div>
+
 			</article>
 		{% endif %}
 
@@ -56,9 +56,9 @@
 						<a href="{{ article_show }}">{{ imageMacros.display_image(media, 'Description de l\'image', 'img-thumbnail border border-0 p-0 img-fluid object-fit-cover h-100', '180') }}</a>
 					<div class=" content p-3">
 
-						<h3 class="fs-5">
+						<h2 class="fs-5">
 							{{ article.title }}
-						</h3>
+						</h2>
 						<a href="{{ article_show }}" class="fs-6 text-uppercase font-weight-bold text-warning">
 							Lire la suite</a>
 						<!-- Post Meta -->
@@ -85,7 +85,7 @@
 			{% endfor %}
 		{% endif %}
 
-		<a href="{{ path('article_all') }}" type="button" class="btn btn-outline-warning d-grid m-0">Voir tous nos articles</a>
+		<a href="{{ path('article_all') }}" class="btn btn-outline-warning d-grid m-0">Voir tous nos articles</a>
 
 	</div>
 
