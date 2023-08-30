@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Article;
 use App\Repository\MediaRepository;
 use App\Repository\ArticleRepository;
-use App\Repository\CommentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,9 +15,12 @@ class HomeController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(EntityManagerInterface $entityManager, ArticleRepository $articleRepo, MediaRepository $mediaRepo): Response
     {
+        // Use the EntityManager to retrieve the last item created
         $article = $entityManager->getRepository(Article::class)
+            // sorting items by date of creation ('createdAt') in descending order
             ->findOneBy([], ['createdAt' => 'DESC']);
 
+        // Use MediaRepository to find media associated with the current article
         $media = $mediaRepo->findOneBy(['mediaOwnerId' => $article->getId()]);
 
         return $this->render('home/index.html.twig', [

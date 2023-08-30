@@ -7,15 +7,14 @@
 	<h2 class="pb-2 mb-4 border-bottom">À la une du Mag'</h2>
 
 	<!-- Article -->
-	<div
-		class="row g-3">
+	<div class="row g-3">
 
 		<!-- Fist Recipe -->
-		{% if articles|length > 0 %}
+		{# Checks if the "items" array contains at least one element #}
+			{% if articles|length > 0 %}
+			{# Defines a new "first_article" variable and assigns the first element of the "articles" array to it #}
 			{% set first_article = articles[0] %}
-			<article class="col-md-6 pb-5">
-
-				<div class="post-entry-1">
+				<article class="col-md-6 pb-5"> <div class="post-entry-1">
 					<a href="{{ path('article_show', {'slug': first_article.slug}) }}">{{ imageMacros.display_image(media, 'Description de l\'image', 'img-fluid object-fit-cover') }}</a>
 
 					<h2 class="pt-3">
@@ -48,8 +47,11 @@
 		<!-- Right Articles -->
 		<div class="col-md-6">
 
+			{# Checks if the "items" array contains more than one element #}
 			{% if articles|length > 1 %}
+				{# Loop over a subset of the "items" array, starting with the element at index 1 and taking the next 3 elements #}
 				{% for article in articles|slice(1, 3) %}
+
 					{% set article_show = path('article_show', { 'slug': article.slug }) %}
 					<article class="post-entry-2 d-flex bg-body-tertiary mb-3">
 
