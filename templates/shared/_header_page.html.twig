@@ -1,12 +1,15 @@
 <header
-	class="position-relative text-center">
+	class="position-relative text-center position-relative" style="background-image: url('https://images.unsplash.com/photo-1556911073-52527ac43761?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80'); background-size: cover; background-position: center; background-attachment: fixed;">
+
+	<!-- Overlay pour assombrir l'image -->
+	<div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 1;"></div>
 
 	<!-- Menu Page-->
 	<nav
-		class="navbar navbar-expand-lg position-absolute w-100 pb-2 pt-4 z-1" data-bs-theme="light">
-		<!-- Container wrapper -->
-		<div class="container d-flex border-bottom">
+		class="navbar navbar-expand-lg w-100 pb-2 pt-4" data-bs-theme="light">
 
+		<!-- Container wrapper -->
+		<div class="container d-flex border-bottom position-relative z-2">
 			<h1>
 				<a class="navbar-brand p-2 m-0" href="{{ path('app_home') }}"><img src="{{ asset('images/logo-cmqr-variante-blanc.png') }}" alt="C'est moi qui régale" width="180"></a>
 			</h1>
@@ -14,7 +17,6 @@
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
-
 			<!-- Collapsible wrapper -->
 			<div
 				class="collapse navbar-collapse justify-content-end align-items-center" id="navbarColor03">
@@ -75,15 +77,11 @@
 				</ul>
 			</div>
 		</div>
+
 	</nav>
 
-	<!-- Image de fond -->
-	<img
-	src="https://images.unsplash.com/photo-1556911073-52527ac43761?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" alt="Image de fond" class="object-fit-cover w-100" height="400" style="filter: brightness(50%);">
-
-
 	<!-- Titre -->
-	<div class="position-absolute" style="top: 65%; left: 50%; transform: translate(-50%, -50%);">
+	<div class="position-relative py-5 z-1">
 		<h2 class="text-light">Votre Titre Ici</h2>
 		<ol class="breadcrumb justify-content-center">
 			<li class="breadcrumb-item">

@@ -3,10 +3,10 @@
 {% import 'macros/image_macros.html.twig' as imageMacros %}
 
 <article
-	class="col-md-4 px-md-2 px-0 py-0">
+	class="col-md-4 px-md-2 px-0 py-0 position-relative">
 
 	{# An "articleMedia" variable is defined to store the media associated with the current article. 
-	    We use the article ID to search for this media in the "mediaForArticles" array. #}
+													    We use the article ID to search for this media in the "mediaForArticles" array. #}
 	{% set articleMedia = mediaForArticles[article.getId()] %}
 
 	{# We check if articleMedia and its filename are defined. #}
@@ -21,6 +21,14 @@
         <img src="https://images.unsplash.com/photo-1556911073-52527ac43761?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" alt="" class=" img-fluid object-fit-cover"  loading="lazy">
     {% endif %}
 
+    <!-- Category Tags Container -->
+    <div class="position-absolute top-0 start-0 m-3 d-flex flex-wrap">
+        <!-- Individual Category Badges -->
+        <a href="#"><span class="badge bg-warning me-1 mb-1">Catégorie 1</span></a>
+        <a href="#"><span class="badge bg-warning me-1 mb-1">Catégorie 1</span></a>
+        <a href="#"><span class="badge bg-warning me-1 mb-1">Catégorie 1</span></a>
+        <!-- ... -->
+    </div>
 		
     <div class="bg-body-tertiary p-3">
 

@@ -13,19 +13,19 @@
 		<!-- Filter Section -->
 		<div class="row justify-content-center px-4 px-md-0">
 
-			<nav class="col-12 col-lg-10 my-5 px-4 px-xl-2 py-3 py-xl-2 bg-warning">
+			<nav class="col-12 col-lg-10 my-5 px-4 px-xl-2 py-3 py-xl-2">
 				<div class="d-flex flex-wrap align-items-stretch justify-content-center">
 
 					<form class="form-inline d-flex w-100 align-items-center flex-wrap">
 
 						<div class="col-12 col-xl-2 d-flex justify-content-center align-items-center text-center">
-							<h3 class="m-0 text-primary fs-5">Filtres</h3>
+							<h3 class="m-xl-0 mb-3 text-primary fs-5">Filtres</h3>
 						</div>
 
 						<!-- Dropdown for Category -->
 						<div class="col-12 col-xl-3 px-2 py-2">
 							<div class="dropdown w-100">
-								<button class="btn btn-secondary dropdown-toggle w-100" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+								<button class="btn btn-warning dropdown-toggle w-100" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-expanded="false">
 									Sélectionner la catégorie
 								</button>
 								<ul class="dropdown-menu w-100 p-2" aria-labelledby="categoryDropdown">
@@ -42,9 +42,10 @@
 							</div>
 						</div>
 
+						<!-- Dropdown for Ingredients -->
 						<div class="col-12 col-xl-4 px-2 py-2">
 							<div class="dropdown w-100">
-								<button class="btn btn-secondary dropdown-toggle w-100" type="button" id="ingredientDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+								<button class="btn btn-warning dropdown-toggle w-100" type="button" id="ingredientDropdown" data-bs-toggle="dropdown" aria-expanded="false">
 									Sélectionner les ingrédients
 								</button>
 								<ul class="dropdown-menu w-100 p-2" aria-labelledby="ingredientDropdown">
@@ -56,7 +57,7 @@
 										<input type="checkbox" id="ingredient2" name="ingredients" value="ingredient2" class="me-2">
 										<label for="ingredient2">Ingrédient 2</label>
 									</li>
-									<!-- Ajoutez d'autres options pour vos ingrédients ici -->
+									<!-- Add more sorting options here -->
 								</ul>
 							</div>
 						</div>
@@ -64,7 +65,7 @@
 						<!-- Dropdown for Sorting -->
 						<div class="col-12 col-xl-3 px-2 py-2">
 							<div class="dropdown w-100">
-								<button class="btn btn-secondary dropdown-toggle w-100" type="button" id="sortingDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+								<button class="btn btn-warning dropdown-toggle w-100" type="button" id="sortingDropdown" data-bs-toggle="dropdown" aria-expanded="false">
 									Sélectionner le tri
 								</button>
 								<ul class="dropdown-menu w-100 p-2" aria-labelledby="sortingDropdown">
@@ -102,7 +103,36 @@
 					class="row g-5">
 
 					<!-- Main Section -->
-					<div class="col-xl-8 pb-5">
+					<div
+						class="col-xl-8 pb-5">
+
+						<!-- Pagination -->
+						<div class="d-flex justify-content-center py-4">
+							<ul class="pagination">
+								<li class="page-item disabled">
+									<a class="page-link" href="#">&laquo; Précédent</a>
+								</li>
+								<li class="page-item active">
+									<a class="page-link" href="#">1</a>
+								</li>
+								<li class="page-item">
+									<a class="page-link" href="#">2</a>
+								</li>
+								<li class="page-item">
+									<a class="page-link" href="#">3</a>
+								</li>
+								<li class="page-item">
+									<a class="page-link" href="#">4</a>
+								</li>
+								<li class="page-item">
+									<a class="page-link" href="#">5</a>
+								</li>
+								<li class="page-item">
+									<a class="page-link" href="#">Suivant &raquo;</a>
+								</li>
+							</ul>
+						</div>
+
 						{% include 'article/_list.html.twig' with { articles } %}
 					</div>
 
