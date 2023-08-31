@@ -1,12 +1,12 @@
 {% set article_show = path('article_show', { 'slug': article.slug }) %}
 
 {% import 'macros/image_macros.html.twig' as imageMacros %}
+{% include 'article/show.html.twig' with {'article': article} %}
 
 <article
 	class="col-md-4 px-md-2 px-0 py-0 position-relative">
 
-	{# An "articleMedia" variable is defined to store the media associated with the current article. 
-													    We use the article ID to search for this media in the "mediaForArticles" array. #}
+	{# An "articleMedia" variable is defined to store the media associated with the current article. We use the article ID to search for this media in the "mediaForArticles" array. #}
 	{% set articleMedia = mediaForArticles[article.getId()] %}
 
 	{# We check if articleMedia and its filename are defined. #}
@@ -35,19 +35,18 @@
         <h2 class="fs-4 pt-3">
             {{ article.title }}
         </h2>
-
-        <p>{{ article.featuredText ?: article.content|striptags|slice(0, 120) ~'...' }} <a href="{{ path('article_show', {'slug': article.slug}) }}" class="fs-6 text-uppercase font-weight-bold text-warning">Lire la suite</a></p>
+        <p class="mb-0">{{ article.featuredText ?: first_article.content|striptags|slice(0, 120) ~'...' }}</p>
+        <button type="button" class="text-warning text-decoration-underline p-0 btn" data-bs-toggle="modal" data-bs-target="#articleModal{{ article.id }}">Lire la suite</button>
 
         <!-- Post Meta -->
-        <div class="post-meta text-primary">
-            <small>
+            <small class="post-meta text-primary pt-2 d-flex flex-wrap">
                 {# Date #}
                 <span class="post-meta-date">
                     <i class="fas fa-calendar-days"></i>
                     <span class="post-meta-date-text">{{ article.createdAt|date('d M Y') }}</span>
                 </span>
 
-                <span class="post-meta-separator">|</span>
+                <span class="post-meta-separator px-1">|</span>
 
                 {# Comment #}
                 <span class="post-meta-comment">
@@ -55,7 +54,6 @@
                     <span class="post-meta-comment-text">10</span>
                 </span>
             </small>
-        </div>
 
 	</div>
     

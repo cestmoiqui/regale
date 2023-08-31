@@ -1,5 +1,7 @@
 {% import 'macros/image_macros.html.twig' as imageMacros %}
 
+{% include 'article/show.html.twig' with {'article': articles} %}
+
 <article
 	class="col mb-5 px-md-0 px-4">
 
@@ -9,7 +11,7 @@
 	<!-- Article -->
 	<div class="row g-3">
 
-		<!-- Fist Recipe -->
+		<!-- Last Article -->
 		{# Checks if the "items" array contains at least one element #}
 			{% if articles|length > 0 %}
 			{# Defines a new "first_article" variable and assigns the first element of the "articles" array to it #}
@@ -30,31 +32,30 @@
 						<h2 class="pt-3">
 							{{ first_article.title }}
 						</h2>
-						<p>{{ first_article.featuredText ?: first_article.content|striptags|slice(0, 120) ~'...' }} <a href="{{ path('article_show', {'slug': first_article.slug}) }}" class="fs-6 text-uppercase font-weight-bold text-warning">Lire la suite</a></p>
+						<p class="mb-0">{{ first_article.featuredText ?: first_article.content|striptags|slice(0, 120) ~'...' }}</p>
+						<button type="button" class="text-warning text-decoration-underline p-0 btn" data-bs-toggle="modal" data-bs-target="#articleModal{{ first_article.id }}">Lire la suite</button>
 
 						<!-- Post Meta -->
-						<div class="post-meta text-primary">
-							<small>
-								{# Date #}
-								<span class="post-meta-date">
-									<i class="fas fa-calendar-days"></i>
-									<span class="post-meta-date-text">{{ first_article.createdAt|date('d M Y') }}</span>
-								</span>
-								<span class="post-meta-separator">|</span>
+						<small class="post-meta text-primary pt-2 d-flex">
+							{# Date #}
+							<span class="post-meta-date">
+								<i class="fas fa-calendar-days"></i>
+								<span class="post-meta-date-text">{{ first_article.createdAt|date('d M Y') }}</span>
+							</span>
+							<span class="post-meta-separator px-1">|</span>
 
-								{# Comment #}
-								<span class="post-meta-comment">
-									<i class="fas fa-comment-dots"></i>
-									<span class="post-meta-comment-text">10</span>
-								</span>
-							</small>
-						</div>
+							{# Comment #}
+							<span class="post-meta-comment">
+								<i class="fas fa-comment-dots"></i>
+								<span class="post-meta-comment-text">10</span>
+							</span>
+						</small>
 					</div>
 				</article>
 				
 		{% endif %}
 
-		<!-- Right Articles -->
+		<!-- 3 Articles after the last -->
 		<div class="col-md-6">
 
 			{# Checks if the "items" array contains more than one element #}
@@ -67,30 +68,30 @@
 
 						<a href="{{ article_show }}">{{ imageMacros.display_image(media, 'Description de l\'image', 'img-thumbnail border border-0 p-0 img-fluid object-fit-cover h-100', '180') }}</a>
 
-				<div class="content p-3">
+				<div class="content p-3 d-flex flex-column justify-content-center align-items-start">
 
-					<h2 class="fs-5">
+					<h2 class="fs-5 m-0">
 						{{ article.title }}
 					</h2>
-					<a href="{{ article_show }}" class="fs-6 text-uppercase font-weight-bold text-warning">
-						Lire la suite</a>
-					<!-- Post Meta -->
-					<div class="post-meta text-primary ">
-						<small>
-							{# Date #}
-							<span class="post-meta-date">
-								<i class="fas fa-calendar-days"></i>
-								<span class="post-meta-date-text">{{ article.createdAt|date('d M Y') }}</span>
-							</span>
-							<span class="post-meta-separator">|</span>
+					<button type="button" class="text-warning text-decoration-underline p-0 btn" data-bs-toggle="modal" data-bs-target="#articleModal{{ article.id }}">Lire la suite</button>
 
-							{# Comment #}
-							<span class="post-meta-comment">
-								<i class="fas fa-comment-dots"></i>
-								<span class="post-meta-comment-text">10</span>
-							</span>
-						</small>
-					</div>
+					<!-- Post Meta -->
+					<small
+						class="post-meta text-primary pt-2 d-flex flex-wrap">
+						{# Date #}
+						<span class="post-meta-date">
+							<i class="fas fa-calendar-days"></i>
+							<span class="post-meta-date-text">{{ article.createdAt|date('d M Y') }}</span>
+						</span>
+						<span class="post-meta-separator px-1">|</span>
+
+						{# Comment #}
+						<span class="post-meta-comment">
+							<i class="fas fa-comment-dots"></i>
+							<span class="post-meta-comment-text">10</span>
+						</span>
+					</small>
+
 
 				</div>
 

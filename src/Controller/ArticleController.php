@@ -14,9 +14,7 @@ class ArticleController extends AbstractController
     #[Route('/article/{slug}', name: 'article_show')] // Displays a unique article based on a unique identifier for each article (slug)
     public function show(): Response
     {
-        return $this->render('article/show.html.twig', [
-            'controller_name' => 'ArticleController',
-        ]);
+        return $this->render('article/show.html.twig', []);
     }
 
     #[Route('/articles', name: 'article_all')] // Displays all articles
@@ -38,6 +36,7 @@ class ArticleController extends AbstractController
         return $this->render('article/all.html.twig', [
             'articles' => $articles,
             'mediaForArticles' => $mediaForArticles,
+            'article' => $article,
         ]);
     }
 }

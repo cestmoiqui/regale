@@ -1,20 +1,127 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Hello ArticleController!{% endblock %}
-
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+	<!-- Last Article -->
+	{# Checks if the "items" array contains at least one element #}
+		{% if articles|length > 0 %}
+		{% set first_article = articles[0] %}
+		{# Defines a new "first_article" variable and assigns the first element of the "articles" array to it #}
+			<div class="modal fade" id="articleModal{{ first_article.id }}" tabindex="-1"> <div class="modal-dialog modal-xl">
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/Users/mcpiie/Documents/DEV/symfony/cestmoiqui_regale/src/Controller/ArticleController.php'|file_link(0) }}">src/Controller/ArticleController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/Users/mcpiie/Documents/DEV/symfony/cestmoiqui_regale/templates/article/index.html.twig'|file_link(0) }}">templates/article/index.html.twig</a></code></li>
-    </ul>
-</div>
+				<div class="modal-content container">
+
+					<div class="modal-header align-items-start">
+						<div
+							class="titles-container">
+							<!-- Category Tags Container -->
+							<div
+								class="d-flex flex-wrap">
+								<!-- Individual Category Badges -->
+								<a href="#">
+									<span class="badge bg-warning me-1 mb-1">Catégorie 1</span>
+								</a>
+								<a href="#">
+									<span class="badge bg-warning me-1 mb-1">Catégorie 1</span>
+								</a>
+								<a href="#">
+									<span class="badge bg-warning me-1 mb-1">Catégorie 1</span>
+								</a>
+								<!-- ... -->
+							</div>
+
+							<h1 class="pt-4 modal-title">{{ first_article.title }}</h1>
+						</div>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+					</div>
+
+
+					<div class="modal-body">
+
+						<div
+							class="mb-4">
+							<!-- Post Meta -->
+							<small
+								class="post-meta text-primary pt-2 d-flex flex-wrap">
+								{# Date #}
+								<span class="post-meta-date">
+									<i class="fas fa-calendar-days"></i>
+									{% if first_article.createdAt is defined %}
+										<span class="post-meta-date-text">{{ first_article.createdAt|date('d M Y') }}</span>
+									{% endif %}
+								</span>
+								<span class="post-meta-separator px-1">|</span>
+								{# Comment #}
+								<span class="post-meta-comment">
+									<i class="fas fa-comment-dots"></i>
+									<span class="post-meta-comment-text">10</span>
+								</span>
+							</small>
+
+							<!-- Review -->
+							<small id="star-rating">
+								<span class="fa fa-star text-warning" data-rating="1"></span>
+								<span class="fa fa-star" data-rating="2"></span>
+								<span class="fa fa-star" data-rating="3"></span>
+								<span class="fa fa-star" data-rating="4"></span>
+								<span class="fa fa-star" data-rating="5"></span>
+								<span class="review-number text-primary">(10)</span>
+							</small>
+						</div>
+
+						{{ first_article.content|raw }}
+					</div>
+
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+
+	{% endif %}
+
+	<!-- 3 Articles after the last -->
+	{# Checks if the "items" array contains more than one element #}
+	{% if articles|length > 1 %}
+		{# Loop over a subset of the "items" array, starting with the element at index 1 and taking the next 3 elements #}
+		{% for article in articles|slice(1, 3) %}
+			<div class="modal fade" id="articleModal{{ article.id }}" tabindex="-1">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">{{ article.title }}</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+						</div>
+						<div class="modal-body">
+							{{ article.content }}
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+
+		<!-- When all articles -->
+	{% else %}
+		<div class="modal fade" id="articleModal{{ article.id }}" tabindex="-1">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">{{ article.title }}</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+					</div>
+					<div class="modal-body">
+						{{ article.content }}
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endif %}
 {% endblock %}
