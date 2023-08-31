@@ -87,8 +87,10 @@ class RecipeCrudController extends AbstractCrudController
 
         yield AssociationField::new('categories', 'Catégorie')
             ->setFormTypeOptions([
+                'multiple' => true,
                 'attr' => ['placeholder' => 'Sélectionner une catégorie']
-            ]);
+            ])
+            ->setFormTypeOption('by_reference', false); // Ensures that changes to the collection of linked entities are correctly taken into account by Doctrine
 
         yield DateTimeField::new('created_at', 'Créé le')
             ->hideOnForm();

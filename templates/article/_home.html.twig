@@ -14,33 +14,37 @@
 		<!-- Last Article -->
 		{# Checks if the "items" array contains at least one element #}
 			{% if articles|length > 0 %}
-			{# Defines a new "first_article" variable and assigns the first element of the "articles" array to it #}
-			{% set first_article = articles[0] %}
+			{# Takes the first item in the list if it's not empty #}
+			{% set last_article = articles is not empty ? articles|last : null %}
+			{% set article_show = path('article_show', { 'slug': article.slug }) %}
 
 				<article class="col-md-6 pb-5"> <div class="post-entry-1 position-relative">
 					{{ imageMacros.display_image(media, 'Description de l\'image', 'img-fluid object-fit-cover') }}
 
 						<!-- Category Tags Container -->
+						{% if articleCategories is not empty %}
 						<div class="position-absolute top-0 start-0 m-3 d-flex flex-wrap">
+							{% for category in articleCategories %}
 							<!-- Individual Category Badges -->
-							<a href="#"><span class="badge bg-warning me-1 mb-1">Catégorie 1</span></a>
-							<a href="#"><span class="badge bg-warning me-1 mb-1">Catégorie 1</span></a>
-							<a href="#"><span class="badge bg-warning me-1 mb-1">Catégorie 1</span></a>
-							<!-- ... -->
+							<a href="#"><span class="badge bg-warning me-1 mb-1">{{ category.name }}</span></a>
+							{% endfor %}
 						</div>
+						{% else %}
+   						<p>Aucune catégorie associée à cet article.</p>
+						{% endif %}
 
 						<h2 class="pt-3">
-							{{ first_article.title }}
+							{{ last_article.title }}
 						</h2>
-						<p class="mb-0">{{ first_article.featuredText ?: first_article.content|striptags|slice(0, 120) ~'...' }}</p>
-						<button type="button" class="text-warning text-decoration-underline p-0 btn" data-bs-toggle="modal" data-bs-target="#articleModal{{ first_article.id }}">Lire la suite</button>
+						<p class="mb-0">{{ last_article.featuredText ?: last_article.content|striptags|slice(0, 120) ~'...' }}</p>
+						<button type="button" class="text-warning text-decoration-underline p-0 btn" data-bs-toggle="modal" data-bs-target="#articleModal{{ last_article.id }}">Lire la suite</button>
 
 						<!-- Post Meta -->
 						<small class="post-meta text-primary pt-2 d-flex">
 							{# Date #}
 							<span class="post-meta-date">
 								<i class="fas fa-calendar-days"></i>
-								<span class="post-meta-date-text">{{ first_article.createdAt|date('d M Y') }}</span>
+								<span class="post-meta-date-text">{{ last_article.createdAt|date('d M Y') }}</span>
 							</span>
 							<span class="post-meta-separator px-1">|</span>
 
@@ -58,23 +62,24 @@
 		<!-- 3 Articles after the last -->
 		<div class="col-md-6">
 
-			{# Checks if the "items" array contains more than one element #}
-			{% if articles|length > 1 %}
-				{# Loop over a subset of the "items" array, starting with the element at index 1 and taking the next 3 elements #}
-				{% for article in articles|slice(1, 3) %}
-					{% set article_show = path('article_show', { 'slug': article.slug }) %}
-					
-					<article class="post-entry-2 d-flex bg-body-tertiary mb-3">
+		{# Checks if the "items" array contains more than one element #}
+		{% if articles|length > 0 %}
+			{# Take the 3 items preceding the last one #}
+			{% set three_previous_articles = articles|slice(1, 3)|reverse %}
 
-						<a href="{{ article_show }}">{{ imageMacros.display_image(media, 'Description de l\'image', 'img-thumbnail border border-0 p-0 img-fluid object-fit-cover h-100', '180') }}</a>
+			{# Loop to display each item #}
+			{% for article in three_previous_articles %}
+				{% set article_show = path('article_show', { 'slug': article.slug }) %}
+						
+				<article class="post-entry-2 d-flex bg-body-tertiary mb-3">
+
+					<a href="{{ article_show }}">{{ imageMacros.display_image(media, 'Description de l\'image', 'img-thumbnail border border-0 p-0 img-fluid object-fit-cover h-100', '180') }}</a>
 
 				<div class="content p-3 d-flex flex-column justify-content-center align-items-start">
-
 					<h2 class="fs-5 m-0">
 						{{ article.title }}
 					</h2>
 					<button type="button" class="text-warning text-decoration-underline p-0 btn" data-bs-toggle="modal" data-bs-target="#articleModal{{ article.id }}">Lire la suite</button>
-
 					<!-- Post Meta -->
 					<small
 						class="post-meta text-primary pt-2 d-flex flex-wrap">
@@ -91,8 +96,6 @@
 							<span class="post-meta-comment-text">10</span>
 						</span>
 					</small>
-
-
 				</div>
 
 			</article>
