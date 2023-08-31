@@ -35,13 +35,14 @@ class Article implements TimestampedInterface
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $updatedAt = null;
 
-    #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'articles')]
-    private Collection $categories;
+    #[ORM\ManyToMany(targetEntity: ArticleCategory::class, mappedBy: 'articles')]
+    private Collection $articleCategories;
 
     public function __construct()
     {
-        $this->categories = new ArrayCollection();
+        $this->articleCategories = new ArrayCollection();
     }
+
 
     public function getId(): ?int
     {
@@ -120,28 +121,33 @@ class Article implements TimestampedInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Category>
-     */
-    public function getCategories(): Collection
+    public function __toString(): string
     {
-        return $this->categories;
+        return $this->title; // Use the article's 'title' attribute as a textual representation
     }
 
-    public function addCategory(Category $category): static
+    /**
+     * @return Collection<int, ArticleCategory>
+     */
+    public function getArticleCategories(): Collection
     {
-        if (!$this->categories->contains($category)) {
-            $this->categories->add($category);
-            $category->addArticle($this);
+        return $this->articleCategories;
+    }
+
+    public function addArticleCategory(ArticleCategory $articleCategory): static
+    {
+        if (!$this->articleCategories->contains($articleCategory)) {
+            $this->articleCategories->add($articleCategory);
+            $articleCategory->addArticle($this);
         }
 
         return $this;
     }
 
-    public function removeCategory(Category $category): static
+    public function removeArticleCategory(ArticleCategory $articleCategory): static
     {
-        if ($this->categories->removeElement($category)) {
-            $category->removeArticle($this);
+        if ($this->articleCategories->removeElement($articleCategory)) {
+            $articleCategory->removeArticle($this);
         }
 
         return $this;

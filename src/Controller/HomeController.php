@@ -3,9 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Repository\ArticleCategoryRepository;
 use App\Repository\MediaRepository;
 use App\Repository\ArticleRepository;
-use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function index(EntityManagerInterface $entityManager, ArticleRepository $articleRepo, MediaRepository $mediaRepo, CategoryRepository $categoryRepo): Response
+    public function index(EntityManagerInterface $entityManager, ArticleRepository $articleRepo, MediaRepository $mediaRepo, ArticleCategoryRepository $categoryRepo): Response
     {
         // Use the EntityManager to retrieve the last item created
         $article = $entityManager->getRepository(Article::class)
@@ -26,7 +26,7 @@ class HomeController extends AbstractController
 
         // Get categories related to the article
         if ($article !== null) {
-            $articleCategories = $article->getCategories();
+            $articleCategories = $article->getArticleCategories();
         }
 
         return $this->render('home/index.html.twig', [

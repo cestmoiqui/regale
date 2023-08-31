@@ -4,7 +4,8 @@ namespace App\Controller\Admin;
 
 use App\Entity\Recipe;
 use App\Entity\Article;
-use App\Entity\Category;
+use App\Entity\RecipeCategory;
+use App\Entity\ArticleCategory;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -43,15 +44,13 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::subMenu('Recette', 'fas fa-book')->setSubItems([
             MenuItem::linkToCrud('Toutes les recettes', 'fas fa-swatchbook', Recipe::class),
             MenuItem::linkToCrud('Ajouter', 'fas fa-plus', Recipe::class)->setAction(Crud::PAGE_NEW),
-            MenuItem::linkToCrud('Catégorie', 'fas fa-list', Category::class)
-                ->setQueryParameter('categoryType', 'recipe'),
+            MenuItem::linkToCrud('Catégorie', 'fas fa-list', RecipeCategory::class),
         ]);
 
         yield MenuItem::subMenu('Article', 'fas fa-newspaper')->setSubItems([
             MenuItem::linkToCrud('Tous les articles', 'fas fa-swatchbook', Article::class),
             MenuItem::linkToCrud('Ajouter', 'fas fa-plus', Article::class)->setAction(Crud::PAGE_NEW),
-            MenuItem::linkToCrud('Catégorie', 'fas fa-list', Category::class)
-                ->setQueryParameter('categoryType', 'article'),
+            MenuItem::linkToCrud('Catégorie', 'fas fa-list', ArticleCategory::class),
         ]);
     }
 }

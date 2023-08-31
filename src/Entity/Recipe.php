@@ -41,9 +41,6 @@ class Recipe implements TimestampedInterface
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $updatedAt = null;
 
-    #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'recipes')]
-    private Collection $categories;
-
     #[ORM\ManyToOne]
     private ?Difficulties $difficulty = null;
 
@@ -53,11 +50,14 @@ class Recipe implements TimestampedInterface
     #[ORM\OneToMany(mappedBy: 'recipe', targetEntity: Steps::class, orphanRemoval: true)]
     private Collection $steps;
 
+    #[ORM\ManyToMany(targetEntity: RecipeCategory::class, mappedBy: 'recipes')]
+    private Collection $recipeCategories;
+
     public function __construct()
     {
-        $this->categories = new ArrayCollection();
         $this->recipeIngredients = new ArrayCollection();
         $this->steps = new ArrayCollection();
+        $this->recipeCategories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -161,33 +161,6 @@ class Recipe implements TimestampedInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Category>
-     */
-    public function getCategories(): Collection
-    {
-        return $this->categories;
-    }
-
-    public function addCategory(Category $category): static
-    {
-        if (!$this->categories->contains($category)) {
-            $this->categories->add($category);
-            $category->addRecipe($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCategory(Category $category): static
-    {
-        if ($this->categories->removeElement($category)) {
-            $category->removeRecipe($this);
-        }
-
-        return $this;
-    }
-
     public function getDifficulty(): ?Difficulties
     {
         return $this->difficulty;
@@ -255,6 +228,33 @@ class Recipe implements TimestampedInterface
             if ($step->getRecipe() === $this) {
                 $step->setRecipe(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, RecipeCategory>
+     */
+    public function getRecipeCategories(): Collection
+    {
+        return $this->recipeCategories;
+    }
+
+    public function addRecipeCategory(RecipeCategory $recipeCategory): static
+    {
+        if (!$this->recipeCategories->contains($recipeCategory)) {
+            $this->recipeCategories->add($recipeCategory);
+            $recipeCategory->addRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRecipeCategory(RecipeCategory $recipeCategory): static
+    {
+        if ($this->recipeCategories->removeElement($recipeCategory)) {
+            $recipeCategory->removeRecipe($this);
         }
 
         return $this;

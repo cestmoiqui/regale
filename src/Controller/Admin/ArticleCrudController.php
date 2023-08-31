@@ -49,7 +49,7 @@ class ArticleCrudController extends AbstractCrudController
                 'attr' => ['placeholder' => 'Entrer le texte à mettre en avant de l\'article']
             ]);
 
-        yield AssociationField::new('categories', 'Catégorie')
+        yield AssociationField::new('articleCategories', 'Catégorie')
             ->setFormTypeOptions([
                 'multiple' => true,
                 'attr' => ['placeholder' => 'Sélectionner une catégorie']

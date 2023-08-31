@@ -85,7 +85,7 @@ class RecipeCrudController extends AbstractCrudController
                 ->allowDelete();
         } // display this field only when the user modifies or creates a recipe
 
-        yield AssociationField::new('categories', 'Catégorie')
+        yield AssociationField::new('recipeCategories', 'Catégorie')
             ->setFormTypeOptions([
                 'multiple' => true,
                 'attr' => ['placeholder' => 'Sélectionner une catégorie']

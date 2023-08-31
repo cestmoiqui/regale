@@ -4,8 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Repository\MediaRepository;
-use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\ArticleCategoryRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,7 +19,7 @@ class ArticleController extends AbstractController
     }
 
     #[Route('/articles', name: 'article_all')] // Displays all articles
-    public function all(EntityManagerInterface $entityManager, MediaRepository $mediaRepo, CategoryRepository $categoryRepo): Response
+    public function all(EntityManagerInterface $entityManager, MediaRepository $mediaRepo, ArticleCategoryRepository $categoryRepo): Response
     {
         // Use Doctrine to retrieve all articles from the database
         $articles = $entityManager->getRepository(Article::class)->findAll();
@@ -37,7 +37,7 @@ class ArticleController extends AbstractController
             $mediaForArticles[$article->getId()] = $media;
 
             // Store categories in array using item ID as key
-            $categoriesForArticles[$article->getId()] = $article->getCategories();
+            $categoriesForArticles[$article->getId()] = $article->getArticleCategories();
         }
 
         return $this->render('article/all.html.twig', [

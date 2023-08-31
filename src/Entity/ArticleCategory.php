@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\CategoryRepository;
+use App\Repository\ArticleCategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: CategoryRepository::class)]
-class Category
+#[ORM\Entity(repositoryClass: ArticleCategoryRepository::class)]
+class ArticleCategory
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -24,16 +24,12 @@ class Category
     #[ORM\Column(length: 10)]
     private ?string $color = null;
 
-    #[ORM\ManyToMany(targetEntity: Article::class, inversedBy: 'categories')]
+    #[ORM\ManyToMany(targetEntity: Article::class, inversedBy: 'articleCategories')]
     private Collection $articles;
-
-    #[ORM\ManyToMany(targetEntity: Recipe::class, inversedBy: 'categories')]
-    private Collection $recipes;
 
     public function __construct()
     {
         $this->articles = new ArrayCollection();
-        $this->recipes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -101,32 +97,8 @@ class Category
         return $this;
     }
 
-    /**
-     * @return Collection<int, Recipe>
-     */
-    public function getRecipes(): Collection
-    {
-        return $this->recipes;
-    }
-
-    public function addRecipe(Recipe $recipe): static
-    {
-        if (!$this->recipes->contains($recipe)) {
-            $this->recipes->add($recipe);
-        }
-
-        return $this;
-    }
-
-    public function removeRecipe(Recipe $recipe): static
-    {
-        $this->recipes->removeElement($recipe);
-
-        return $this;
-    }
-
     public function __toString(): string
     {
-        return $this->name;
+        return $this->name; // Use the category's 'name' attribute as a textual representation
     }
 }

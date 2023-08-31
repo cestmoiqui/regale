@@ -33,11 +33,14 @@ class Menu
     #[ORM\ManyToOne]
     private ?Recipe $recipe = null;
 
-    #[ORM\ManyToOne]
-    private ?Category $category = null;
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $link = null;
+
+    #[ORM\ManyToOne]
+    private ?ArticleCategory $articleCategory = null;
+
+    #[ORM\ManyToOne]
+    private ?RecipeCategory $recipeCategory = null;
 
     public function __construct()
     {
@@ -133,18 +136,6 @@ class Menu
         return $this;
     }
 
-    public function getCategory(): ?Category
-    {
-        return $this->category;
-    }
-
-    public function setCategory(?Category $category): static
-    {
-        $this->category = $category;
-
-        return $this;
-    }
-
     public function getLink(): ?string
     {
         return $this->link;
@@ -153,6 +144,30 @@ class Menu
     public function setLink(?string $link): static
     {
         $this->link = $link;
+
+        return $this;
+    }
+
+    public function getArticleCategory(): ?ArticleCategory
+    {
+        return $this->articleCategory;
+    }
+
+    public function setArticleCategory(?ArticleCategory $articleCategory): static
+    {
+        $this->articleCategory = $articleCategory;
+
+        return $this;
+    }
+
+    public function getRecipeCategory(): ?RecipeCategory
+    {
+        return $this->recipeCategory;
+    }
+
+    public function setRecipeCategory(?RecipeCategory $recipeCategory): static
+    {
+        $this->recipeCategory = $recipeCategory;
 
         return $this;
     }
