@@ -4,18 +4,15 @@
 {% include 'article/show.html.twig' with {'article': article} %}
 
 <article
-	class="col-md-4 px-md-2 px-0 py-0 position-relative d-flex flex-wrap">
+	class="col-md-4 px-md-2 px-0 py-0 position-relative d-flex flex-wrap card border-0">
 
 	{# We check if articleMedia and its filename are defined. #}
 	{% if articleMedia is defined and articleMedia.filename is defined %}
-		<a
-			href="{{ path('article_show', {'slug': article.slug}) }}">
-			{# If the conditions are true, a macro is used to display the image associated with the item.#}
-			{{ imageMacros.display_image(articleMedia, 'Description de l\'image', 'img-fluid object-fit-cover') }}
-        </a>
+		{# If the conditions are true, a macro is used to display the image associated with the item.#}
+		{{ imageMacros.display_image(articleMedia, 'Description de l\'image', 'img-fluid object-fit-cover') }}
     {% else %}
         {# Debug: si articleMedia est indéfini ou filename est indéfini #}
-        <img src="https://images.unsplash.com/photo-1556911073-52527ac43761?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" alt="" class=" img-fluid object-fit-cover"  loading="lazy">
+        <img src="https://images.unsplash.com/photo-1556911073-52527ac43761?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" alt="" class="card-img-top"  loading="lazy">
     {% endif %}
 
     <!-- Category Tags Container -->
@@ -27,15 +24,14 @@
         {% endfor %}
     </div>
     {% else %}
-    <p>Aucune catégorie associée à cet article.</p>
     {% endif %}
 		
-    <div class="bg-body-tertiary p-3 d-flex flex-wrap">
+    <div class="bg-body-tertiary p-3 d-flex flex-wrap card-body">
         
-        <h2 class="fs-4 pt-3 w-100">
+        <h2 class="fs-4 pt-3 w-100 card-title text-primary">
             {{ article.title }}
         </h2>
-        <p class="mb-0 w-100">{{ article.featuredText ?: first_article.content|striptags|slice(0, 120) ~'...' }}</p>
+        <p class="mb-0 w-100 card-text">{{ article.featuredText ?: article.content|striptags|slice(0, 120) ~'...' }}</p>
         <button type="button" class="text-warning text-decoration-underline p-0 btn" data-bs-toggle="modal" data-bs-target="#articleModal{{ article.id }}">Lire la suite</button>
 
         <!-- Post Meta -->

@@ -14,6 +14,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class RecipeCrudController extends AbstractCrudController
 {
@@ -44,7 +45,13 @@ class RecipeCrudController extends AbstractCrudController
             ]);
 
         yield SlugField::new('slug')
-            ->setTargetFieldName('title');
+            ->setTargetFieldName('title')
+            ->setFormTypeOption('constraints', [
+                new Assert\Regex([
+                    'pattern' => '/^[a-zA-Z0-9\-_]+$/',
+                    'message' => 'Seuls les caractères alphanumériques, tirets et underscores sont autorisés dans ce champ.'
+                ])
+            ]);
 
         yield TextEditorField::new('content', 'Contenu')
             ->setFormTypeOptions([

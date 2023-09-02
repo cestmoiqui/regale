@@ -19,12 +19,12 @@
 			{% set article_show = path('article_show', { 'slug': article.slug }) %}
 
 				<article class="col-md-6 pb-5"> <div class="post-entry-1 position-relative">
-					{{ imageMacros.display_image(media, 'Description de l\'image', 'img-fluid object-fit-cover') }}
+					{{ imageMacros.display_image(mediaArticle, 'Description de l\'image', 'img-fluid object-fit-cover') }}
 
 						<!-- Category Tags Container -->
-						{% if articleCategories is not empty %}
+						{% if articleCategory is not empty %}
 						<div class="position-absolute top-0 start-0 m-3 d-flex flex-wrap">
-							{% for category in articleCategories %}
+							{% for category in articleCategory %}
 							<!-- Individual Category Badges -->
 							<a href="#"><span class="badge bg-warning me-1 mb-1">{{ category.name }}</span></a>
 							{% endfor %}
@@ -73,7 +73,7 @@
 						
 				<article class="post-entry-2 d-flex bg-body-tertiary mb-3">
 
-					<a href="{{ article_show }}">{{ imageMacros.display_image(media, 'Description de l\'image', 'img-thumbnail border border-0 p-0 img-fluid object-fit-cover h-100', '180') }}</a>
+					<a href="{{ article_show }}">{{ imageMacros.display_image(mediaArticle, 'Description de l\'image', 'img-thumbnail border border-0 p-0 img-fluid object-fit-cover h-100', '180') }}</a>
 
 				<div class="content p-3 d-flex flex-column justify-content-center align-items-start">
 					<h2 class="fs-5 m-0">

@@ -19,10 +19,12 @@ class ArticleController extends AbstractController
     }
 
     #[Route('/articles', name: 'article_all')] // Displays all articles
-    public function all(EntityManagerInterface $entityManager, MediaRepository $mediaRepo, ArticleCategoryRepository $categoryRepo): Response
+    public function all(EntityManagerInterface $entityManager, MediaRepository $mediaRepo, ArticleCategoryRepository $articleCategoryRepo): Response
     {
+
         // Use Doctrine to retrieve all articles from the database
-        $articles = $entityManager->getRepository(Article::class)->findAll();
+        $articles = $entityManager->getRepository(Article::class)
+            ->findBy([], ['createdAt' => 'DESC']);
 
         // Initialize an array to store the media associated with each item
         $mediaForArticles = [];
@@ -44,7 +46,7 @@ class ArticleController extends AbstractController
             'articles' => $articles,
             'mediaForArticles' => $mediaForArticles,
             'categoriesForArticles' => $categoriesForArticles, // Nouveau tableau contenant les catégories
-            'categories' => $categoryRepo->findAll(),
+            'articleCategories' => $articleCategoryRepo->findAll(),
             'isAllArticlesPage' => true,
         ]);
     }

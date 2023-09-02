@@ -9,15 +9,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ArticleCategoryController extends AbstractController
 {
-    #[Route('/article/category/{slug}', name: 'category_show')]
-    public function show(?ArticleCategory $category): Response
+    #[Route('/article/category/{slug}', name: 'article_category_show')]
+    public function show(?ArticleCategory $articleCategory): Response
     {
-        if (!$category) {
+        if (!$articleCategory) {
             return $this->redirectToRoute('app_home');
         }
 
-        return $this->render('category/show.html.twig', [
-            'category' => $category
+        return $this->render('article_category/show.html.twig', [
+            'aricleCategory' => $articleCategory,
         ]);
     }
 }
