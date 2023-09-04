@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Tag;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Model\TimestampedInterface;
@@ -38,9 +39,14 @@ class Article implements TimestampedInterface
     #[ORM\ManyToMany(targetEntity: ArticleCategory::class, mappedBy: 'articles')]
     private Collection $articleCategories;
 
+    #[ORM\ManyToMany(targetEntity: Tag::class, mappedBy: 'articles', cascade: ["persist"])]
+    private Collection $tags;
+
+
     public function __construct()
     {
         $this->articleCategories = new ArrayCollection();
+        $this->tags = new ArrayCollection();
     }
 
 
@@ -148,6 +154,54 @@ class Article implements TimestampedInterface
     {
         if ($this->articleCategories->removeElement($articleCategory)) {
             $articleCategory->removeArticle($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Tag>
+     */
+    public function getTags(): Collection
+    {
+        return $this->tags;
+    }
+
+    public function addTag(Tag $tag): static
+    {
+        if (!$this->tags->contains($tag)) {
+            $this->tags->add($tag);
+            $tag->addArticle($this);
+        }
+        return $this;
+    }
+
+    public function removeTag(Tag $tag): static
+    {
+        if ($this->tags->contains($tag)) {
+            $this->tags->removeElement($tag);
+        }
+        return $this;
+    }
+
+    private $tagsAsString;
+
+    public function getTagsAsString(): ?string
+    {
+        return implode(', ', $this->tags->map(function ($tag) {
+            return $tag->getName();
+        })->toArray());
+    }
+
+    public function setTagsAsString(string $tagsAsString): self
+    {
+        $tagNames = array_map('trim', explode(',', $tagsAsString));
+
+        $this->tags->clear(); // Remove previous tags
+        foreach ($tagNames as $tagName) {
+            $tag = new Tag(); // You may want to fetch existing tags from DB instead of always creating new ones
+            $tag->setName($tagName);
+            $this->addTag($tag);
         }
 
         return $this;

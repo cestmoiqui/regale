@@ -3,18 +3,19 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Recipe;
-use App\Form\StepsType;
+use App\Form\Type\StepsType;
+use CestMoiQui\TagBundle\Form\Type\TagsType;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TimeField;
+use Symfony\Component\Validator\Constraints as Assert;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use Symfony\Component\Validator\Constraints as Assert;
 
 class RecipeCrudController extends AbstractCrudController
 {
@@ -98,6 +99,13 @@ class RecipeCrudController extends AbstractCrudController
                 'attr' => ['placeholder' => 'Sélectionner une catégorie']
             ])
             ->setFormTypeOption('by_reference', false); // Ensures that changes to the collection of linked entities are correctly taken into account by Doctrine
+
+        yield TextField::new('tags', 'Tags')  // Remplacer 'tags' par le nom de la propriété associée à vos tags dans l'entité Article
+            ->setFormType(TagsType::class)  // Utiliser votre TagsType
+            ->setFormTypeOptions([
+                'label' => 'Tag',
+                'attr' => ['placeholder' => 'Entrer des tags séparés par des virgules']
+            ]);
 
         yield DateTimeField::new('created_at', 'Créé le')
             ->hideOnForm();

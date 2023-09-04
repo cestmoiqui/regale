@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\Type;
 
 use App\Entity\Steps;
-use App\Form\RecipeIngredientType;
+use App\Form\Type\RecipeIngredientType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;

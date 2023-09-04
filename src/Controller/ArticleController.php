@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
-use App\Entity\Article;
+use App\Data\ArticleSearchData;
+use App\Form\ArticleSearchForm;
 use App\Repository\MediaRepository;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\ArticleRepository;
 use App\Repository\ArticleCategoryRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,12 +21,29 @@ class ArticleController extends AbstractController
     }
 
     #[Route('/articles', name: 'article_all')] // Displays all articles
-    public function all(EntityManagerInterface $entityManager, MediaRepository $mediaRepo, ArticleCategoryRepository $articleCategoryRepo): Response
+    public function all(MediaRepository $mediaRepo, ArticleCategoryRepository $articleCategoryRepo, ArticleRepository $articleRepo, Request $request): Response
     {
-
         // Use Doctrine to retrieve all articles from the database
-        $articles = $entityManager->getRepository(Article::class)
-            ->findBy([], ['createdAt' => 'DESC']);
+        $articles = $articleRepo->findBy([], ['createdAt' => 'DESC']);
+
+
+        // Use Doctrine to
+        $articleData = new ArticleSearchData();
+        $articleForm = $this->createForm(ArticleSearchForm::class, $articleData);
+        $articleForm->handleRequest($request);
+
+        $articleSearch = null;
+        $selectedSort = null;
+        if ($articleForm->isSubmitted() && $articleForm->isValid()) {
+            $formData = $articleForm->getData();
+            $selectedSort = $formData->sort[0];
+
+            // Utiliser les données pour effectuer une recherche
+            $articleSearch = $articleRepo->findSearch($formData);
+        } else {
+            // Le formulaire n'a pas été soumis ou est invalide, effectuer une autre action si nécessaire
+        }
+
 
         // Initialize an array to store the media associated with each item
         $mediaForArticles = [];
@@ -44,6 +63,9 @@ class ArticleController extends AbstractController
 
         return $this->render('article/all.html.twig', [
             'articles' => $articles,
+            'articleSearch' => $articleSearch,
+            'selectedSort' => $selectedSort,
+            'articleForm' => $articleForm->createView(),
             'mediaForArticles' => $mediaForArticles,
             'categoriesForArticles' => $categoriesForArticles, // Nouveau tableau contenant les catégories
             'articleCategories' => $articleCategoryRepo->findAll(),

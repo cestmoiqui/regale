@@ -5,7 +5,7 @@
 		{% set articleMedia = mediaForArticles[article.id] %}
 		{# An "articleCategories" variable is defined to store the categorie associated with the current article. We use the article ID to search for this media in the "categoriesForArticles" array. #}
 		{% set articleCategories = categoriesForArticles[article.id] %}
-		{% include 'article/_item.html.twig' with { article } %}
+		{% include 'article/_item.html.twig' with { 'article': article } %}
 	{% endfor %}
 
 </div>

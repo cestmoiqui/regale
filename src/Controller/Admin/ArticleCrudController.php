@@ -2,18 +2,30 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Tag;
 use App\Entity\Article;
+use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Symfony\Component\Validator\Constraints as Assert;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Event\AfterEntityUpdatedEvent;
+use EasyCorp\Bundle\EasyAdminBundle\Event\AfterEntityPersistedEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use Symfony\Component\Validator\Constraints as Assert;
 
 class ArticleCrudController extends AbstractCrudController
 {
+
+    private $entityManager;
+
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
     public static function getEntityFqcn(): string
     {
         return Article::class;
@@ -63,10 +75,67 @@ class ArticleCrudController extends AbstractCrudController
             ])
             ->setFormTypeOption('by_reference', false); // Ensures that changes to the collection of linked entities are correctly taken into account by Doctrine
 
+        yield TextField::new('tagsAsString', 'Tag')
+            ->setFormTypeOptions([
+                'attr' => ['placeholder' => 'Entrer les tags de l\'article (ex: tag1, tag2, tag3)']
+            ]);
+
         yield DateTimeField::new('created_at', 'Créé le')
             ->hideOnForm();
 
         yield DateTimeField::new('updated_at', 'Modifié le')
             ->hideOnForm();
+    }
+
+    private function updateTags(Article $article)
+    {
+        $tagNames = explode(',', $article->getTagsAsString());
+
+        foreach ($tagNames as $tagName) {
+            $trimmedTagName = trim($tagName);
+
+            // Recherchez le tag existant ou créez-en un nouveau
+            $tag = $this->entityManager->getRepository(Tag::class)
+                ->findOneByName($trimmedTagName) ?? new Tag();
+
+            $tag->setName($trimmedTagName);
+
+            // Si le tag est nouveau, persistez-le
+            if (null === $tag->getId()) {
+                $this->entityManager->persist($tag);
+            }
+
+            if (!$article->getTags()->contains($tag)) {
+                $article->addTag($tag);
+            }
+        }
+        // Important : n'oubliez pas de flush si vous voulez enregistrer immédiatement les modifications.
+        // $this->entityManager->flush();
+    }
+
+    public static function getSubscribedEvents()
+    {
+        return [
+            AfterEntityPersistedEvent::class => ['handleAfterEntityPersisted'],
+            AfterEntityUpdatedEvent::class => ['handleAfterEntityUpdated'],
+        ];
+    }
+
+    public function handleAfterEntityPersisted(AfterEntityPersistedEvent $event)
+    {
+        $instance = $event->getEntityInstance();
+        if ($instance instanceof Article) {
+            $this->updateTags($instance);
+            $this->entityManager->flush();
+        }
+    }
+
+    public function handleAfterEntityUpdated(AfterEntityUpdatedEvent $event)
+    {
+        $instance = $event->getEntityInstance();
+        if ($instance instanceof Article) {
+            $this->updateTags($instance);
+            $this->entityManager->flush();
+        }
     }
 }
