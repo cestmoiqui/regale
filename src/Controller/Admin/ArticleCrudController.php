@@ -2,8 +2,8 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Tag;
 use App\Entity\Article;
+use App\Service\ArticleTagUpdater;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
@@ -12,23 +12,29 @@ use Symfony\Component\Validator\Constraints as Assert;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
-use EasyCorp\Bundle\EasyAdminBundle\Event\AfterEntityUpdatedEvent;
-use EasyCorp\Bundle\EasyAdminBundle\Event\AfterEntityPersistedEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class ArticleCrudController extends AbstractCrudController
 {
+    private $tagUpdater;
 
-    private $entityManager;
-
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(ArticleTagUpdater $tagUpdater)
     {
-        $this->entityManager = $entityManager;
+        $this->tagUpdater = $tagUpdater;
     }
 
     public static function getEntityFqcn(): string
     {
         return Article::class;
+    }
+
+    public function updateEntity(EntityManagerInterface $entityManager, $entity): void
+    {
+        parent::updateEntity($entityManager, $entity);
+        if ($entity instanceof Article) {
+            $this->tagUpdater->updateTags($entity);
+            dump($entity);
+        }
     }
 
     public function configureCrud(Crud $crud): Crud
@@ -85,57 +91,5 @@ class ArticleCrudController extends AbstractCrudController
 
         yield DateTimeField::new('updated_at', 'Modifié le')
             ->hideOnForm();
-    }
-
-    private function updateTags(Article $article)
-    {
-        $tagNames = explode(',', $article->getTagsAsString());
-
-        foreach ($tagNames as $tagName) {
-            $trimmedTagName = trim($tagName);
-
-            // Recherchez le tag existant ou créez-en un nouveau
-            $tag = $this->entityManager->getRepository(Tag::class)
-                ->findOneByName($trimmedTagName) ?? new Tag();
-
-            $tag->setName($trimmedTagName);
-
-            // Si le tag est nouveau, persistez-le
-            if (null === $tag->getId()) {
-                $this->entityManager->persist($tag);
-            }
-
-            if (!$article->getTags()->contains($tag)) {
-                $article->addTag($tag);
-            }
-        }
-        // Important : n'oubliez pas de flush si vous voulez enregistrer immédiatement les modifications.
-        // $this->entityManager->flush();
-    }
-
-    public static function getSubscribedEvents()
-    {
-        return [
-            AfterEntityPersistedEvent::class => ['handleAfterEntityPersisted'],
-            AfterEntityUpdatedEvent::class => ['handleAfterEntityUpdated'],
-        ];
-    }
-
-    public function handleAfterEntityPersisted(AfterEntityPersistedEvent $event)
-    {
-        $instance = $event->getEntityInstance();
-        if ($instance instanceof Article) {
-            $this->updateTags($instance);
-            $this->entityManager->flush();
-        }
-    }
-
-    public function handleAfterEntityUpdated(AfterEntityUpdatedEvent $event)
-    {
-        $instance = $event->getEntityInstance();
-        if ($instance instanceof Article) {
-            $this->updateTags($instance);
-            $this->entityManager->flush();
-        }
     }
 }

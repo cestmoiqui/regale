@@ -2,8 +2,10 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Tag;
 use App\Entity\Recipe;
 use App\Form\Type\StepsType;
+use Doctrine\ORM\EntityManagerInterface;
 use CestMoiQui\TagBundle\Form\Type\TagsType;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
@@ -15,10 +17,19 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Event\AfterEntityUpdatedEvent;
+use EasyCorp\Bundle\EasyAdminBundle\Event\AfterEntityPersistedEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class RecipeCrudController extends AbstractCrudController
 {
+    private $entityManager;
+
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
     public static function getEntityFqcn(): string
     {
         return Recipe::class;
@@ -100,11 +111,9 @@ class RecipeCrudController extends AbstractCrudController
             ])
             ->setFormTypeOption('by_reference', false); // Ensures that changes to the collection of linked entities are correctly taken into account by Doctrine
 
-        yield TextField::new('tags', 'Tags')  // Remplacer 'tags' par le nom de la propriété associée à vos tags dans l'entité Article
-            ->setFormType(TagsType::class)  // Utiliser votre TagsType
+        yield TextField::new('tagsAsString', 'Tag')
             ->setFormTypeOptions([
-                'label' => 'Tag',
-                'attr' => ['placeholder' => 'Entrer des tags séparés par des virgules']
+                'attr' => ['placeholder' => 'Entrer les tags de l\'article (ex: tag1, tag2, tag3)']
             ]);
 
         yield DateTimeField::new('created_at', 'Créé le')
@@ -112,5 +121,50 @@ class RecipeCrudController extends AbstractCrudController
 
         yield DateTimeField::new('updated_at', 'Modifié le')
             ->hideOnForm();
+    }
+
+    private function updateTags(Recipe $article)
+    {
+        $tagNames = array_map('trim', explode(',', $article->getTagsAsString()));
+        $existingTags = $article->getTags();
+
+        foreach ($tagNames as $tagName) {
+            $tag = $this->entityManager->getRepository(Tag::class)->findOneByName($tagName);
+
+            if (!$tag) {
+                $tag = (new Tag())->setName($tagName);
+                $this->entityManager->persist($tag);
+            }
+
+            if (!$existingTags->contains($tag)) {
+                $article->addTag($tag);
+            }
+        }
+    }
+
+    public static function getSubscribedEvents()
+    {
+        return [
+            AfterEntityPersistedEvent::class => ['handleAfterEntityPersisted'],
+            AfterEntityUpdatedEvent::class => ['handleAfterEntityUpdated'],
+        ];
+    }
+
+    public function handleAfterEntityPersisted(AfterEntityPersistedEvent $event)
+    {
+        $instance = $event->getEntityInstance();
+        if ($instance instanceof Recipe) {
+            $this->updateTags($instance);
+            $this->entityManager->flush();
+        }
+    }
+
+    public function handleAfterEntityUpdated(AfterEntityUpdatedEvent $event)
+    {
+        $instance = $event->getEntityInstance();
+        if ($instance instanceof Recipe) {
+            $this->updateTags($instance);
+            $this->entityManager->flush();
+        }
     }
 }

@@ -170,7 +170,7 @@ class Article implements TimestampedInterface
     public function addTag(Tag $tag): static
     {
         if (!$this->tags->contains($tag)) {
-            $this->tags->add($tag);
+            $this->tags[] = $tag;
             $tag->addArticle($this);
         }
         return $this;

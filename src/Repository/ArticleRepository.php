@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Data\ArticleSearchData;
 use App\Entity\Article;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -25,16 +26,59 @@ class ArticleRepository extends ServiceEntityRepository
      * Retrieve articles from the database based on search criteria
      *@return Article[]
      */
-    public function findSearch(): array
+    public function findSearch(ArticleSearchData $articleSearchData): array
     {
-        $queryBuilder = $this->createQueryBuilder('a');
+        $query = $this
+            ->createQueryBuilder('a')
+            ->select('c', 'a')
+            ->join('a.articleCategories', 'c')
+            ->leftJoin('a.tags', 'tag');
 
-        $queryBuilder
-            ->select('a')
-            ->orderBy('a.createdAt', 'DESC');
+        // Filter by category
+        if (!empty($articleSearchData->categories)) {
+            $categoryIds = array_map(function ($category) {
+                return $category->getId(); // Suppose que l'entité Category a une méthode getId()
+            }, $articleSearchData->categories);
 
-        $query = $queryBuilder->getQuery();
+            $query = $query
+                ->andWhere('c.id IN (:categories)')
+                ->setParameter('categories', $categoryIds);
+        }
 
-        return $query->getResult();
+        // Filter by tags
+        if (!empty($articleSearchData->tags)) {
+            $tagIds = array_map(function ($tag) {
+                return $tag->getId(); // Suppose que l'entité Tag a une méthode getId()
+            }, $articleSearchData->tags);
+
+            $query = $query
+                ->andWhere('tag.id IN (:tags)')
+                ->setParameter('tags', $tagIds);
+        }
+
+
+        // Sorting
+        if (!empty($articleSearchData->sort)) {
+            switch ($articleSearchData->sort) {
+                case 'best':
+                    $query = $query->orderBy('a.rating', 'DESC'); // Assuming you have a "rating" field in your Article entity
+                    break;
+                case 'oldest':
+                    $query = $query->orderBy('a.createdAt', 'ASC'); // Assuming you have a "createdAt" datetime field in your Article entity
+                    break;
+                case 'latest':
+                    $query = $query->orderBy('a.createdAt', 'DESC');
+                    break;
+            }
+        }
+
+        // Search by article name or content
+        if (!empty($articleSearchData->q)) {
+            $query = $query
+                ->andWhere('a.title LIKE :q')
+                ->setParameter('q', "%{$articleSearchData->q}%");
+        }
+
+        return $query->getQuery()->getResult();
     }
 }
