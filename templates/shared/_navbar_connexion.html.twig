@@ -1,64 +1,49 @@
 <nav
-	class="navbar navbar-expand-lg bg-primary pb-2" data-bs-theme="dark">
+	class="navbar navbar-expand-lg bg-primary d-flex align-items-center pb-2" data-bs-theme="dark">
 
 	<!-- Container wrapper -->
-	<div class="container">
-
-		<h1>
-			<a class="navbar-brand" href="{{ path('app_home') }}"><img src="{{ asset('images/logo-cmqr-variante-blanc.png') }}" alt="C'est moi qui régale" width="180"></a>
-		</h1>
-
+	<div class="container d-flex">
+		{% if app.request.attributes.get('_route') != 'app_home' %}
+			<h1>
+				<a class="navbar-brand" href="{{ path('app_home') }}"><img src="{{ asset('images/logo-cmqr-variante-blanc.png') }}" alt="C'est moi qui régale" width="180"></a>
+			</h1>
+		{% endif %}
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu-items" aria-controls="menu-items" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 
+		<!-- Collapsible wrapper -->
 		<div
-			class="collapse navbar-collapse" id="menu-items">
-			<!-- Links -->
-			<ul class="navbar-nav nav-pills">
-				<li class="nav-item d-lg-none">
-					<a class="nav-link" href="#">S'inscrire</a>
-				</li>
-				<li class="nav-item d-lg-none">
-					<a class="nav-link" href="#">Se connecter</a>
-				</li>
-			</ul>
-		</div>
-
-		<!-- Right elements -->
-		<div
-			class="align-items-center d-none d-lg-flex">
+			class="collapse navbar-collapse justify-content-end align-items-center" id="menu-items">
 
 			<!-- Links -->
-			<ul class="navbar-nav nav-pills">
-				<li class="nav-item">
-					<a class="nav-link" href="#">S'inscrire</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">Se connecter</a>
-				</li>
-			</ul>
-
-			<!-- Avatar -->
-			<div class="dropdown">
-				<a class="dropdown-toggle d-flex align-items-center hidden-arrow" href="#" id="navbarDropdownMenuAvatar" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
-					<img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle" height="25" alt="Black and White Portrait of a Man" loading="lazy"/>
-				</a>
-				<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
-					<li>
-						<a class="dropdown-item" href="#">My profile</a>
+			<ul class="navbar-nav">
+				{% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+					<li class="nav-item ">
+						<a class="nav-link" href="{{ path('app_register') }}">S'inscrire</a>
 					</li>
-					<li>
-						<a class="dropdown-item" href="#">Settings</a>
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('app_login') }}">Se connecter</a>
 					</li>
-					<li>
-						<a class="dropdown-item" href="#">Logout</a>
-					</li>
+				{% else %}
+					<div class="dropdown">
+						<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+							{{ app.user.username|capitalize }}
+						</button>
+						<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+							<li>
+								<a class="dropdown-item" href="{{ path('app_home') }}">Accueil</a>
+							</li>
+							<li>
+								<a class="dropdown-item" href="{{ path('app_profile', { username: app.user.username }) }}">Mon profil</a>
+							</li>
+							<li>
+								<a class="dropdown-item" href="{{ path('app_logout') }}">Se déconnecter</a>
+							</li>
+						</ul>
+					{% endif %}
 				</ul>
+
 			</div>
-
 		</div>
-		<!-- Right elements -->
-
-	</div>
-</nav>
+	</nav>

@@ -21,7 +21,7 @@ class ArticleSearchForm extends AbstractType
                 'attr' => [
                     'placeholder' => 'Rechercher un article',
                     'class' => 'form-control me-2',
-                    'aria-label' => 'Recherhcher un article',
+                    'aria-label' => 'Rechercher un article',
                 ],
                 'required' => false,
             ])

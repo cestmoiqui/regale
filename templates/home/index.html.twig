@@ -8,20 +8,25 @@
 
 <nav
 	class="navbar navbar-expand-lg bg-light d-flex align-items-center pb-2 pt-3" data-bs-theme="light">
+
 	<!-- Container wrapper -->
 	<div class="container d-lg-flex flex-lg-column">
-		<a class="navbar-brand d-lg-none pb-0" href="{{ path('app_home') }}"><img src="{{ asset('images/logo-cmqr-variante.png') }}" alt="C'est moi qui régale" width="180"></a>
+
+		<h1>
+			<a class="navbar-brand d-lg-none pb-0" href="{{ path('app_home') }}"><img src="{{ asset('images/logo-cmqr-variante.png') }}" alt="C'est moi qui régale" width="180"></a>
+		</h1>
 		<h1>
 			<a class="navbar-brand text-center d-none d-lg-block p-2 m-0" href="#"><img src="{{ asset('images/logo-cmqr.png') }}" alt="C'est moi qui régale" width="180"></a>
 		</h1>
+
 		<!-- Toggle button -->
-		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHome" aria-controls="navbarHome" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
 
 		<!-- Collapsible wrapper -->
 		<div
-			class="collapse navbar-collapse justify-content-center align-items-center" id="navbarColor03">
+			class="collapse navbar-collapse justify-content-center align-items-center ps-5 pt-3" id="navbarHome">
 
 			<!-- Links -->
 			<ul class="navbar-nav">
@@ -33,7 +38,7 @@
 					<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Recettes</a>
 
 					<!-- Dropdown menu -->
-					<div class="dropdown-menu megamenu border-0">
+					<div class="dropdown-menu megamenu mt-2">
 						<div class="container-fluid">
 							<div class="row">
 								<div class="col-md-4">
@@ -52,7 +57,7 @@
 					<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Le Mag'</a>
 
 					<!-- Dropdown menu -->
-					<div class="dropdown-menu megamenu border-0">
+					<div class="dropdown-menu megamenu mt-2">
 						<div class="container-fluid">
 							<div class="row">
 								<div class="col-md-4">
@@ -338,15 +343,15 @@
 					<div class="col-12 p-0">
 						<article class="bg-warning col d-lg-flex">
 							<!-- Video content -->
-							<div class="content p-5 pb-3">
-								<span class="badge bg-primary mb-3">Catégorie</span>
-								<h2><a href="">Titre de la publication</a></h2>
-								<p class="mb-3 text-light">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate vero obcaecati natus adipisci necessitatibus eius, enim vel sit ad reiciendis.</p>
-								<a class="btn btn-primary btn-sm">Voir d'autre recette</a>
+							<div class="content p-5 w-75">
+								<span class="badge bg-primary mb-3">Youtube</span>
+								<h2><a href="">Une Épopée Culinaire sans Frontières !</a></h2>
+								<p class="mb-3 text-light">Découvrez un voyage gustatif sans précédent avec 'C'est Moi Qui Régale' ! Rejoignez-nous dans cette épopée culinaire sans frontières, où chaque recette raconte une histoire et chaque plat vous transporte vers une région différente du globe.</p>
+								<a href="#" class="btn btn-primary btn-sm" alt="Bouton page Youtube">Voir d'autre recette</a>
 							</div>
 
 							<!-- Video -->
-							<div class="my-5 me-5 ratio ratio-1x1"><iframe src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0" title="Vidéo de présentaion de C'est moi Qui Régale" loading="lazy" allowfullscreen></iframe></div>
+							<div class="my-5 me-5 ratio ratio-16x9"><iframe src="{{ asset('images/intro-video.mp4') }}" title="Vidéo de présentaion de C'est moi Qui Régale" loading="lazy" allowfullscreen></iframe></div>
 					</article>
 				</div>
 

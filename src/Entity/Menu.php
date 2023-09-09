@@ -171,4 +171,9 @@ class Menu
 
         return $this;
     }
+
+    public function __toString(): string
+    {
+        return $this->name; // Use the tag's 'name' attribute as a textual representation
+    }
 }
