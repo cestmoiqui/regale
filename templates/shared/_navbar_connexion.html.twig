@@ -3,11 +3,11 @@
 
 	<!-- Container wrapper -->
 	<div class="container d-flex">
-		{% if app.request.attributes.get('_route') != 'app_home' %}
-			<h1>
-				<a class="navbar-brand" href="{{ path('app_home') }}"><img src="{{ asset('images/logo-cmqr-variante-blanc.png') }}" alt="C'est moi qui régale" width="180"></a>
-			</h1>
-		{% endif %}
+
+		<h1>
+			<a class="navbar-brand ps-5" href="{{ path('app_home') }}"><img src="{{ asset('images/icon-cmqr.png') }}" alt="C'est moi qui régale" width="80"></a>
+		</h1>
+
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu-items" aria-controls="menu-items" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -17,33 +17,37 @@
 			class="collapse navbar-collapse justify-content-end align-items-center" id="menu-items">
 
 			<!-- Links -->
-			<ul class="navbar-nav">
-				{% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+			<ul class="navbar-nav align-items-center">
+				{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+					{% if is_granted('ROLE_ADMIN') %}
+						<!-- Liens spécifiques aux administrateurs -->
+						<li class="nav-item">
+							<a class="nav-link" href="{{ path('admin') }}">Tableau de bord</a>
+						</li>
+					{% endif %}
+					<div class="dropdown">
+						<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+							{{ app.user.username|default('Invité') }}
+						</button>
+						<!-- Dropdown menu -->
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+							<a class="dropdown-item" href="{{ path('app_home') }}">Accueil</a>
+							<a class="dropdown-item" href="{{ path('app_profile', { username: app.user.username|default('Invité') }) }}">Mon profil</a>
+							<a class="dropdown-item" href="{{ path('app_logout') }}">Se déconnecter</a>
+						</div>
+					</div>
+				{% else %}
+					<!-- Liens pour les visiteurs non connectés -->
 					<li class="nav-item ">
 						<a class="nav-link" href="{{ path('app_register') }}">S'inscrire</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="{{ path('app_login') }}">Se connecter</a>
 					</li>
-				{% else %}
-					<div class="dropdown">
-						<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-							{{ app.user.username|capitalize }}
-						</button>
-						<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-							<li>
-								<a class="dropdown-item" href="{{ path('app_home') }}">Accueil</a>
-							</li>
-							<li>
-								<a class="dropdown-item" href="{{ path('app_profile', { username: app.user.username }) }}">Mon profil</a>
-							</li>
-							<li>
-								<a class="dropdown-item" href="{{ path('app_logout') }}">Se déconnecter</a>
-							</li>
-						</ul>
-					{% endif %}
-				</ul>
+				{% endif %}
 
-			</div>
+			</ul>
+
 		</div>
-	</nav>
+	</div>
+</nav>

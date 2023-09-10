@@ -11,15 +11,25 @@
 		{{ form_errors(registrationForm) }}
 
 		{{ form_start(registrationForm) }}
+
 		<div class="mb-4">
 			{{ form_row(registrationForm.username) }}
 		</div>
-		<div class="my-2">
-			{{ form_row(registrationForm.plainPassword) }}
+
+		<div class="mb-4">
+			<label>{{ registrationForm.plainPassword.first.vars.label }}</label>
+			{{ form_widget(registrationForm.plainPassword.first, {'attr': {'class': 'form-control my-2'}}) }}
 		</div>
+
+		<div class="mb-4">
+			<label>{{ registrationForm.plainPassword.second.vars.label }}</label>
+			{{ form_widget(registrationForm.plainPassword.second, {'attr': {'class': 'form-control my-2'}}) }}
+		</div>
+
 		<div class="mb-4">
 			{{ form_row(registrationForm.agreeTerms) }}
 		</div>
+
 		<button type="submit" class="btn btn-primary">s'inscrire</button>
 		{{ form_end(registrationForm) }}
 

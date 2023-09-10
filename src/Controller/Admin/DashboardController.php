@@ -2,11 +2,12 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Menu;
+use App\Entity\User;
 use App\Entity\Recipe;
 use App\Entity\Article;
 use App\Entity\RecipeCategory;
 use App\Entity\ArticleCategory;
-use App\Entity\Menu;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -23,24 +24,32 @@ class DashboardController extends AbstractDashboardController
     ) {
     }
 
+    #[Route('/admin/home', name: 'admin_home')]
+    public function home(): Response
+    {
+
+        return $this->render('admin/home.html.twig');
+    }
+
     #[Route('/admin', name: 'admin')]
     public function index(): Response
     {
-        $url = $this->adminUrlGenerator->setController(RecipeCrudController::class)
-            ->generateUrl();
-
-        return $this->redirect($url);
+        return $this->redirectToRoute('admin_home');
     }
 
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Une cuisine connectée');
+            ->setTitle('Une cuisine connectée')
+            ->setFaviconPath('images/icon-cmqr.png');
     }
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToDashboard('Tableau de bord', 'fa fa-home');
+        yield MenuItem::subMenu('Utilisateur', 'fa fa-users')->setSubItems([
+            MenuItem::linkToCrud('Tous les utilisateurs', 'fas fa-swatchbook', User::class),
+            MenuItem::linkToCrud('Ajouter', 'fas fa-plus', User::class)->setAction(Crud::PAGE_NEW),
+        ]);
 
         yield MenuItem::subMenu('Recette', 'fas fa-book')->setSubItems([
             MenuItem::linkToCrud('Toutes les recettes', 'fas fa-swatchbook', Recipe::class),

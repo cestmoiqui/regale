@@ -1,0 +1,68 @@
+
+
+.btn-outline-warning {
+    border-color: $warning !important;
+
+    &:hover, 
+    &:focus {
+        border: none !important;
+    }
+}
+
+a {
+    text-decoration: none !important;
+    transition: color 0.3s ease, background-color 0.3s ease;
+
+
+    &:hover,
+    &:focus,
+    &:active {
+        text-decoration: none !important;
+        color: #ff9900;
+        opacity: 0.6;
+    }
+
+    &::before,
+    &::after {
+        text-decoration: none !important;
+    }
+}
+
+button {
+    transition: color 0.6s ease, background-color 0.6s ease !important;
+
+    &:hover,
+    &:focus,
+    &:active {
+        opacity: 0.8;
+    }
+}
+
+
+@font-face {
+    font-family: 'Recoleta';
+    src: url('../../fonts/RecoletaAlt-Regular.woff2') format('woff2'),
+        url('../../fonts/RecoletaAlt-Regular.woff') format('woff') !important;
+    font-weight: normal !important;
+    font-style: normal !important;
+}
+
+.recoleta {
+    font-family: 'Recoleta', sans-serif !important;
+}
+
+.hidden {
+    opacity: 0;
+    transition: opacity 0.3s ease-out; // Transition douce de l'opacité
+}
+
+.sticky-container {
+    height: 2000px; // Une grande hauteur pour permettre le défilement
+}
+
+.sticky-header {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}

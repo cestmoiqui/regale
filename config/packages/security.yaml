@@ -19,21 +19,18 @@ security:
       lazy: true
       provider: app_user_provider
 
-      # You might have form_login & custom authenticator here, just as an example
       form_login:
         login_path: login
         check_path: login
         enable_csrf: true
+        default_target_path: "/" # This will redirect to homepage after login
 
-      # Here is how you set your custom authenticator
       custom_authenticator: App\Security\AppAuthenticator
-
-      # Set entry_point
       entry_point: App\Security\AppAuthenticator
 
       logout:
         path: app_logout
-        target: "/"
+        target: "/" # This will redirect to homepage after logout
 
   # Access control settings
   access_control:

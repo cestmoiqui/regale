@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Tag;
 use App\Entity\Recipe;
 use App\Entity\Article;
 use App\Repository\MediaRepository;
@@ -50,6 +51,8 @@ class HomeController extends AbstractController
             $mediaRecipe = $mediaRepo->findOneBy(['mediaOwnerId' => $recipe->getId()]);
         }
 
+        $tags = $entityManager->getRepository(Tag::class)->findAll();
+
         return $this->render('home/index.html.twig', [
             'articles' => $articleRepo->findAll(),
             'mediaArticle' => $mediaArticle,
@@ -62,6 +65,8 @@ class HomeController extends AbstractController
             'recipeCategories' => $recipeCategoryRepo->findAll(),
             'recipeCategory' => $recipeCategory,
             'recipe' => $recipe,
+            'is_homepage' => true,
+            'tags' => $tags
         ]);
     }
 }

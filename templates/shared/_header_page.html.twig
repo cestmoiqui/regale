@@ -6,12 +6,12 @@
 
 	<!-- Menu Page-->
 	<nav
-		class="navbar navbar-expand-lg w-100 pb-2 pt-4" data-bs-theme="light">
+		class="navbar navbar-expand-lg w-100 pb-2 pt-4" data-bs-theme="dark">
 
 		<!-- Container wrapper -->
-		<div class="container d-flex border-bottom position-relative z-2">
+		<div class="container d-flex border-bottom border-light position-relative z-2">
 			<h1>
-				<a class="navbar-brand p-2 m-0" href="{{ path('app_home') }}"><img src="{{ asset('images/logo-cmqr-variante-blanc.png') }}" alt="C'est moi qui régale" width="180"></a>
+				<a class="navbar-brand p-2 m-0" href="{{ path('app_home') }}"><img src="{{ asset('images/logo-cmqr-variante-blanc.png') }}" alt="C'est moi qui régale" width="160"></a>
 			</h1>
 			<!-- Toggle button -->
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,10 +35,10 @@
 							<div class="container-fluid">
 								<div class="row">
 									<div class="col-md-4">
-										<a class="dropdown-item" href="#">Catégorie</a>
-										<a class="dropdown-item" href="#">Catégorie</a>
-										<a class="dropdown-item" href="#">Catégorie</a>
-										<a class="dropdown-item" href="#">Catégorie</a>
+										{% for recipeCategory in recipeCategories %}
+											<a href="#" class="dropdown-item">
+												{{ recipeCategory.name }}</a>
+										{% endfor %}
 									</div>
 								</div>
 							</div>
@@ -54,10 +54,10 @@
 							<div class="container-fluid">
 								<div class="row">
 									<div class="col-md-4">
-										<a class="dropdown-item" href="#">Catégorie</a>
-										<a class="dropdown-item" href="#">Catégorie</a>
-										<a class="dropdown-item" href="#">Catégorie</a>
-										<a class="dropdown-item" href="#">Catégorie</a>
+										{% for articleCategory in articleCategories %}
+											<a href="#" class="dropdown-item">
+												{{ articleCategory.name }}</a>
+										{% endfor %}
 									</div>
 								</div>
 							</div>
@@ -82,15 +82,12 @@
 
 	<!-- Titre -->
 	<div class="position-relative py-5 z-1">
-		<h2 class="text-light">Votre Titre Ici</h2>
+		<h2 class="text-light recoleta fs-1 text-capitalize">Le Mag'</h2>
 		<ol class="breadcrumb justify-content-center">
 			<li class="breadcrumb-item">
-				<a href="#">Home</a>
+				<a href="{{ path('app_home') }}">Accueil</a>
 			</li>
-			<li class="breadcrumb-item">
-				<a href="#">Library</a>
-			</li>
-			<li class="breadcrumb-item active">Data</li>
+			<li class="breadcrumb-item active">Le Mag'</li>
 		</ol>
 	</div>
 

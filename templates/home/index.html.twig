@@ -6,86 +6,6 @@
 {% endblock %}
 {% block body %}
 
-<nav
-	class="navbar navbar-expand-lg bg-light d-flex align-items-center pb-2 pt-3" data-bs-theme="light">
-
-	<!-- Container wrapper -->
-	<div class="container d-lg-flex flex-lg-column">
-
-		<h1>
-			<a class="navbar-brand d-lg-none pb-0" href="{{ path('app_home') }}"><img src="{{ asset('images/logo-cmqr-variante.png') }}" alt="C'est moi qui régale" width="180"></a>
-		</h1>
-		<h1>
-			<a class="navbar-brand text-center d-none d-lg-block p-2 m-0" href="#"><img src="{{ asset('images/logo-cmqr.png') }}" alt="C'est moi qui régale" width="180"></a>
-		</h1>
-
-		<!-- Toggle button -->
-		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHome" aria-controls="navbarHome" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-
-		<!-- Collapsible wrapper -->
-		<div
-			class="collapse navbar-collapse justify-content-center align-items-center ps-5 pt-3" id="navbarHome">
-
-			<!-- Links -->
-			<ul class="navbar-nav">
-				<li class="nav-item">
-					<a class="nav-link" href="#">Accueil</a>
-				</li>
-
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Recettes</a>
-
-					<!-- Dropdown menu -->
-					<div class="dropdown-menu megamenu mt-2">
-						<div class="container-fluid">
-							<div class="row">
-								<div class="col-md-4">
-									<a class="dropdown-item" href="#">Catégorie</a>
-									<a class="dropdown-item" href="#">Catégorie</a>
-									<a class="dropdown-item" href="#">Catégorie</a>
-									<a class="dropdown-item" href="#">Catégorie</a>
-								</div>
-							</div>
-						</div>
-					</div>
-
-				</li>
-
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Le Mag'</a>
-
-					<!-- Dropdown menu -->
-					<div class="dropdown-menu megamenu mt-2">
-						<div class="container-fluid">
-							<div class="row">
-								<div class="col-md-4">
-									<a class="dropdown-item" href="#">Catégorie</a>
-									<a class="dropdown-item" href="#">Catégorie</a>
-									<a class="dropdown-item" href="#">Catégorie</a>
-									<a class="dropdown-item" href="#">Catégorie</a>
-								</div>
-							</div>
-						</div>
-					</div>
-
-				</li>
-
-				<li class="nav-item">
-					<a class="nav-link" href="#">Trin'k</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">À propos</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">Contact</a>
-				</li>
-			</ul>
-		</div>
-	</div>
-</nav>
-
 <main
 	class="container my-5 p-0">
 
@@ -155,7 +75,7 @@
 					<!-- Article Category Section -->
 					<div class="col-12 p-0">
 						<section class="bg-body-tertiary py-4 col mb-5">
-							<h2 class="category-title text-center mt-4">De nouvelles découvertes</h2>
+							<h2 class="category-title text-center mt-4 recoleta fs-1 text-capitalize">De nouvelles découvertes</h2>
 							<!-- Grid row -->
 							<nav>
 								<ul class="row m-0 ps-0 d-flex justify-content-center">
@@ -323,7 +243,7 @@
 					<!-- Recipe Category Section -->
 					<div class="col-12 p-0">
 						<section class="bg-body-tertiary py-4 col mb-5">
-							<h2 class="category-title text-center mt-4">Selon vos goûts</h2>
+							<h2 class="category-title text-center mt-4 recoleta fs-1 text-capitalize">Selon vos goûts</h2>
 							<!-- Grid row -->
 							<nav>
 								<ul class="row m-0 ps-0 d-flex justify-content-center">
@@ -344,10 +264,10 @@
 						<article class="bg-warning col d-lg-flex">
 							<!-- Video content -->
 							<div class="content p-5 w-75">
-								<span class="badge bg-primary mb-3">Youtube</span>
-								<h2><a href="">Une Épopée Culinaire sans Frontières !</a></h2>
+								<span class="badge bg-primary mb-3">Sans frontières</span>
+								<h2 class="recoleta fs-1 text-capitalize">Une Épopée Culinaire sans Frontières !</h2>
 								<p class="mb-3 text-light">Découvrez un voyage gustatif sans précédent avec 'C'est Moi Qui Régale' ! Rejoignez-nous dans cette épopée culinaire sans frontières, où chaque recette raconte une histoire et chaque plat vous transporte vers une région différente du globe.</p>
-								<a href="#" class="btn btn-primary btn-sm" alt="Bouton page Youtube">Voir d'autre recette</a>
+								<a href="https://www.youtube.com/channel/UCrnRw1MN9eSVOxIkt5-R-ZA" class="btn btn-primary btn-sm" alt="Bouton page Youtube" target="_blank">Voir d'autre recette</a>
 							</div>
 
 							<!-- Video -->
@@ -358,7 +278,7 @@
 				<!-- Trin'k Presentation Section -->
 				<div class="col-12 p-0">
 					<section class="text-center col my-5 py-4 px-lg-0 px-4 border-top border-bottom">
-						<h2>Trin'k or Treat :<br/><span class="text-warning">Le bon choix, au bon moment</span>
+						<h2><span class="recoleta fs-1 text-capitalize">Trin'k or Treat</span><br/><span class="text-warning fs-4">Le bon choix, au bon moment</span>
 						</h2>
 						<p>Que vous dirigiez un bar, un café ou un restaurant, Trin'k transforme l'expérience de vos clients en un moment inoubliable. Avec Trin'k, rendez la sélection de boissons aussi simple qu'amusante!</p>
 						<a href="#" class="btn btn-primary">Tenter l'expérience</a>

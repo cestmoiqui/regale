@@ -2,10 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Recipe;
 use App\Data\ArticleSearchData;
 use App\Form\ArticleSearchForm;
 use App\Repository\MediaRepository;
 use App\Repository\ArticleRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\RecipeCategoryRepository;
 use App\Repository\ArticleCategoryRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,7 +24,7 @@ class ArticleController extends AbstractController
     }
 
     #[Route('/articles', name: 'article_all')] // Displays all articles
-    public function all(MediaRepository $mediaRepo, ArticleCategoryRepository $articleCategoryRepo, ArticleRepository $articleRepo, Request $request): Response
+    public function all(EntityManagerInterface $entityManager, MediaRepository $mediaRepo, ArticleCategoryRepository $articleCategoryRepo, ArticleRepository $articleRepo, RecipeCategoryRepository $recipeCategoryRepo, Request $request): Response
     {
         $articleData = new ArticleSearchData();
         $articleForm = $this->createForm(ArticleSearchForm::class, $articleData);
@@ -46,13 +49,29 @@ class ArticleController extends AbstractController
             $categoriesForArticles[$article->getId()] = $article->getArticleCategories();
         }
 
+        // Use the EntityManager to retrieve the last item created
+        $recipe = $entityManager->getRepository(Recipe::class)
+            // sorting items by date of creation ('createdAt') in descending order
+            ->findOneBy([], ['createdAt' => 'DESC']);
+
+        $recipeCategory = null;
+        $mediaRecipe = null;
+
+        if ($recipe !== null) {
+            // Get categories related to the recipes
+            $recipeCategory = $recipe->getRecipeCategories();
+            // Use MediaRepository to find media associated with the current recipe
+            $mediaRecipe = $mediaRepo->findOneBy(['mediaOwnerId' => $recipe->getId()]);
+        }
+
         return $this->render('article/all.html.twig', [
             'articles' => $articles,
-            'articleForm' => $articleForm->createView(), // Assurez-vous d'utiliser createView() pour passer le formulaire à Twig.
+            'articleForm' => $articleForm,
             'mediaForArticles' => $mediaForArticles,
             'categoriesForArticles' => $categoriesForArticles,
             'articleCategories' => $articleCategoryRepo->findAll(),
             'isAllArticlesPage' => true,
+            'recipeCategories' => $recipeCategoryRepo->findAll(),
         ]);
     }
 

@@ -14,27 +14,23 @@
 		<img src="https://images.unsplash.com/photo-1556911073-52527ac43761?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" class="rounded-circle mb-3 object-fit-cover" alt="Home image" width="100" height="100">
 		<div class="bio-body">
 			<h3>C'est moi qui régale</h3>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Exercitationem facilis sunt repellendus excepturi beatae porro debitis voluptate nulla quo veniam fuga sit molestias minus.
+			<p>Des recettes traditionnelles aux créations innovantes, nous explorons les saveurs du monde entier avec une équipe de passionnés de cuisine. Plongez dans des paysages gustatifs exquis, découvrez les techniques et les ingrédients uniques de chaque culture.
 			</p>
 			<a href="#" class="btn btn-warning btn-sm">Notre concept</a>
 			<div class="social d-flex justify-content-center pt-3">
-				<a href="#" class="p-2">
+				<a href="mailto:marieceline.pedurand@gmail.com" class="p-2">
 					<i class="fas fa-envelope"></i>
 				</a>
-				<a href="#" class="p-2">
-					<i class="fa-brands fa-youtube"></i>
+				<a href="https://www.youtube.com/channel/UCrnRw1MN9eSVOxIkt5-R-ZA" class="p-2" target="_blank">
+					<i class=" fa-brands fa-youtube"></i>
 				</a>
-				<a href="#" class="p-2">
-					<i class="fa-brands fa-instagram"></i>
+				<a href="https://instagram.com/cmoiqui_regale?igshid=NzZlODBkYWE4Ng==" class="p-2" target="_blank">
+					<i class=" fa-brands fa-instagram"></i>
 				</a>
 			</div>
 		</div>
-
-	</div>
-
-	<!-- Section Popular -->
-	<div class="sidebar-box pt-5">
-		<h3 class="pb-2 mb-4 border-bottom">Le Top des publications</h3>
+	</div><!-- Section Popular --><div class="sidebar-box pt-5">
+		<h3 class="pb-2 mb-4 border-bottom recoleta fs-3 text-capitalize">Le Top des publications</h3>
 
 		<div class="post-entry-sidebar">
 			<ul
@@ -75,46 +71,34 @@
 
 			</ul>
 		</div>
-
-	</div>
-
-	<!-- Section Category -->
-	<div class="sidebar-box pt-5">
-		<h3 class="pb-2 mb-4 border-bottom">Les plus dégustées</h3>
+	</div><!-- Section Category --><div class="sidebar-box pt-5">
+		<h3 class="pb-2 mb-4 border-bottom recoleta fs-3 text-capitalize">Les plus dégustées</h3>
 
 		<div class="categories">
 			<ul class="list-group list-group-flush">
-				<li class="list-group-item d-flex justify-content-between align-items-center">Categorie
-					<span class="badge bg-primary rounded-pill">14</span>
-				</li>
-				<li class="list-group-item d-flex justify-content-between align-items-center">Categorie
-					<span class="badge bg-primary rounded-pill">14</span>
-				</li>
-				<li class="list-group-item d-flex justify-content-between align-items-center">Categorie
-					<span class="badge bg-primary rounded-pill">14</span>
-				</li>
+				{% if recipeCategories is defined %}
+					{% for recipecategory in recipeCategories|slice(0, 3) %}
+						<li class="list-group-item d-flex justify-content-between align-items-center">{{ recipecategory.name }}
+							<span class="badge bg-primary rounded-pill">{{ recipecategory.recipes|length }}</span>
+						</li>
+					{% endfor %}
+				{% else %}
+					<p>Pas de catégories disponibles.</p>
+				{% endif %}
 			</ul>
 		</div>
-
-	</div>
-
-	<!-- Section Tags -->
-	<div class="sidebar-box pt-5">
-		<h3 class="pb-2 mb-4 border-bottom">Tags</h3>
+	</div><!-- Section Tags --><div class="sidebar-box pt-5">
+		<h3 class="pb-2 mb-4 border-bottom recoleta fs-3 text-capitalize">Tags</h3>
 
 		<div class="tags">
-			<span class="badge bg-warning">#Tag</span>
-			<span class="badge bg-warning">#Tag</span>
-			<span class="badge bg-warning">#Tag</span>
-			<span class="badge bg-warning">#Tag</span>
-			<span class="badge bg-warning">#Tag</span>
-			<span class="badge bg-warning">#Tag</span>
-			<span class="badge bg-warning">#Tag</span>
-			<span class="badge bg-warning">#Tag</span>
-			<span class="badge bg-warning">#Tag</span>
-			<span class="badge bg-warning">#Tag</span>
-			<span class="badge bg-warning">#Tag</span>
+			{% if tags is defined %}
+				{% for tag in tags|slice(0, 15) %}
+					<span class="badge bg-warning">#
+						{{ tag.name }}</span>
+				{% endfor %}
+			{% else %}
+				<p>Pas de tags disponibles.</p>
+			{% endif %}
 		</div>
 	</div>
-
 </div>
