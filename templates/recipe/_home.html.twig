@@ -1,0 +1,107 @@
+{% import 'macros/image_macros.html.twig' as imageMacros %}
+
+{% include 'recipe/show.html.twig' with {'recipe': recipes} %}
+
+<article
+	class="col mb-5 px-md-0 px-4">
+
+	<!-- Title Section -->
+	<h2 class="pb-2 mb-4 border-bottom recoleta fs-1 text-capitalize">Les Recettes de Saisons</h2>
+
+	<!-- Recipe -->
+	<div class="row g-3">
+
+		<!-- Last Recipe -->
+		{# Checks if the "items" array contains at least one element #}
+			{% if recipes|length > 0 %}
+			{# Takes the first item in the list if it's not empty #}
+			{% set last_recipe = recipes is not empty ? recipes|last : null %}
+			{% set recipe_show = path('recipe_show', { 'slug': recipe.slug }) %}
+
+				<article class="col-md-6 pb-5"> <div class="post-entry-1 position-relative">
+					{{ imageMacros.display_image(mediaRecipe, 'Description de l\'image', 'img-fluid object-fit-cover') }}
+
+						<!-- Category Tags Container -->
+						{% if recipeCategory is not empty %}
+						<div class="position-absolute top-0 start-0 m-3 d-flex flex-wrap">
+							{% for category in recipeCategory %}
+							<!-- Individual Category Badges -->
+							<a href="#"><span class="badge bg-warning me-1 mb-1">{{ category.name }}</span></a>
+							{% endfor %}
+						</div>
+						{% else %}
+   						<p>Aucune catégorie associée à cette recette.</p>
+						{% endif %}
+
+						<h2 class="pt-3 fs-3">
+							{{ last_recipe.title }}
+						</h2>
+						<p class="mb-0">{{ last_recipe.featuredText ?: last_recipe.content|striptags|slice(0, 120) ~'...' }}</p>
+						<button type="button" class="text-warning text-decoration-underline p-0 btn" data-bs-toggle="modal" data-bs-target="#recipeModal{{ last_recipe.id }}">Lire la suite</button>
+
+						<!-- Post Meta -->
+						<small class="post-meta text-primary pt-2 d-flex">
+							{# Date #}
+							<span class="post-meta-date">
+								<i class="fas fa-calendar-days"></i>
+								<span class="post-meta-date-text">{{ last_recipe.createdAt|date('d M Y') }}</span>
+							</span>
+							<span class="post-meta-separator px-1">|</span>
+
+							{# Comment #}
+							<span class="post-meta-comment">
+								<i class="fas fa-comment-dots"></i>
+								<span class="post-meta-comment-text">10</span>
+							</span>
+						</small>
+					</div>
+				</article>
+				
+		{% endif %}
+
+		<!-- 3 Recipes after the last -->
+		<div class="col-md-6">
+
+		{# Checks if the "items" array contains more than one element #}
+		{% if recipes|length > 0 %}
+			{# Take the 3 items preceding the last one #}
+			{% set three_previous_recipes = recipes|slice(0, 3)|reverse %}
+
+			{# Loop to display each item #}
+			{% for recipe in three_previous_recipes %}
+				{% set recipe_show = path('recipes_show', { 'slug': recipe.slug }) %}
+						
+				<article class="post-entry-2 d-flex bg-body-tertiary mb-3">
+
+					<button type="button" class="border-0 p-0" data-bs-toggle="modal" data-bs-target="#recipeModal{{ recipe.id }}">{{ imageMacros.display_image(mediaRecipe, 'Description de l\'image', 'img-thumbnail border border-0 p-0 img-fluid object-fit-cover h-100', '180') }}</button>
+
+				<div class="content p-3 d-flex flex-column justify-content-center align-items-start w-75">
+					<h2 class="fs-5 m-0">
+						{{ recipe.title }}
+					</h2>
+					<button type="button" class="text-warning text-decoration-underline p-0 btn" data-bs-toggle="modal" data-bs-target="#recipeModal{{ recipe.id }}">Lire la suite</button>
+					<!-- Post Meta -->
+					<small
+						class="post-meta text-primary pt-2 d-flex flex-wrap">
+						{# Date #}
+						<span class="post-meta-date">
+							<i class="fas fa-calendar-days"></i>
+							<span class="post-meta-date-text">{{ recipe.createdAt|date('d M Y') }}</span>
+						</span>
+						<span class="post-meta-separator px-1">|</span>
+
+						{# Comment #}
+						<span class="post-meta-comment">
+							<i class="fas fa-comment-dots"></i>
+							<span class="post-meta-comment-text">10</span>
+						</span>
+					</small>
+				</div>
+
+			</article>
+		{% endfor %}
+	{% endif %}
+
+	<a href="{{ path('recipe_all') }}" class="btn btn-outline-warning d-grid m-0 border border-2 border-warning">Voir toutes nos recettes</a>
+
+</div></div></article>

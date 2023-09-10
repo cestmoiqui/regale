@@ -60,11 +60,12 @@ class HomeController extends AbstractController
             'articleCategory' => $articleCategory,
             'article' => $article,
             'isAllArticlesPage' => false,
-            'recipe' => $recipeRepo->findAll(),
+            'recipes' => $recipeRepo->findAll(),
             'mediaRecipe' => $mediaRecipe,
             'recipeCategories' => $recipeCategoryRepo->findAll(),
             'recipeCategory' => $recipeCategory,
             'recipe' => $recipe,
+            'isAllRecipesPage' => false,
             'is_homepage' => true,
             'tags' => $tags
         ]);

@@ -178,6 +178,11 @@ class Recipe implements TimestampedInterface
         return $this;
     }
 
+    public function __toString(): string
+    {
+        return $this->title; // Use the recipe's 'title' attribute as a textual representation
+    }
+
     /**
      * @return Collection<int, RecipeIngredient>
      */

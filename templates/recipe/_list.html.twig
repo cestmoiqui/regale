@@ -1,0 +1,11 @@
+<div class="row g-3 mt-1 mb-4">
+
+	{% for recipe in recipes %}
+		{# An "recipeMedia" variable is defined to store the media associated with the current recipe. We use the recipe ID to search for this media in the "mediaForRecipes" array. #}
+		{% set recipeMedia = mediaForRecipes[recipe.id] %}
+		{# An "recipeCategories" variable is defined to store the categorie associated with the current recipe. We use the recipe ID to search for this media in the "categoriesForRecipes" array. #}
+		{% set recipeCategories = categoriesForRecipes[recipe.id] %}
+		{% include 'recipe/_item.html.twig' with { 'recipe': recipe } %}
+	{% endfor %}
+
+</div>

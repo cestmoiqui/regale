@@ -2,12 +2,14 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Difficulties;
 use App\Entity\Tag;
 use App\Entity\Recipe;
 use App\Form\Type\StepsType;
 use Doctrine\ORM\EntityManagerInterface;
 use CestMoiQui\TagBundle\Form\Type\TagsType;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TimeField;
@@ -84,9 +86,13 @@ class RecipeCrudController extends AbstractCrudController
             }); // This method takes a callback function as argument, which receives the field value as parameter.
 
         yield AssociationField::new('difficulty', 'Difficulté')
+            ->setFormType(EntityType::class)
             ->setFormTypeOptions([
+                'class' => Difficulties::class,
+                'choice_label' => 'name',
                 'attr' => ['placeholder' => 'Sélectionner un niveau de difficulté']
             ]);
+
 
         yield IntegerField::new('yield_quantity', 'Portion')
             ->setFormTypeOptions([

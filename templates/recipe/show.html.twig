@@ -1,20 +1,232 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Hello RecipeController!{% endblock %}
-
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+	<!-- Last Recipe -->
+	{# Checks if the "items" array contains at least one element #}
+		{% if recipes|length > 0 %}
+		{% set last_recipe = recipes is not empty ? recipes|last : null %}
+		{# Defines a new "first_recipe" variable and assigns the first element of the "recipes" array to it #}
+			<div class="modal fade" id="recipeModal{{ last_recipe.id }}" tabindex="-1"> <div class="modal-dialog modal-xl">
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/Users/mcpiie/Documents/DEV/symfony/cestmoiqui_regale/src/Controller/RecipeController.php'|file_link(0) }}">src/Controller/RecipeController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/Users/mcpiie/Documents/DEV/symfony/cestmoiqui_regale/templates/recipe/index.html.twig'|file_link(0) }}">templates/recipe/index.html.twig</a></code></li>
-    </ul>
-</div>
+				<div class="modal-content container">
+
+					<div class="modal-header align-items-start pb-0">
+						<div
+							class="titles-container">
+							<!-- Category Tags Container -->
+							{% if recipeCategories is not empty %}
+								<div class="d-flex flex-wrap">
+									{% for category in recipeCategories %}
+										<!-- Individual Category Badges -->
+										<a href="#">
+											<span class="badge bg-warning me-1 mb-1">{{ category.name }}</span>
+										</a>
+									{% endfor %}
+								</div>
+							{% else %}
+								<p>Aucune catégorie associée à cet recipe.</p>
+							{% endif %}
+
+							<h1 class="pt-4 modal-title">{{ last_recipe.title }}</h1>
+						</div>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+					</div>
+
+					<div class="modal-body">
+
+						<div
+							class="mb-4">
+							<!-- Post Meta -->
+							<small
+								class="post-meta text-primary pt-2 d-flex flex-wrap">
+								{# Date #}
+								<span class="post-meta-date">
+									<i class="fas fa-calendar-days"></i>
+									{% if last_recipe.createdAt is defined %}
+										<span class="post-meta-date-text">{{ last_recipe.createdAt|date('d M Y') }}</span>
+									{% endif %}
+								</span>
+								<span class="post-meta-separator px-1">|</span>
+								{# Comment #}
+								<span class="post-meta-comment">
+									<i class="fas fa-comment-dots"></i>
+									<span class="post-meta-comment-text">10</span>
+								</span>
+							</small>
+
+							<!-- Review -->
+							<small id="star-rating">
+								<span class="fa fa-star text-warning" data-rating="1"></span>
+								<span class="fa fa-star" data-rating="2"></span>
+								<span class="fa fa-star" data-rating="3"></span>
+								<span class="fa fa-star" data-rating="4"></span>
+								<span class="fa fa-star" data-rating="5"></span>
+								<span class="review-number text-primary">(10)</span>
+							</small>
+						</div>
+
+						{{ last_recipe.content|raw }}
+					</div>
+
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+
+	{% endif %}
+
+	{% if isAllRecipesPage and recipes|length > 0 %}
+		<div class="modal fade" id="recipeModal{{ recipe.id }}" tabindex="-1">
+			<div class="modal-dialog modal-xl">
+
+				<div class="modal-content container">
+
+					<div class="modal-header align-items-start pb-0">
+						<div
+							class="titles-container">
+							<!-- Category Tags Container -->
+							{% if recipeCategories is not empty %}
+								<div class="d-flex flex-wrap">
+									{% for category in recipeCategories %}
+										<!-- Individual Category Badges -->
+										<a href="#">
+											<span class="badge bg-warning me-1 mb-1">{{ category.name }}</span>
+										</a>
+									{% endfor %}
+								</div>
+							{% else %}
+								<p>Aucune catégorie associée à cet recipe.</p>
+							{% endif %}
+
+							<h1 class="pt-4 modal-title">{{ recipe.title }}</h1>
+						</div>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+					</div>
+
+					<div class="modal-body">
+
+						<div
+							class="mb-4">
+							<!-- Post Meta -->
+							<small
+								class="post-meta text-primary pt-2 d-flex flex-wrap">
+								{# Date #}
+								<span class="post-meta-date">
+									<i class="fas fa-calendar-days"></i>
+									{% if recipe.createdAt is defined %}
+										<span class="post-meta-date-text">{{ recipe.createdAt|date('d M Y') }}</span>
+									{% endif %}
+								</span>
+								<span class="post-meta-separator px-1">|</span>
+								{# Comment #}
+								<span class="post-meta-comment">
+									<i class="fas fa-comment-dots"></i>
+									<span class="post-meta-comment-text">10</span>
+								</span>
+							</small>
+
+							<!-- Review -->
+							<small id="star-rating">
+								<span class="fa fa-star text-warning" data-rating="1"></span>
+								<span class="fa fa-star" data-rating="2"></span>
+								<span class="fa fa-star" data-rating="3"></span>
+								<span class="fa fa-star" data-rating="4"></span>
+								<span class="fa fa-star" data-rating="5"></span>
+								<span class="review-number text-primary">(10)</span>
+							</small>
+						</div>
+
+						{{ recipe.content|raw }}
+					</div>
+
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	{% else %}
+		<!-- 3 Recipes after the last -->
+		{# Loop over a subset of the "items" array, starting with the element at index 1 and taking the next 3 elements #}
+			{% for recipe in recipes|slice(0, 3)|reverse %}
+				<div class="modal fade" id="recipeModal{{ recipe.id }}" tabindex="-1"> <div class="modal-dialog modal-xl">
+
+					<div class="modal-content container">
+
+						<div class="modal-header align-items-start pb-0">
+							<div
+								class="titles-container">
+								<!-- Category Tags Container -->
+								{% if recipeCategories is not empty %}
+									<div class="d-flex flex-wrap">
+										{% for category in recipeCategories %}
+											<!-- Individual Category Badges -->
+											<a href="#">
+												<span class="badge bg-warning me-1 mb-1">{{ category.name }}</span>
+											</a>
+										{% endfor %}
+									</div>
+								{% else %}
+									<p>Aucune catégorie associée à cet recipe.</p>
+								{% endif %}
+
+								<h1 class="pt-4 modal-title">{{ recipe.title }}</h1>
+							</div>
+							<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+						</div>
+
+						<div class="modal-body">
+
+							<div
+								class="mb-4">
+								<!-- Post Meta -->
+								<small
+									class="post-meta text-primary pt-2 d-flex flex-wrap">
+									{# Date #}
+									<span class="post-meta-date">
+										<i class="fas fa-calendar-days"></i>
+										{% if recipe.createdAt is defined %}
+											<span class="post-meta-date-text">{{ recipe.createdAt|date('d M Y') }}</span>
+										{% endif %}
+									</span>
+									<span class="post-meta-separator px-1">|</span>
+									{# Comment #}
+									<span class="post-meta-comment">
+										<i class="fas fa-comment-dots"></i>
+										<span class="post-meta-comment-text">10</span>
+									</span>
+								</small>
+
+								<!-- Review -->
+								<small id="star-rating">
+									<span class="fa fa-star text-warning" data-rating="1"></span>
+									<span class="fa fa-star" data-rating="2"></span>
+									<span class="fa fa-star" data-rating="3"></span>
+									<span class="fa fa-star" data-rating="4"></span>
+									<span class="fa fa-star" data-rating="5"></span>
+									<span class="review-number text-primary">(10)</span>
+								</small>
+							</div>
+
+							{{ recipe.content|raw }}
+						</div>
+
+
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+		{% endfor %}
+	{% endif %}
 {% endblock %}
