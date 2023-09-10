@@ -81,38 +81,150 @@
 
 	{% if isAllArticlesPage and articles|length > 0 %}
 		<div class="modal fade" id="articleModal{{ article.id }}" tabindex="-1">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title">{{ article.title }}</h5>
+			<div class="modal-dialog modal-xl">
+
+				<div class="modal-content container">
+
+					<div class="modal-header align-items-start pb-0">
+						<div
+							class="titles-container">
+							<!-- Category Tags Container -->
+							{% if articleCategories is not empty %}
+								<div class="d-flex flex-wrap">
+									{% for category in articleCategories %}
+										<!-- Individual Category Badges -->
+										<a href="#">
+											<span class="badge bg-warning me-1 mb-1">{{ category.name }}</span>
+										</a>
+									{% endfor %}
+								</div>
+							{% else %}
+								<p>Aucune catégorie associée à cet article.</p>
+							{% endif %}
+
+							<h1 class="pt-4 modal-title">{{ article.title }}</h1>
+						</div>
 						<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 					</div>
+
 					<div class="modal-body">
-						{{ article.content }}
+
+						<div
+							class="mb-4">
+							<!-- Post Meta -->
+							<small
+								class="post-meta text-primary pt-2 d-flex flex-wrap">
+								{# Date #}
+								<span class="post-meta-date">
+									<i class="fas fa-calendar-days"></i>
+									{% if article.createdAt is defined %}
+										<span class="post-meta-date-text">{{ article.createdAt|date('d M Y') }}</span>
+									{% endif %}
+								</span>
+								<span class="post-meta-separator px-1">|</span>
+								{# Comment #}
+								<span class="post-meta-comment">
+									<i class="fas fa-comment-dots"></i>
+									<span class="post-meta-comment-text">10</span>
+								</span>
+							</small>
+
+							<!-- Review -->
+							<small id="star-rating">
+								<span class="fa fa-star text-warning" data-rating="1"></span>
+								<span class="fa fa-star" data-rating="2"></span>
+								<span class="fa fa-star" data-rating="3"></span>
+								<span class="fa fa-star" data-rating="4"></span>
+								<span class="fa fa-star" data-rating="5"></span>
+								<span class="review-number text-primary">(10)</span>
+							</small>
+						</div>
+
+						{{ article.content|raw }}
 					</div>
+
+
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
 					</div>
+
 				</div>
+
 			</div>
 		</div>
 	{% else %}
 		<!-- 3 Articles after the last -->
 		{# Loop over a subset of the "items" array, starting with the element at index 1 and taking the next 3 elements #}
 			{% for article in articles|slice(0, 3)|reverse %}
-				<div class="modal fade" id="articleModal{{ article.id }}" tabindex="-1"> <div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title">{{ article.title }}</h5>
+				<div class="modal fade" id="articleModal{{ article.id }}" tabindex="-1"> <div class="modal-dialog modal-xl">
+
+					<div class="modal-content container">
+
+						<div class="modal-header align-items-start pb-0">
+							<div
+								class="titles-container">
+								<!-- Category Tags Container -->
+								{% if articleCategories is not empty %}
+									<div class="d-flex flex-wrap">
+										{% for category in articleCategories %}
+											<!-- Individual Category Badges -->
+											<a href="#">
+												<span class="badge bg-warning me-1 mb-1">{{ category.name }}</span>
+											</a>
+										{% endfor %}
+									</div>
+								{% else %}
+									<p>Aucune catégorie associée à cet article.</p>
+								{% endif %}
+
+								<h1 class="pt-4 modal-title">{{ article.title }}</h1>
+							</div>
 							<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 						</div>
+
 						<div class="modal-body">
-							{{ article.content }}
+
+							<div
+								class="mb-4">
+								<!-- Post Meta -->
+								<small
+									class="post-meta text-primary pt-2 d-flex flex-wrap">
+									{# Date #}
+									<span class="post-meta-date">
+										<i class="fas fa-calendar-days"></i>
+										{% if article.createdAt is defined %}
+											<span class="post-meta-date-text">{{ article.createdAt|date('d M Y') }}</span>
+										{% endif %}
+									</span>
+									<span class="post-meta-separator px-1">|</span>
+									{# Comment #}
+									<span class="post-meta-comment">
+										<i class="fas fa-comment-dots"></i>
+										<span class="post-meta-comment-text">10</span>
+									</span>
+								</small>
+
+								<!-- Review -->
+								<small id="star-rating">
+									<span class="fa fa-star text-warning" data-rating="1"></span>
+									<span class="fa fa-star" data-rating="2"></span>
+									<span class="fa fa-star" data-rating="3"></span>
+									<span class="fa fa-star" data-rating="4"></span>
+									<span class="fa fa-star" data-rating="5"></span>
+									<span class="review-number text-primary">(10)</span>
+								</small>
+							</div>
+
+							{{ article.content|raw }}
 						</div>
+
+
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
 						</div>
+
 					</div>
+
 				</div>
 			</div>
 		{% endfor %}

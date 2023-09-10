@@ -66,3 +66,12 @@ button {
     top: 0;
     z-index: 1000;
 }
+
+
+.carousel-control-prev {
+    margin-left: -80px !important;
+  }
+  
+.carousel-control-next {
+margin-right: -80px !important;
+}

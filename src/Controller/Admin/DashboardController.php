@@ -11,6 +11,7 @@ use App\Entity\ArticleCategory;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
@@ -24,32 +25,38 @@ class DashboardController extends AbstractDashboardController
     ) {
     }
 
-    #[Route('/admin/home', name: 'admin_home')]
+    #[Route('/', name: 'app_home')]
     public function home(): Response
     {
 
-        return $this->render('admin/home.html.twig');
+        return $this->render('home/index.html.twig');
     }
 
     #[Route('/admin', name: 'admin')]
     public function index(): Response
     {
-        return $this->redirectToRoute('admin_home');
+        return $this->render('admin/home.html.twig');
     }
 
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Une cuisine connectée')
+            ->setTitle('Une Cuisine Connectée')
             ->setFaviconPath('images/icon-cmqr.png');
     }
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::subMenu('Utilisateur', 'fa fa-users')->setSubItems([
-            MenuItem::linkToCrud('Tous les utilisateurs', 'fas fa-swatchbook', User::class),
-            MenuItem::linkToCrud('Ajouter', 'fas fa-plus', User::class)->setAction(Crud::PAGE_NEW),
-        ]);
+
+        yield MenuItem::linkToRoute('Tableau de board', 'fa fa-kitchen-set', 'admin');
+        yield MenuItem::linkToRoute('C\'est Moi Qui Régale', 'fa fa-home', 'app_home');
+
+        if ($this->isGranted('ROLE_SUPER_ADMIN')) {
+            yield MenuItem::subMenu('Utilisateur', 'fa fa-users')->setSubItems([
+                MenuItem::linkToCrud('Tous les utilisateurs', 'fas fa-swatchbook', User::class),
+                MenuItem::linkToCrud('Ajouter', 'fas fa-plus', User::class)->setAction(Crud::PAGE_NEW),
+            ]);
+        }
 
         yield MenuItem::subMenu('Recette', 'fas fa-book')->setSubItems([
             MenuItem::linkToCrud('Toutes les recettes', 'fas fa-swatchbook', Recipe::class),

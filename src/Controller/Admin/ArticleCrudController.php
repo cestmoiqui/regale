@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Article;
 use App\Service\ArticleTagUpdater;
+use Doctrine\DBAL\Types\TextType;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
@@ -81,7 +82,9 @@ class ArticleCrudController extends AbstractCrudController
             ])
             ->setFormTypeOption('by_reference', false); // Ensures that changes to the collection of linked entities are correctly taken into account by Doctrine
 
-        yield TextField::new('tagsAsString', 'Tag')
+        yield TextField::new('tagsAsString', 'Tag', TextType::class, [
+            'mapped' => false,
+        ])
             ->setFormTypeOptions([
                 'attr' => ['placeholder' => 'Entrer les tags de l\'article (ex: tag1, tag2, tag3)']
             ]);

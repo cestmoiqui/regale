@@ -5,11 +5,13 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -22,7 +24,7 @@ class RegistrationFormType extends AbstractType
             ->add('username', TextType::class, [
                 'label' => 'Nom d\'utilisateur',
                 'attr' => [
-                    'placeholder' => 'Nom d\'utilisateur',
+                    'placeholder' => 'CestMoiQuiRegale',
                     'class' => 'form-control my-2',
                     'aria-label' => 'Nom d\'utilisateur',
                 ],
@@ -32,6 +34,17 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ]
             ])
+
+            ->add('email', EmailType::class, [
+                'label' => 'Adresse e-mail',
+                'required' => true,
+                'attr' => [
+                    'placeholder' => 'cestmoiquiregale@gmail.com',
+                    'class' => 'form-control my-2',
+                    'aria-label' => 'Email',
+                ]
+            ])
+
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [
@@ -56,7 +69,7 @@ class RegistrationFormType extends AbstractType
                     'attr' => [
                         'class' => 'my-2',
                         'aria-label' => 'Mot de passe',
-                        'placeholder' => '6 caractères minimum',
+                        'placeholder' => '6 caractères minimum, dont une majuscule, un chiffre et un caractère spécial',
                     ]
                 ],
                 'second_options' => [
@@ -64,7 +77,7 @@ class RegistrationFormType extends AbstractType
                     'attr' => [
                         'class' => 'my-2',
                         'aria-label' => 'Confirmer le mot de passe',
-                        'placeholder' => '6 caractères minimum',
+                        'placeholder' => 'Confirmer le mot de passe',
                     ]
                 ],
                 'constraints' => [
@@ -73,9 +86,12 @@ class RegistrationFormType extends AbstractType
                     ]),
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Votre mot de passe d\'être d\'au moins  {{ limit }} caractères',
-                        // max length allowed by Symfony for security reasons
+                        'minMessage' => 'Votre mot de passe doit avoir au moins {{ limit }} caractères',
                         'max' => 4096,
+                    ]),
+                    new Regex([
+                        'pattern' => "/^(?=.*[A-Z])(?=.*[0-9])(?=.*[~!@#$%^&*()_\-+=\[\]{}|\\:;\"'<>,.?\/]).{6,}$/",
+                        'message' => 'Le mot de passe doit contenir au moins une lettre majuscule, un chiffre et un caractère spécial.'
                     ]),
                 ],
             ]);

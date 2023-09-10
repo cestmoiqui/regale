@@ -17,6 +17,10 @@
 		</div>
 
 		<div class="mb-4">
+			{{ form_row(registrationForm.email) }}
+		</div>
+
+		<div class="mb-4">
 			<label>{{ registrationForm.plainPassword.first.vars.label }}</label>
 			{{ form_widget(registrationForm.plainPassword.first, {'attr': {'class': 'form-control my-2'}}) }}
 		</div>

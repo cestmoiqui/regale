@@ -3,8 +3,8 @@
 namespace App\Controller\Admin;
 
 use App\Entity\ArticleCategory;
-use Symfony\Component\Validator\Constraints as Assert;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use Symfony\Component\Validator\Constraints\Regex;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ColorField;
@@ -34,7 +34,7 @@ class ArticleCategoryCrudController extends AbstractCrudController
         yield SlugField::new('slug')
             ->setTargetFieldName('name')
             ->setFormTypeOption('constraints', [
-                new Assert\Regex([
+                new Regex([
                     'pattern' => '/^[a-zA-Z0-9\-_]+$/',
                     'message' => 'Seuls les caractères alphanumériques, tirets et underscores sont autorisés dans ce champ.'
                 ])

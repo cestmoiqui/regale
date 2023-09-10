@@ -9,6 +9,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use Symfony\Component\Validator\Constraints\Choice;
+use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
@@ -44,14 +45,6 @@ class UserCrudController extends AbstractCrudController
             ->setPageTitle(Crud::PAGE_EDIT, 'Modifier la %entity_label_singular%')
             ->setPageTitle(Crud::PAGE_DETAIL, 'Détails de la %entity_label_singular');
     }
-
-    // public function configureActions(Actions $actions): Actions
-    // {
-    //     return $actions
-    //         ->update(Crud::PAGE_INDEX, Action::NEW, function (Action $action) {
-    //             return $action->setIcon('fa fa-user')->addCssClass('btn btn-warning');
-    //         });
-    // }
 
     public function configureFields(string $pageName): iterable
     {

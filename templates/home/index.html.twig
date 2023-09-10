@@ -11,15 +11,18 @@
 
 	<!-- Carousel Section -->
 	<div class="row">
-		<section class="d-flex align-items-center justify-content-center mb-5">
+		<section class="d-flex align-items-center justify-content-center mb-5 carousel slide carousel-fade p-0" id="articlesCarousel" data-ride="carousel">
 
-			<div class="row">
-				<div
-					class="col-lg-8 p-0">
-					<!-- Carousel image -->
-					<div class="carousel-image h-100">{{ imageMacros.display_image(mediaArticle, 'Description de l\'image', 'img-fluid object-fit-cover h-100','5000') }}</div>
+			<div
+				class="row carousel-inner">
+
+				<!-- Carousel item -->
+				<div class="carousel-item active d-flex p-0">
+					<div
+						class="col-lg-8">
+						<!-- Carousel image -->
+						<div class="carousel-image h-100">{{ imageMacros.display_image(mediaArticle, 'Description de l\'image', 'img-fluid object-fit-cover h-100','5000') }}</div>
                 	</div>
-
 					<div class="col-lg-4 p-0">
 						<!-- Carousel content -->
 						<div class="h-100 content bg-warning p-5 d-flex flex-column align-items-start justify-content-center">
@@ -57,9 +60,119 @@
 						</div>
 					</div>
             	</div>
+
+				<!-- Carousel item -->
+				<div class="carousel-item d-flex p-0">
+					<div
+						class="col-lg-8">
+						<!-- Carousel image -->
+						<div class="carousel-image h-100">{{ imageMacros.display_image(mediaArticle, 'Description de l\'image', 'img-fluid object-fit-cover h-100','5000') }}</div>
+					</div>
+					<div
+						class="col-lg-4 p-0">
+						<!-- Carousel content -->
+						<div class="h-100 content bg-warning p-5 d-flex flex-column align-items-start justify-content-center">
+
+							<div class="mb-3">
+								<span class="badge bg-primary">Catégorie</span>
+							</div>
+
+							<h2>
+								<a href="">Titre de lad</a>
+							</h2>
+
+							<p class="mb-3 text-light">Lorem ipsum dolor sit amet, consectetur adipisicing elit ipsum dolor sit amet, consectetur adipisicing elit ipsum dolor sit amet, consectetur adipisicing elit ipsum dolor sit amet, consectetur adipisicing elit ipsum dolor sit amet, consectetur adipisicing elit...</p>
+
+							<!-- Post Meta -->
+							<small
+								class="post-meta text-primary">
+								{# servings #}
+								<span class="post-meta-servings">
+									<i class="fas fa-user"></i>
+									<span class="post-meta-servings-text">4</span>
+								</span>
+								<span class="post-meta-separator">|</span>
+
+								{# cook-time #}
+								<span class="post-meta-preparation-time">
+									<i class="fas fa-clock"></i>
+									<span class="post-meta-servings-text">30 mins</span>
+								</span>
+								<span class="post-meta-separator">|</span>
+
+								{# difficutly #}
+								<span class="post-meta-difficulty">
+									<span class="post-meta-difficulty-text">Facile</span>
+								</span>
+							</small>
+
+							<a class="btn btn-primary mt-4">Lire la suite</a>
+
+						</div>
+					</div>
+				</div>
+
+				<!-- Carousel item -->
+				<div class="carousel-item d-flex p-0">
+					<div
+						class="col-lg-8">
+						<!-- Carousel image -->
+						<div class="carousel-image h-100">{{ imageMacros.display_image(mediaArticle, 'Description de l\'image', 'img-fluid object-fit-cover h-100','5000') }}</div>
+                	</div>
+					<div class="col-lg-4 p-0">
+						<!-- Carousel content -->
+						<div class="h-100 content bg-warning p-5 d-flex flex-column align-items-start justify-content-center">
+
+							<div class="mb-3"><span class="badge bg-primary">Catégorie</span></div>
+							
+							<h2><a href="">Titre de la publication</a></h2>
+
+							<p class="mb-3 text-light">Lorem ipsum dolor sit amet, consectetur adipisicing elit ipsum dolor sit amet, consectetur adipisicing elit ipsum dolor sit amet, consectetur adipisicing elit ipsum dolor sit amet, consectetur adipisicing elit ipsum dolor sit amet, consectetur adipisicing elit...</p>
+
+							<!-- Post Meta -->
+							<small class="post-meta text-primary">
+								{# servings #}
+								<span class="post-meta-servings">
+									<i class="fas fa-user"></i>
+									<span class="post-meta-servings-text">4</span>
+								</span>
+								<span class="post-meta-separator">|</span>
+
+								{# cook-time #}
+								<span class="post-meta-preparation-time">
+									<i class="fas fa-clock"></i>
+									<span class="post-meta-servings-text">30 mins</span>
+								</span>
+								<span class="post-meta-separator">|</span>
+
+								{# difficutly #}
+								<span class="post-meta-difficulty">
+									<span class="post-meta-difficulty-text">Facile</span>
+								</span>
+							</small>
+
+							<a class="btn btn-primary mt-4">Lire la suite</a>
+
+						</div>
+					</div>
+            	</div>
+
+				
+
+			</div>
+
+			<!-- Contrôles (si vous en voulez) -->
+			<a class="carousel-control-prev" href="#articlesCarousel" role="button" data-slide="prev">
+				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				<span class="sr-only">Précédent</span>
+			</a>
+			<a class="carousel-control-next" href="#articlesCarousel" role="button" data-slide="next">
+				<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				<span class="sr-only">Suivant</span>
+			</a>
             
-        	</section>
-    	</div>
+        </section>
+    </div>
 
 		<!-- Post and Sidebar Section -->
 		<div class="row pb-5">
