@@ -1,8 +1,9 @@
 # Politique de Sécurité
 
+
 ## Versions Prises en Charge
 
-| Version | Supported          |
+| Version | Supporté          |
 | ------- | ------------------ |
 | 6.0.x   | :white_check_mark: |
 | 5.4.x   | :white_check_mark:               |
