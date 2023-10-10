@@ -37,7 +37,7 @@ class ArticleRepository extends ServiceEntityRepository
         // Filter by category
         if (!empty($articleSearchData->categories)) {
             $categoryIds = array_map(function ($category) {
-                return $category->getId(); // Suppose que l'entité Category a une méthode getId()
+                return $category->getId(); // Assumes Category entity has a getId() method
             }, $articleSearchData->categories);
 
             $query = $query

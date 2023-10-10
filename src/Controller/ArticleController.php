@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Tag;
 use App\Entity\Recipe;
 use App\Data\ArticleSearchData;
 use App\Form\ArticleSearchForm;
@@ -17,19 +18,29 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ArticleController extends AbstractController
 {
+
     #[Route('/article/{slug}', name: 'article_show')] // Displays a unique article based on a unique identifier for each article (slug)
     public function show(): Response
     {
-        return $this->render('article/show.html.twig', []);
+        return $this->render('article/show.html.twig', [
+            'isAllRecipesPage' => true,
+        ]);
     }
 
     #[Route('/articles', name: 'article_all')] // Displays all articles
-    public function all(EntityManagerInterface $entityManager, MediaRepository $mediaRepo, ArticleCategoryRepository $articleCategoryRepo, ArticleRepository $articleRepo, RecipeCategoryRepository $recipeCategoryRepo, Request $request): Response
-    {
+    public function all(
+        EntityManagerInterface $entityManager,
+        MediaRepository $mediaRepo,
+        ArticleCategoryRepository $articleCategoryRepo,
+        ArticleRepository $articleRepo,
+        RecipeCategoryRepository $recipeCategoryRepo,
+        Request $request
+    ): Response {
         $articleData = new ArticleSearchData();
         $articleForm = $this->createForm(ArticleSearchForm::class, $articleData);
         $articleForm->handleRequest($request);
 
+        // Determine if a search was made and if valid, then fetch articles accordingly
         if ($articleForm->isSubmitted() && $articleForm->isValid()) {
             if ($this->isEmptySearch($articleData)) {
                 $articles = $articleRepo->findBy([], ['createdAt' => 'DESC']);
@@ -40,6 +51,7 @@ class ArticleController extends AbstractController
             $articles = $articleRepo->findBy([], ['createdAt' => 'DESC']);
         }
 
+        // Retrieve media and categories associated with each article
         $mediaForArticles = [];
         $categoriesForArticles = [];
         foreach ($articles as $article) {
@@ -49,20 +61,18 @@ class ArticleController extends AbstractController
             $categoriesForArticles[$article->getId()] = $article->getArticleCategories();
         }
 
-        // Use the EntityManager to retrieve the last item created
-        $recipe = $entityManager->getRepository(Recipe::class)
-            // sorting items by date of creation ('createdAt') in descending order
-            ->findOneBy([], ['createdAt' => 'DESC']);
+        // Retrieve the most recent recipe
+        $recipe = $entityManager->getRepository(Recipe::class)->findOneBy([], ['createdAt' => 'DESC']);
 
         $recipeCategory = null;
         $mediaRecipe = null;
 
         if ($recipe !== null) {
-            // Get categories related to the recipes
             $recipeCategory = $recipe->getRecipeCategories();
-            // Use MediaRepository to find media associated with the current recipe
             $mediaRecipe = $mediaRepo->findOneBy(['mediaOwnerId' => $recipe->getId()]);
         }
+
+        $tags = $entityManager->getRepository(Tag::class)->findAll();
 
         return $this->render('article/all.html.twig', [
             'articles' => $articles,
@@ -72,28 +82,23 @@ class ArticleController extends AbstractController
             'articleCategories' => $articleCategoryRepo->findAll(),
             'isAllArticlesPage' => true,
             'recipeCategories' => $recipeCategoryRepo->findAll(),
+            'tags' => $tags
         ]);
     }
 
     /**
-     * Check if the search criteria is empty.
+     * Determines if the search form is empty (no filters applied).
      *
      * @param ArticleSearchData $data
-     * @return bool
+     * @return bool True if empty, otherwise false.
      */
     private function isEmptySearch(ArticleSearchData $data): bool
     {
-        // Vérifiez si la recherche par texte est vide
-        $isQEmpty = empty(trim($data->q));
+        $isQEmpty = empty(trim($data->q));           // Check if the text search is empty
+        $isSortEmpty = empty(trim($data->sort));     // Check if the sort option is empty
+        $areCategoriesEmpty = empty($data->categories);  // Check if categories are empty
+        $areTagsEmpty = empty($data->tags);          // Check if tags are empty
 
-        // Vérifiez si le tri est vide
-        $isSortEmpty = empty(trim($data->sort));
-
-        // Vérifiez si les tableaux de catégories et de tags sont vides
-        $areCategoriesEmpty = empty($data->categories);
-        $areTagsEmpty = empty($data->tags);
-
-        // Si tout est vide, alors la recherche est considérée comme vide
         return $isQEmpty && $isSortEmpty && $areCategoriesEmpty && $areTagsEmpty;
     }
 }

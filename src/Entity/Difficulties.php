@@ -32,4 +32,9 @@ class Difficulties
 
         return $this;
     }
+
+    public function __toString(): string
+    {
+        return $this->name; // Use the difficulties's 'name' attribute as a textual representation
+    }
 }

@@ -21,7 +21,10 @@ class Menu
     #[ORM\Column(nullable: true)]
     private ?int $menuOrder = null;
 
-    #[ORM\ManyToMany(targetEntity: self::class, inversedBy: 'subMenus')]
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'subMenus')]
+    private ?Menu $parentMenu = null;
+
+    #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parentMenu')]
     private Collection $subMenus;
 
     #[ORM\Column]
@@ -72,6 +75,18 @@ class Menu
     public function setMenuOrder(?int $menuOrder): static
     {
         $this->menuOrder = $menuOrder;
+
+        return $this;
+    }
+
+    public function getParentMenu(): ?self
+    {
+        return $this->parentMenu;
+    }
+
+    public function setParentMenu(?self $parentMenu): static
+    {
+        $this->parentMenu = $parentMenu;
 
         return $this;
     }

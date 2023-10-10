@@ -2,7 +2,7 @@
 	{% if media is not null %}
 		<img src="{{ media.filename }}" alt="{{ altText }}" class="{{ extra_class }} img-fluid object-fit-cover" {{ width ? "width=" ~ width : "" }} {{ height ? "height=" ~ height : "" }} loading="lazy">
 	{% else %}
-		<img src="https://images.unsplash.com/photo-1556911073-52527ac43761?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" alt="{{ altText }}" class="{{ extra_class }} img-fluid object-fit-cover" {{ width ? "width=" ~ width : "" }} {{ height ? "height=" ~ height : "" }} loading="lazy">
+		<img src="https://source.unsplash.com/random?cuisine,food" alt="{{ altText }}" class="{{ extra_class }} img-fluid object-fit-cover" {{ width ? "width=" ~ width : "" }} {{ height ? "height=" ~ height : "" }} loading="lazy">
 	{% endif %}
 {% endmacro %}
 

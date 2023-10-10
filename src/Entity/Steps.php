@@ -2,9 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\StepsRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\StepsRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: StepsRepository::class)]
 class Steps
@@ -24,19 +26,27 @@ class Steps
     #[ORM\JoinColumn(nullable: false)]
     private ?Recipe $recipe = null;
 
+    #[ORM\OneToMany(mappedBy: 'step', targetEntity: RecipeIngredient::class, orphanRemoval: true)]
+    private Collection $recipeIngredients;
+
+    public function __construct()
+    {
+        $this->recipeIngredients = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    public function setName(string $name): static
+    public function setTitle(string $title): static
     {
-        $this->title = $name;
+        $this->title = $title;
 
         return $this;
     }
@@ -61,6 +71,43 @@ class Steps
     public function setRecipe(?Recipe $recipe): static
     {
         $this->recipe = $recipe;
+
+        return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->title; // Use the steps's 'title' attribute as a textual representation
+    }
+
+
+    /**
+     * @return Collection<int, RecipeIngredient>
+     */
+    public function getRecipeIngredients(): Collection
+    {
+        return $this->recipeIngredients;
+    }
+
+    public function addRecipeIngredient(RecipeIngredient $recipeIngredient): static
+    {
+        if (!$this->recipeIngredients->contains($recipeIngredient)) {
+            $this->recipeIngredients->add($recipeIngredient);
+            $recipeIngredient->setStep($this);  // Change from setRecipes() to setStep()
+        }
+
+        return $this;
+    }
+
+
+    public function removeRecipeIngredient(RecipeIngredient $recipeIngredient): static
+    {
+        if ($this->recipeIngredients->removeElement($recipeIngredient)) {
+            // set the owning side to null (unless already changed)
+            if ($recipeIngredient->getStep() === $this) {
+                $recipeIngredient->setStep(null);
+            }
+        }
 
         return $this;
     }

@@ -107,4 +107,9 @@ class Media
 
         return $this;
     }
+
+    public function __toString(): string
+    {
+        return $this->name; // Use the media's 'name' attribute as a textual representation
+    }
 }

@@ -11,19 +11,19 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        $faker = Factory::create();
+        // $faker = Factory::create();
 
-        // Créer 20 tags fictifs
-        for ($i = 0; $i < 20; $i++) {
-            $tag = new Tag();
-            $tag->setName($faker->word);
+        // // Créer 20 tags fictifs
+        // for ($i = 0; $i < 20; $i++) {
+        //     $tag = new Tag();
+        //     $tag->setName($faker->word);
 
-            // Ajoutez des appels à des setters ici si vous avez d'autres champs
+        //     // Ajoutez des appels à des setters ici si vous avez d'autres champs
 
-            $manager->persist($tag);
-        }
+        //     $manager->persist($tag);
+        // }
 
-        // Sauvegardez les objets en base de données
-        $manager->flush();
+        // // Sauvegardez les objets en base de données
+        // $manager->flush();
     }
 }

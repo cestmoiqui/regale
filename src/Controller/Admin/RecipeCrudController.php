@@ -7,7 +7,6 @@ use App\Entity\Tag;
 use App\Entity\Recipe;
 use App\Form\Type\StepsType;
 use Doctrine\ORM\EntityManagerInterface;
-use CestMoiQui\TagBundle\Form\Type\TagsType;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;

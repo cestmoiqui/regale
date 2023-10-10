@@ -19,7 +19,9 @@
 			{% set article_show = path('article_show', { 'slug': article.slug }) %}
 
 				<article class="col-md-6 pb-5"> <div class="post-entry-1 position-relative">
-					{{ imageMacros.display_image(mediaArticle, 'Description de l\'image', 'img-fluid object-fit-cover') }}
+					<div class="" height="50">
+						{{ imageMacros.display_image(mediaArticle, 'Description de l\'image', '') }}
+					</div>
 
 						<!-- Category Tags Container -->
 						{% if articleCategory is not empty %}
@@ -75,33 +77,34 @@
 
 					<button type="button" class="border-0 p-0" data-bs-toggle="modal" data-bs-target="#articleModal{{ article.id }}">{{ imageMacros.display_image(mediaArticle, 'Description de l\'image', 'img-thumbnail border border-0 p-0 img-fluid object-fit-cover h-100', '180') }}</button>
 
-				<div class="content p-3 d-flex flex-column justify-content-center align-items-start w-75">
-					<h2 class="fs-5 m-0">
-						{{ article.title }}
-					</h2>
-					<button type="button" class="text-warning text-decoration-underline p-0 btn" data-bs-toggle="modal" data-bs-target="#articleModal{{ article.id }}">Lire la suite</button>
-					<!-- Post Meta -->
-					<small
-						class="post-meta text-primary pt-2 d-flex flex-wrap">
-						{# Date #}
-						<span class="post-meta-date">
-							<i class="fas fa-calendar-days"></i>
-							<span class="post-meta-date-text">{{ article.createdAt|date('d M Y') }}</span>
-						</span>
-						<span class="post-meta-separator px-1">|</span>
+					<div class="content p-3 d-flex flex-column justify-content-center align-items-start w-75">
+						<h2 class="fs-5 m-0">
+							{{ article.title }}
+						</h2>
+						<button type="button" class="text-warning text-decoration-underline p-0 btn" data-bs-toggle="modal" data-bs-target="#articleModal{{ article.id }}">Lire la suite</button>
+						<!-- Post Meta -->
+						<small
+							class="post-meta text-primary pt-2 d-flex flex-wrap">
+							{# Date #}
+							<span class="post-meta-date">
+								<i class="fas fa-calendar-days"></i>
+								<span class="post-meta-date-text">{{ article.createdAt|date('d M Y') }}</span>
+							</span>
+							<span class="post-meta-separator px-1">|</span>
 
-						{# Comment #}
-						<span class="post-meta-comment">
-							<i class="fas fa-comment-dots"></i>
-							<span class="post-meta-comment-text">10</span>
-						</span>
-					</small>
-				</div>
+							{# Comment #}
+							<span class="post-meta-comment">
+								<i class="fas fa-comment-dots"></i>
+								<span class="post-meta-comment-text">10</span>
+							</span>
+						</small>
+					</div>
 
-			</article>
-		{% endfor %}
-	{% endif %}
+				</article>
+			{% endfor %}
+		{% endif %}
 
-	<a href="{{ path('article_all') }}" class="btn btn-outline-warning d-grid m-0 border border-2 border-warning">Voir tous nos articles</a>
+		<a href="{{ path('article_all') }}" class="btn btn-outline-warning d-grid m-0 border border-2 border-warning">Voir tous nos articles</a>
 
-</div></div></article>
+	</div>
+</div></article>

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Tag;
 use App\Entity\Article;
 use App\Data\RecipeSearchData;
 use App\Form\RecipeSearchForm;
@@ -64,6 +65,8 @@ class RecipeController extends AbstractController
             $mediaArticle = $mediaRepo->findOneBy(['mediaOwnerId' => $article->getId()]);
         }
 
+        $tags = $entityManager->getRepository(Tag::class)->findAll();
+
         return $this->render('recipe/all.html.twig', [
             'recipes' => $recipes,
             'recipeForm' => $recipeForm,
@@ -72,6 +75,7 @@ class RecipeController extends AbstractController
             'recipeCategories' => $recipeCategoryRepo->findAll(),
             'isAllRecipesPage' => true,
             'articleCategories' => $articleCategoryRepo->findAll(),
+            'tags' => $tags
         ]);
     }
 

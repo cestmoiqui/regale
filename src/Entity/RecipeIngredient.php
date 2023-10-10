@@ -27,6 +27,9 @@ class RecipeIngredient
     #[ORM\ManyToOne]
     private ?MeasurementUnits $unit = null;
 
+    #[ORM\ManyToOne(targetEntity: Steps::class, inversedBy: "recipeIngredients")]
+    private ?Steps $step = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -76,6 +79,18 @@ class RecipeIngredient
     public function setUnit(?MeasurementUnits $unit): static
     {
         $this->unit = $unit;
+
+        return $this;
+    }
+
+    public function getStep(): ?Steps
+    {
+        return $this->step;
+    }
+
+    public function setStep(?Steps $step): static
+    {
+        $this->step = $step;
 
         return $this;
     }

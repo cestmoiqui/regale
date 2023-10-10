@@ -6,184 +6,115 @@
 {% endblock %}
 {% block body %}
 
-<main
-	class="container my-5 p-0">
+	<main
+		class="container my-5 p-0">
 
-	<!-- Carousel Section -->
-	<div class="row">
-		<section class="d-flex align-items-center justify-content-center mb-5 carousel slide carousel-fade p-0" id="articlesCarousel" data-ride="carousel">
+		<!-- Carousel Section -->
+		<div class="row">
+			<section class="d-flex align-items-center justify-content-center mb-5 carousel slide carousel-fade p-0" id="articlesCarousel" data-ride="carousel">
 
-			<div
-				class="row carousel-inner">
+				<div
+					class="row carousel-inner">
 
-				<!-- Carousel item -->
-				<div class="carousel-item active d-flex p-0">
-					<div
-						class="col-lg-8">
-						<!-- Carousel image -->
-						<div class="carousel-image h-100">{{ imageMacros.display_image(mediaArticle, 'Description de l\'image', 'img-fluid object-fit-cover h-100','5000') }}</div>
-                	</div>
-					<div class="col-lg-4 p-0">
-						<!-- Carousel content -->
-						<div class="h-100 content bg-warning p-5 d-flex flex-column align-items-start justify-content-center">
+					{# Checks if the "items" array contains more than one element #}
+					{% if recipes|length > 0 %}
+						{# Take the 3 items preceding the last one #}
+						{% set five_last_recipes = recipes|slice(0, 5)|reverse %}
 
-							<div class="mb-3"><span class="badge bg-primary">Catégorie</span></div>
-							
-							<h2><a href="">Titre de la publication</a></h2>
+						{# Loop to display each item #}
+						{% for recipe in five_last_recipes %}
 
-							<p class="mb-3 text-light">Lorem ipsum dolor sit amet, consectetur adipisicing elit ipsum dolor sit amet, consectetur adipisicing elit ipsum dolor sit amet, consectetur adipisicing elit ipsum dolor sit amet, consectetur adipisicing elit ipsum dolor sit amet, consectetur adipisicing elit...</p>
+							<!-- Carousel item -->
+							<div class="carousel-item {% if loop.first %}active{% endif %} d-flex p-0">
+								<div
+									class="col-lg-8">
+									<!-- Carousel image -->
+									<div class="carousel-image h-100 position-relative" height="300">{{ imageMacros.display_image(mediaArticle, "Description de l\'image", "w-100 h-100 position-absolute top-0 start-0 object-fit-cover") }}</div>
+								</div>
+								<div
+									class="col-lg-4 p-0">
+									<!-- Carousel content -->
+									<div
+										class="h-100 content bg-warning p-5 d-flex flex-column align-items-start justify-content-center">
 
-							<!-- Post Meta -->
-							<small class="post-meta text-primary">
-								{# servings #}
-								<span class="post-meta-servings">
-									<i class="fas fa-user"></i>
-									<span class="post-meta-servings-text">4</span>
-								</span>
-								<span class="post-meta-separator">|</span>
+										<!-- Category Tags Container -->
+										{% if recipeCategory is not empty %}
+											<div class="m-3">
+												{% for category in recipeCategory %}
+													<!-- Individual Category Badges -->
+													<a href="#">
+														<span class="badge bg-primary">{{ category.name }}</span>
+													</a>
+												{% endfor %}
+											</div>
+										{% else %}
+											<p>Aucune catégorie associée à cette recette.</p>
+										{% endif %}
 
-								{# cook-time #}
-								<span class="post-meta-preparation-time">
-									<i class="fas fa-clock"></i>
-									<span class="post-meta-servings-text">30 mins</span>
-								</span>
-								<span class="post-meta-separator">|</span>
+										<h2>
+											{{ recipe.title }}
+										</h2>
 
-								{# difficutly #}
-								<span class="post-meta-difficulty">
-									<span class="post-meta-difficulty-text">Facile</span>
-								</span>
-							</small>
+										<p class="mb-3 text-light">{{ recipe.featuredText ?: recipe.content|striptags|slice(0, 120) ~'...' }}</p>
 
-							<a class="btn btn-primary mt-4">Lire la suite</a>
+										<!-- Post Meta -->
+										<small
+											class="post-meta text-primary">
+											{# servings #}
+											<span class="post-meta-servings">
+												<i class="fas fa-user"></i>
+												<span class="post-meta-servings-text">{{ recipe.yieldQuantity }}</span>
+											</span>
+											<span class="post-meta-separator">|</span>
 
-						</div>
-					</div>
-            	</div>
+											{# cook-time #}
+											<span class="post-meta-preparation-time">
+												<i class="fas fa-clock"></i>
+												<span class="post-meta-cookTime-text">{{ recipe.cookTime.format('i') }}
+													mins</span>
+											</span>
+											<span class="post-meta-separator">|</span>
 
-				<!-- Carousel item -->
-				<div class="carousel-item d-flex p-0">
-					<div
-						class="col-lg-8">
-						<!-- Carousel image -->
-						<div class="carousel-image h-100">{{ imageMacros.display_image(mediaArticle, 'Description de l\'image', 'img-fluid object-fit-cover h-100','5000') }}</div>
-					</div>
-					<div
-						class="col-lg-4 p-0">
-						<!-- Carousel content -->
-						<div class="h-100 content bg-warning p-5 d-flex flex-column align-items-start justify-content-center">
+											{# difficutly #}
+											<span class="post-meta-difficulty">
+												<span class="post-meta-difficulty-text">{{ recipe.difficulty }}</span>
+											</span>
+										</small>
 
-							<div class="mb-3">
-								<span class="badge bg-primary">Catégorie</span>
+										<a href="{{ path('recipe_all') }}" class="btn btn-primary mt-4">Lire la suite</a>
+
+									</div>
+								</div>
 							</div>
+						{% endfor %}
+					{% endif %}
 
-							<h2>
-								<a href="">Titre de lad</a>
-							</h2>
-
-							<p class="mb-3 text-light">Lorem ipsum dolor sit amet, consectetur adipisicing elit ipsum dolor sit amet, consectetur adipisicing elit ipsum dolor sit amet, consectetur adipisicing elit ipsum dolor sit amet, consectetur adipisicing elit ipsum dolor sit amet, consectetur adipisicing elit...</p>
-
-							<!-- Post Meta -->
-							<small
-								class="post-meta text-primary">
-								{# servings #}
-								<span class="post-meta-servings">
-									<i class="fas fa-user"></i>
-									<span class="post-meta-servings-text">4</span>
-								</span>
-								<span class="post-meta-separator">|</span>
-
-								{# cook-time #}
-								<span class="post-meta-preparation-time">
-									<i class="fas fa-clock"></i>
-									<span class="post-meta-servings-text">30 mins</span>
-								</span>
-								<span class="post-meta-separator">|</span>
-
-								{# difficutly #}
-								<span class="post-meta-difficulty">
-									<span class="post-meta-difficulty-text">Facile</span>
-								</span>
-							</small>
-
-							<a class="btn btn-primary mt-4">Lire la suite</a>
-
-						</div>
-					</div>
 				</div>
 
-				<!-- Carousel item -->
-				<div class="carousel-item d-flex p-0">
-					<div
-						class="col-lg-8">
-						<!-- Carousel image -->
-						<div class="carousel-image h-100">{{ imageMacros.display_image(mediaArticle, 'Description de l\'image', 'img-fluid object-fit-cover h-100','5000') }}</div>
-                	</div>
-					<div class="col-lg-4 p-0">
-						<!-- Carousel content -->
-						<div class="h-100 content bg-warning p-5 d-flex flex-column align-items-start justify-content-center">
+				<!-- Contrôles (si vous en voulez) -->
+				<a class="carousel-control-prev" href="#articlesCarousel" role="button" data-slide="prev">
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					<span class="sr-only">Précédent</span>
+				</a>
+				<a class="carousel-control-next" href="#articlesCarousel" role="button" data-slide="next">
+					<span class="carousel-control-next-icon" aria-hidden="true"></span>
+					<span class="sr-only">Suivant</span>
+				</a>
 
-							<div class="mb-3"><span class="badge bg-primary">Catégorie</span></div>
-							
-							<h2><a href="">Titre de la publication</a></h2>
-
-							<p class="mb-3 text-light">Lorem ipsum dolor sit amet, consectetur adipisicing elit ipsum dolor sit amet, consectetur adipisicing elit ipsum dolor sit amet, consectetur adipisicing elit ipsum dolor sit amet, consectetur adipisicing elit ipsum dolor sit amet, consectetur adipisicing elit...</p>
-
-							<!-- Post Meta -->
-							<small class="post-meta text-primary">
-								{# servings #}
-								<span class="post-meta-servings">
-									<i class="fas fa-user"></i>
-									<span class="post-meta-servings-text">4</span>
-								</span>
-								<span class="post-meta-separator">|</span>
-
-								{# cook-time #}
-								<span class="post-meta-preparation-time">
-									<i class="fas fa-clock"></i>
-									<span class="post-meta-servings-text">30 mins</span>
-								</span>
-								<span class="post-meta-separator">|</span>
-
-								{# difficutly #}
-								<span class="post-meta-difficulty">
-									<span class="post-meta-difficulty-text">Facile</span>
-								</span>
-							</small>
-
-							<a class="btn btn-primary mt-4">Lire la suite</a>
-
-						</div>
-					</div>
-            	</div>
-
-				
-
-			</div>
-
-			<!-- Contrôles (si vous en voulez) -->
-			<a class="carousel-control-prev" href="#articlesCarousel" role="button" data-slide="prev">
-				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-				<span class="sr-only">Précédent</span>
-			</a>
-			<a class="carousel-control-next" href="#articlesCarousel" role="button" data-slide="next">
-				<span class="carousel-control-next-icon" aria-hidden="true"></span>
-				<span class="sr-only">Suivant</span>
-			</a>
-            
-        </section>
-    </div>
+			</section>
+		</div>
 
 		<!-- Post and Sidebar Section -->
-		<div class="row pb-5">
+		<div
+			class="row pb-5">
 
 			<!-- Post -->
 			<div class="col-xl-8 p-0">
 				<div class="row g-5 mx-0">
 					<!-- Main Section -->
-	
+
 					<!-- Article Section -->
-					<div class="col-12 p-0">{% include "article/_home.html.twig" %}</div>
+						<div class="col-12 p-0"> {% include "article/_home.html.twig" %}</div>
 
 					<!-- Article Category Section -->
 					<div class="col-12 p-0">
@@ -193,11 +124,12 @@
 							<nav>
 								<ul class="row m-0 ps-0 d-flex justify-content-center">
 									{% for articleCategory in articleCategories %}
-									<!-- Grid column -->
-									<li class="col-4 col-lg-2 d-flex flex-column align-items-center m-4 p-0">
-										<a href="#" class="d-flex flex-column align-items-center justify-content-center text-center">
-											<img src="https://images.unsplash.com/photo-1556911073-52527ac43761?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" class="rounded-circle mb-3 object-fit-cover" alt="Home image" width="100" height="100"><h3 class="fs-5">{{ articleCategory.name }}</h3></a>
-									</li>
+										<!-- Grid column -->
+										<li class="col-4 col-lg-2 d-flex flex-column align-items-center m-4 p-0">
+											<a href="#" class="d-flex flex-column align-items-center justify-content-center text-center">
+												<img src="https://source.unsplash.com/random?cuisine,food&373978" class="rounded-circle mb-3 object-fit-cover" alt="Home image" width="100" height="100"><h3 class="fs-5">{{ articleCategory.name }}</h3>
+											</a>
+										</li>
 									{% endfor %}
 								</ul>
 							</nav>
@@ -215,11 +147,12 @@
 							<nav>
 								<ul class="row m-0 ps-0 d-flex justify-content-center">
 									{% for recipecategory in recipeCategories %}
-									<!-- Grid column -->
-									<li class="col-4 col-lg-2 d-flex flex-column align-items-center m-4 p-0">
-										<a href="#" class="d-flex flex-column align-items-center justify-content-center text-center">
-											<img src="https://images.unsplash.com/photo-1556911073-52527ac43761?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" class="rounded-circle mb-3 object-fit-cover" alt="Home image" width="100" height="100"><h3 class="fs-5">{{ recipecategory.name }}</h3></a>
-									</li>
+										<!-- Grid column -->
+										<li class="col-4 col-lg-2 d-flex flex-column align-items-center m-4 p-0">
+											<a href="#" class="d-flex flex-column align-items-center justify-content-center text-center">
+												<img src="https://source.unsplash.com/random?cuisine,food&373978" class="rounded-circle mb-3 object-fit-cover" alt="Home image" width="100" height="100"><h3 class="fs-5">{{ recipecategory.name }}</h3>
+											</a>
+										</li>
 									{% endfor %}
 								</ul>
 							</nav>
@@ -228,7 +161,8 @@
 
 					<!-- Video Presentation Section -->
 					<div class="col-12 p-0">
-						<article class="bg-warning col d-lg-flex">
+						<article
+							class="bg-warning col d-lg-flex">
 							<!-- Video content -->
 							<div class="content p-5 w-75">
 								<span class="badge bg-primary mb-3">Sans frontières</span>
@@ -238,32 +172,36 @@
 							</div>
 
 							<!-- Video -->
-							<div class="my-5 me-5 ratio ratio-16x9"><iframe src="{{ asset('images/intro-video.mp4') }}" title="Vidéo de présentaion de C'est moi Qui Régale" loading="lazy" allowfullscreen></iframe></div>
-					</article>
-				</div>
+							<div class="my-5 me-5 ratio ratio-16x9">
+								<iframe src="{{ asset('images/intro-video.mp4') }}" title="Vidéo de présentaion de C'est moi Qui Régale" loading="lazy" allowfullscreen></iframe>
+							</div>
+						</article>
+					</div>
 
-				<!-- Trin'k Presentation Section -->
-				<div class="col-12 p-0">
-					<section class="text-center col my-5 py-4 px-lg-0 px-4 border-top border-bottom">
-						<h2><span class="recoleta fs-1 text-capitalize">Trin'k or Treat</span><br/><span class="text-warning fs-4">Le bon choix, au bon moment</span>
-						</h2>
-						<p>Que vous dirigiez un bar, un café ou un restaurant, Trin'k transforme l'expérience de vos clients en un moment inoubliable. Avec Trin'k, rendez la sélection de boissons aussi simple qu'amusante!</p>
-						<a href="#" class="btn btn-primary">Tenter l'expérience</a>
-					</section>
-				</div>
+					<!-- Trin'k Presentation Section -->
+					<div class="col-12 p-0">
+						<section class="text-center col my-5 py-4 px-lg-0 px-4 border-top border-bottom">
+							<h2>
+								<span class="recoleta fs-1 text-capitalize">Trin'k or Treat</span><br/><span class="text-warning fs-4">Le bon choix, au bon moment</span>
+							</h2>
+							<p>Que vous dirigiez un bar, un café ou un restaurant, Trin'k transforme l'expérience de vos clients en un moment inoubliable. Avec Trin'k, rendez la sélection de boissons aussi simple qu'amusante!</p>
+							<a href="#" class="btn btn-primary">Tenter l'expérience</a>
+						</section>
+					</div>
 
+				</div>
 			</div>
+
+			<!-- Sidebar -->
+			<aside class="col-xl-4 sidebar">
+				<div
+					class="row position-sticky pt-4 p-4 p-xl-0 ps-xl-5" style="top:2rem;">
+					<!-- Content -->
+					{% include "shared/_sidebar_content.html.twig" %}
+				</div>
+			</aside>
+
 		</div>
 
-		<!-- Sidebar -->
-		<aside class="col-xl-4 sidebar">
-			<div
-				class="row position-sticky pt-4 p-4 p-xl-0 ps-xl-5" style="top:2rem;">
-				<!-- Content -->
-				{% include "shared/_sidebar_content.html.twig" %}
-			</div>
-		</aside>
-
-	</div>
-
-</main>{% endblock %}
+	</main>
+{% endblock %}

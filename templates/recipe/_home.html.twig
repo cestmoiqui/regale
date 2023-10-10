@@ -19,8 +19,9 @@
 			{% set recipe_show = path('recipe_show', { 'slug': recipe.slug }) %}
 
 				<article class="col-md-6 pb-5"> <div class="post-entry-1 position-relative">
-					{{ imageMacros.display_image(mediaRecipe, 'Description de l\'image', 'img-fluid object-fit-cover') }}
-
+					<div class="" height="50">
+						{{ imageMacros.display_image(mediaRecipe, 'Description de l\'image', '') }}
+					</div>
 						<!-- Category Tags Container -->
 						{% if recipeCategory is not empty %}
 						<div class="position-absolute top-0 start-0 m-3 d-flex flex-wrap">
@@ -39,21 +40,29 @@
 						<p class="mb-0">{{ last_recipe.featuredText ?: last_recipe.content|striptags|slice(0, 120) ~'...' }}</p>
 						<button type="button" class="text-warning text-decoration-underline p-0 btn" data-bs-toggle="modal" data-bs-target="#recipeModal{{ last_recipe.id }}">Lire la suite</button>
 
-						<!-- Post Meta -->
+						<!-- Post Meta -->	
 						<small class="post-meta text-primary pt-2 d-flex">
-							{# Date #}
-							<span class="post-meta-date">
-								<i class="fas fa-calendar-days"></i>
-								<span class="post-meta-date-text">{{ last_recipe.createdAt|date('d M Y') }}</span>
+							{# servings #}
+							<span class="post-meta-servings pe-1">
+								<i class="fas fa-user"></i>
+								<span class="post-meta-servings-text">{{ last_recipe.yieldQuantity }}</span>
 							</span>
-							<span class="post-meta-separator px-1">|</span>
+							<span class="post-meta-separator">|</span>
 
-							{# Comment #}
-							<span class="post-meta-comment">
-								<i class="fas fa-comment-dots"></i>
-								<span class="post-meta-comment-text">10</span>
+							{# cook-time #}
+							<span class="post-meta-preparation-time px-1">
+								<i class="fas fa-clock"></i>
+								<span class="post-meta-cookTime-text">{{ last_recipe.cookTime.format('i') }}
+									mins</span>
+							</span>
+							<span class="post-meta-separator">|</span>
+
+							{# difficutly #}
+							<span class="post-meta-difficulty ps-1">
+								<span class="post-meta-difficulty-text">{{ last_recipe.difficulty }}</span>
 							</span>
 						</small>
+						
 					</div>
 				</article>
 				
@@ -69,39 +78,47 @@
 
 			{# Loop to display each item #}
 			{% for recipe in three_previous_recipes %}
-				{% set recipe_show = path('recipes_show', { 'slug': recipe.slug }) %}
+				{% set recipe_show = path('recipe_show', { 'slug': recipe.slug }) %}
 						
 				<article class="post-entry-2 d-flex bg-body-tertiary mb-3">
 
 					<button type="button" class="border-0 p-0" data-bs-toggle="modal" data-bs-target="#recipeModal{{ recipe.id }}">{{ imageMacros.display_image(mediaRecipe, 'Description de l\'image', 'img-thumbnail border border-0 p-0 img-fluid object-fit-cover h-100', '180') }}</button>
 
-				<div class="content p-3 d-flex flex-column justify-content-center align-items-start w-75">
-					<h2 class="fs-5 m-0">
-						{{ recipe.title }}
-					</h2>
-					<button type="button" class="text-warning text-decoration-underline p-0 btn" data-bs-toggle="modal" data-bs-target="#recipeModal{{ recipe.id }}">Lire la suite</button>
-					<!-- Post Meta -->
-					<small
-						class="post-meta text-primary pt-2 d-flex flex-wrap">
-						{# Date #}
-						<span class="post-meta-date">
-							<i class="fas fa-calendar-days"></i>
-							<span class="post-meta-date-text">{{ recipe.createdAt|date('d M Y') }}</span>
-						</span>
-						<span class="post-meta-separator px-1">|</span>
+					<div class="content p-3 d-flex flex-column justify-content-center align-items-start w-75">
+						<h2 class="fs-5 m-0">
+							{{ recipe.title }}
+						</h2>
+						<button type="button" class="text-warning text-decoration-underline p-0 btn" data-bs-toggle="modal" data-bs-target="#recipeModal{{ recipe.id }}">Lire la suite</button>
+						<!-- Post Meta -->
+						<small
+							class="post-meta text-primary pt-2 d-flex">
+							{# servings #}
+							<span class="post-meta-servings pe-1">
+								<i class="fas fa-user"></i>
+								<span class="post-meta-servings-text">{{ recipe.yieldQuantity }}</span>
+							</span>
+							<span class="post-meta-separator">|</span>
 
-						{# Comment #}
-						<span class="post-meta-comment">
-							<i class="fas fa-comment-dots"></i>
-							<span class="post-meta-comment-text">10</span>
-						</span>
-					</small>
-				</div>
+							{# cook-time #}
+							<span class="post-meta-preparation-time px-1">
+								<i class="fas fa-clock"></i>
+								<span class="post-meta-cookTime-text">{{ recipe.cookTime.format('i') }}
+									mins</span>
+							</span>
+							<span class="post-meta-separator">|</span>
 
-			</article>
-		{% endfor %}
-	{% endif %}
+							{# difficutly #}
+							<span class="post-meta-difficulty ps-1">
+								<span class="post-meta-difficulty-text">{{ recipe.difficulty }}</span>
+							</span>
+						</small>
+					</div>
 
-	<a href="{{ path('recipe_all') }}" class="btn btn-outline-warning d-grid m-0 border border-2 border-warning">Voir toutes nos recettes</a>
+				</article>
+			{% endfor %}
+		{% endif %}
 
-</div></div></article>
+		<a href="{{ path('recipe_all') }}" class="btn btn-outline-warning d-grid m-0 border border-2 border-warning">Voir toutes nos recettes</a>
+
+	</div>
+</div></article>

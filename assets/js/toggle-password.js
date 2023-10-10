@@ -1,25 +1,23 @@
-document.addEventListener('DOMContentLoaded', () => {
-    toggleButtons();
-}); // Calls the function when the document is completely downloaded
-
-document.addEventListener('DOMContentLoaded', () => {
+function initializeToggleButtons() {
     const toggleButtons = document.querySelectorAll('.toggle-password-btn');
 
     toggleButtons.forEach(button => {
         button.addEventListener('click', function() {
-            var input = this.parentNode.previousElementSibling;
-            var icon = this.firstChild;
+            const input = this.closest('.input-group').querySelector('input');
+            const eyeIcon = this.querySelector('.fa-eye');
+            const eyeSlashIcon = this.querySelector('.fa-eye-slash');
 
             if (input.type === 'password') {
                 input.type = 'text';
-                icon.classList.remove('fas', 'fa-eye');
-                icon.classList.add('fas', 'fa-eye-slash');
+                eyeIcon.style.display = 'none';
+                eyeSlashIcon.style.display = 'inline-block';
             } else {
                 input.type = 'password';
-                icon.classList.remove('fas', 'fa-eye-slash');
-                icon.classList.add('fas', 'fa-eye');
+                eyeSlashIcon.style.display = 'none';
+                eyeIcon.style.display = 'inline-block';
             }
         });
     });
-});
-;
+}
+
+document.addEventListener('DOMContentLoaded', initializeToggleButtons);

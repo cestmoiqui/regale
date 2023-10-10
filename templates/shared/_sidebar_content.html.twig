@@ -1,3 +1,5 @@
+{# {% include 'article/show.html.twig' with {'article': articles} %} #}
+
 <div
 	class="p-0 ps-xl-4">
 
@@ -29,49 +31,35 @@
 				</a>
 			</div>
 		</div>
-	</div><!-- Section Popular --><div class="sidebar-box pt-5">
+	</div>
+
+	<!-- Section Popular -->
+	<div class="sidebar-box pt-5">
 		<h3 class="pb-2 mb-4 border-bottom recoleta fs-3 text-capitalize">Le Top des publications</h3>
 
 		<div class="post-entry-sidebar">
-			<ul
-				class="px-0 m-0 col-8 col-xl-12">
+			<ul class="px-0 m-0 col-8 col-xl-12">
+				{% if articles is defined %}
+					{% for article in articles|slice(0, 3) %}
+						<li class="d-flex mb-3">
+							<img src="https://images.unsplash.com/photo-1556911073-52527ac43761?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" alt="Image" class="img-fluid img-thumbnail border border-0 p-0 object-fit-cover" width="100">
 
-				{# post #}
-				<li class="d-flex mb-3">
-					<img src="https://images.unsplash.com/photo-1556911073-52527ac43761?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" alt="Image" class="img-fluid img-thumbnail border border-0 p-0 object-fit-cover" width="100">
-
-					<div class="content ps-3 d-flex align-items-center">
-						<h3 class="fs-5 m-0">
-							<a href="#">News Needs to Meet Its Audiences Where They Are</a>
-						</h3>
-					</div>
-				</li>
-
-				{# post #}
-				<li class="d-flex mb-3">
-					<img src="https://images.unsplash.com/photo-1556911073-52527ac43761?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" alt="Image" class="img-fluid img-thumbnail border border-0 p-0 object-fit-cover" width="100">
-
-					<div class="content ps-3 d-flex align-items-center">
-						<h3 class="fs-5 m-0">
-							<a href="#">News Needs to Meet Its Audiences Where They Are</a>
-						</h3>
-					</div>
-				</li>
-
-				{# post #}
-				<li class="d-flex">
-					<img src="https://images.unsplash.com/photo-1556911073-52527ac43761?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" alt="Image" class="img-fluid img-thumbnail border border-0 p-0 object-fit-cover" width="100">
-
-					<div class="content ps-3 d-flex align-items-center">
-						<h3 class="fs-5 m-0">
-							<a href="#">News Needs to Meet Its Audiences Where They Are</a>
-						</h3>
-					</div>
-				</li>
-
+							<div class="content ps-3 d-flex align-items-center">
+								<h3 class="fs-5 m-0">
+									<a href="{{ path('article_all') }}">{{ article.title }}</a>
+								</h3>
+							</div>
+						</li>
+					{% endfor %}
+				{% else %}
+					<p>Pas de recettes disponibles.</p>
+				{% endif %}
 			</ul>
 		</div>
-	</div><!-- Section Category --><div class="sidebar-box pt-5">
+	</div>
+
+	<!-- Section Category -->
+	<div class="sidebar-box pt-5">
 		<h3 class="pb-2 mb-4 border-bottom recoleta fs-3 text-capitalize">Les plus dégustées</h3>
 
 		<div class="categories">
